@@ -1,20 +1,32 @@
 <?php
 
-use App\Kernel;
+namespace App\Controller;
+
 use App\Entity\User;
-// use Doctrine\ORM\EntityManagerInterface;
-// use Symfony\Runtime\Doctrine\ORM\EntityManagerInterfaceRuntime;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
-require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+class IndexController extends AbstractController
+{
 
-return function (
-    array $context,
-    // EntityManagerInterface $entityManager
-    // EntityManagerInterfaceRuntime $entityManager
-    ) {
 
-        // echo "hallo";
+    #[Route(path: '/', name: 'test')]
+    public function test(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response
+    {
 
+
+
+
+
+        // USER ANLAGE
+
+        
         // $newUser = new User();
 
         // $email = "admin@email.de";
@@ -40,12 +52,14 @@ return function (
         //     ->setLastname($lastname)
         //     ->setDeleted($deleted)
         //     ;
-        
-        // var_dump($newUser);
 
 
         // $entityManager->persist($newUser);
         // $entityManager->flush();
-    
-        return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
-};
+
+        return new Response("hey hey hey");
+
+    }
+
+
+}
