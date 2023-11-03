@@ -6,12 +6,12 @@ use App\Repository\GuitarRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GuitarRepository::class)]
-class Guitar
+class Guitar extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    protected int $id ;
 
     #[ORM\ManyToOne(inversedBy: 'model')]
     #[ORM\JoinColumn(nullable: false)]
