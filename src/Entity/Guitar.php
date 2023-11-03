@@ -16,7 +16,7 @@ class Guitar extends AbstractEntity
     protected int $id ;
 
     #[ORM\ManyToOne(inversedBy: 'model')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?GuitarType $GuitarType = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -34,7 +34,6 @@ class Guitar extends AbstractEntity
     #[ORM\Column(nullable: true)]
     private ?bool $used = null;
 
-    // #[ORM\ManyToOne(inversedBy: 'guitar', cascade: ['persist', 'remove'])]
     #[ORM\ManyToOne(inversedBy: 'guitar')]
     private ?Order $guitarOrder = null;
 
