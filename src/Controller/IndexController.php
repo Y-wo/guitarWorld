@@ -212,19 +212,28 @@ class IndexController extends AbstractController
         //     ;
         // $userService->store($newUser);
 
-        // ----------------- TEST CREATE --------------------------
-        // - lastIds
-        //     * user: 2
-        //     * order: 4
-        //     * imageGuitar: 11
-        //     * image: 3
-        //     * guitarType: 3
-        //     * guitar: 3
+        // ----------------- TEST DELETE --------------------------
+        // $guitar = $guitarService->get(17);
+        // $guitarService->remove($guitar);
+
+        // $image = $imageService->get(8);
+        // $imageService->remove($image);
 
 
-        return new Response("huhu");
 
+        
+        return $this->render("test.html.twig", [
+            'item' => $item ??  "no item"
+        ]);
     }
 
 
 }
+
+
+        // SO GEHTS
+        // $item = $userService->get(1);
+        // $item = $item->getOrders()->toArray();
+
+        // $item = $guitarService->get(1);
+        // $itemCollection = $item->getImageGuitar()->toArray();

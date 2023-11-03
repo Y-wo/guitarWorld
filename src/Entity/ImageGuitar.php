@@ -13,11 +13,13 @@ class ImageGuitar extends AbstractEntity
     #[ORM\Column]
     protected int $id;
 
-    #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
+    // #[ORM\ManyToOne(cascade: ['persist', 'remove'], fetch: "EAGER")]
+    #[ORM\ManyToOne(fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: false)]
     private ?Image $image = null;
 
-    #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
+    // #[ORM\ManyToOne(cascade: ['persist', 'remove'], fetch: "EAGER")]
+    #[ORM\ManyToOne(fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: false)]
     private ?Guitar $guitar = null;
 

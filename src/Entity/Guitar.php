@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GuitarRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GuitarRepository::class)]
@@ -32,8 +34,17 @@ class Guitar extends AbstractEntity
     #[ORM\Column(nullable: true)]
     private ?bool $used = null;
 
-    #[ORM\ManyToOne(inversedBy: 'guitar', cascade: ['persist', 'remove'])]
+    // #[ORM\ManyToOne(inversedBy: 'guitar', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'guitar')]
     private ?Order $guitarOrder = null;
+
+    #[ORM\OneToMany(mappedBy: 'guitar', targetEntity: ImageGuitar::class, cascade: ['persist', 'remove'])]
+    private Collection $imageGuitar;
+
+    public function __construct()
+    {
+        $this->imageGuitar = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +132,36 @@ class Guitar extends AbstractEntity
     public function setGuitarOrder(?Order $guitarOrder): static
     {
         $this->guitarOrder = $guitarOrder;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ImageGuitar>
+     */
+    public function getImageGuitar(): Collection
+    {
+        return $this->imageGuitar;
+    }
+
+    public function addGuitar(ImageGuitar $imageGuitar): static
+    {
+        if (!$this->imageGuitar->contains($imageGuitar)) {
+            $this->imageGuitar->add($imageGuitar);
+            $imageGuitar->setGuitar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImageGuitar(Guitar $imageGuitar): static
+    {
+        if ($this->imageGuitar->removeElement($imageGuitar)) {
+            // set the owning side to null (unless already changed)
+            if ($imageGuitar->getGuitar() === $this) {
+                $imageGuitar->setGuitar(null);
+            }
+        }
 
         return $this;
     }
