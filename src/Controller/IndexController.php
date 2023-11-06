@@ -32,8 +32,15 @@ class IndexController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response
     {
-        return new Response("hey hey hey");
+
+
+        
+        return $this->render("base.html.twig", [
+            'item' => $item ??  "no item body blabla"
+        ]);
     }
+
+
 
     #[Route(path: '/bla', name: 'bla')]
     public function bla(
@@ -46,8 +53,8 @@ class IndexController extends AbstractController
         OrderService $orderService,
     ): Response
     {
-        return $this->render("test.html.twig", [
-            'item' => $item ??  "no item"
+        return $this->render("base.html.twig", [
+            'body' => $item ??  "no item body blabla"
         ]);
     }
 

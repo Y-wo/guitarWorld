@@ -1,0 +1,23 @@
+{# {% set tab = tab ?? '' %} #}
+
+{# {% set login_state = app.session.get('loggedIn') ? 'true' : 'false' %}
+{% set first_name = app.session.get('firstName') ?? null %}
+{% set last_name = app.session.get('lastName') ?? null %}
+{% set member_id = app.session.get('memberId') ?? null %} #}
+
+{# <nav class="d-flex justify-content-between align-items-center p-3 row" >
+    <div class="col-9">
+        <a class="navbar-brand" href="{{ path('index') }}">Der glühende Colt</a>
+    </div>
+    <div class="col-3 d-flex justify-content-between align-items-center">
+        {% if login_state == 'true' %}
+            <span class="user-font">User: {{ first_name }} {{ last_name }} </span>
+            <a class="nav-link {% if tab == 'members' %} fw-bold {% endif %}" href="{{ path('members') }}">Mitglieder</a>
+            <a class="nav-link btn logout-btn px-1" href="{{ path('logout') }}">Abmelden</a>
+        {% endif %}
+    </div>
+</nav> #}
+
+<div class="navbar__test test">
+    Das ist die Navbar <br>
+</div>
