@@ -27,6 +27,12 @@ class Order extends AbstractEntity
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?User $user = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $paid = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $canceled = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +92,30 @@ class Order extends AbstractEntity
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPaid(): ?\DateTimeInterface
+    {
+        return $this->paid;
+    }
+
+    public function setPaid(?\DateTimeInterface $paid): static
+    {
+        $this->paid = $paid;
+
+        return $this;
+    }
+
+    public function getCanceled(): ?\DateTimeInterface
+    {
+        return $this->canceled;
+    }
+
+    public function setCanceled(?\DateTimeInterface $canceled): static
+    {
+        $this->canceled = $canceled;
 
         return $this;
     }
