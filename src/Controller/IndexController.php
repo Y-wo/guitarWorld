@@ -26,37 +26,48 @@ class IndexController extends AbstractController
 {
 
 
-    #[Route(path: '/', name: 'test')]
-    public function test(
-        Request $request,
-        EntityManagerInterface $entityManager
+    #[Route(path: '/', name: 'home')]
+    public function home(
     ): Response
-    {
-
-
-        
+    {        
         return $this->render("base.html.twig", [
             'item' => $item ??  "no item body blabla"
         ]);
     }
 
-
-
-    #[Route(path: '/bla', name: 'bla')]
-    public function bla(
+    #[Route(path: '/login', name: 'login')]
+    public function login(
         Request $request,
-        UserService $userService,
-        GuitarService $guitarService,
-        GuitarTypeService $guitarTypeService,
-        ImageGuitarService $imageGuitarService,
-        ImageService $imageService,
-        OrderService $orderService,
+        EntityManagerInterface $entityManager
     ): Response
     {
-        return $this->render("base.html.twig", [
-            'body' => $item ??  "no item body blabla"
-        ]);
+
+        return new Response("login");
+        //check if userData are correct
+        // $isAuthorized = $loginService->authenticate($request);
+
+        // if(!$isAuthorized){
+        //     $message = "Login nicht möglich.";
+        //     return $this->redirectToRoute('login', [
+        //         'message' => $message,
+        //     ]);
+        // }else{
+        //     $message = "Herzlich Willkommen";
+        //     return $this->redirectToRoute('index', [
+        //         'message' => $message,
+        //     ]);
+        // }
     }
+
+    #[Route(path: '/create-user', name: 'create-user')]
+    public function createUser(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response
+    {
+        return $this->render("createUser.html.twig");
+    }
+
 
 
 }
