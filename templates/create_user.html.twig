@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+<div class="content">
+    <div class="create-user__container">
+        <form class="form" action="{{path('save_user')}}" method="POST">
+            <input type="text" name="firstname">
+            <label for="firstname">Vorname</label>
+
+            <input type="text" name="lastname">
+            <label for="lastname">Nachname</label>
+
+            <input type="text" name="street">
+            <label for="street">Straße</label>
+
+            <input type="number" name="housenumber">
+            <label for="housenumber">Hausnummer</label>
+
+            <input type="number" name="zipcode">
+            <label for="zipcode">Postleitzahl</label>
+
+            <input type="text" name="city">
+            <label for="city">Ort</label>
+
+            <input type="email" name="email">
+            <label for="email">E-Mail</label>
+
+            <input type="email" name="email_confirmation">
+            <label for="email_confirmation">E-Mail bestätigen</label>
+
+            <input type="text" name="phone">
+            <label for="phone">Telefonnummer</label>
+
+            <input type="password" name="password">
+            <label for="password">Passwort</label>
+
+            <input type="password" name="password_confirmation">
+            <label for="password_confirmation">Passwort bestätigen</label>
+
+            <button type="submit">Registrieren</button>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

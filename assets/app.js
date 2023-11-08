@@ -12,3 +12,4 @@
 import './styles/navbar.sass';
 import './styles/base.sass';
 import './styles/default-elements.sass';
+import './styles/create-user.sass';

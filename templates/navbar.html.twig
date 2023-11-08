@@ -18,14 +18,13 @@
     </div>
 </nav> #}
 
-<nav class="navbar__container content">
-    <p>Das ist die Navbar </p>
+<nav class="navbar__container ">
+        Navbar
+        <form class="" action="{{ path('login') }}" method="post">
+            <input type="text" class="" name="member_id" placeholder="User">
+            <input type="password" class="" name="password" placeholder="Passwort">
+            <button class="button" type="submit">Login</button>
+        </form>
+        <a class="button" href="{{path('create_user')}}"> Registrieren </a>
 
-    <form class="" action="{{ path('login') }}" method="post">
-        <input type="text" class="" name="member_id" placeholder="User">
-        <input type="password" class="" name="password" placeholder="Passwort">
-        <button class="button" type="submit">Login</button>
-    </form>
-
-    <a class="button" href="{{path('create-user')}}"> Registrieren </a>
 </nav>

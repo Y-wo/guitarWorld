@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+<div class="content">
+    <div class="save-user__container">
+       {{dump(userInfos)}}
+        {{dump(allUsers)}}
+
+        {{dump(emailExists)}}
+       {{userInfos.firstname}}
+    </div>
+</div>
+
+{% endblock %}
