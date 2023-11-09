@@ -47,12 +47,22 @@ class UserService extends AbstractEntityService
             'birthday' => new \DateTime($request->request->get('birthday')),
             'createdAt' => new \DateTimeImmutable(),
             'password' => $request->request->get('password'),
-            'passwordConfirmation' => $request->request->get('password_confirmation'),
+            'password_confirmation' => $request->request->get('password_confirmation'),
         ];
     }
 
+    public function getUserManipulationProcess(
+        Request $request
+    ) : ?String
+    {
+        return $request->request->get('user_manipulation_process') ?? null;
+    }
+
+
+
     public function emailExists(
-        String $email
+        String $email,
+        bool $onlyActive
     ): bool {
         $query = $this
             ->entityManager
@@ -60,12 +70,17 @@ class UserService extends AbstractEntityService
             ->createQueryBuilder('r')
             ->select('r.email')
             ->where('r.email = :email')
-            ->andWhere('r.deleted = 0')
             ->setParameter('email', $email)
-            ->getQuery();
             ;
-        $result = $query->execute();
+
+        if($onlyActive){
+            $query->andWhere('r.deleted = 0');
+        }
+
+        $result = $query->getQuery()->execute();
         return count($result) > 0;   
     }
+
+
 
 }
