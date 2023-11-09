@@ -13,13 +13,23 @@
         {% endblock %}
     </head>
     <body>
+
         {% include 'navbar.html.twig' %}
 
         <div class="main">
-            <h1>
-                {% block headline %}{% endblock %}
-            </h1>
-        {% block content %}{% endblock %}
+            <div class="content">
+                <h1 class="base__headline--big">
+                    {% if headline is defined %} 
+                        {{ headline }} 
+                    {% else %}
+                        {{ constant('App\\Constants\\SystemWording::HELLO') }}
+                    {% endif %}
+                </h1>
+
+                {% block content %}{% endblock %}
+
+            </div>
+
         </div>
     </body>
 </html>

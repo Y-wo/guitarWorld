@@ -4,55 +4,53 @@
 
 {% block content %}
 
-<div class="content">
-    <div class="create-user__container">
+<div class="create-user__container">
 
-        {% if return %}
-            {% if message is defined %}
-                {{ message }}
-            {% endif %}
+    {% if return %}
+        {% if message is defined %}
+            {{ message }}
         {% endif %}
+    {% endif %}
 
-        <form class="form" action="{{path('create_user')}}" method="POST">
-            <input type="text" name="firstname" {% if return %} value="{{userInfos.firstname}}" {% endif %}>
-            <label for="firstname">Vorname</label>
+    <form class="form" action="{{path('create_user')}}" method="POST">
+        <input type="text" name="firstname" {% if return %} value="{{userInfos.firstname}}" {% endif %}>
+        <label for="firstname">Vorname</label>
 
-            <input type="text" name="lastname"  {% if return %} value="{{userInfos.lastname}}" {% endif %}>
-            <label for="lastname">Nachname</label>
+        <input type="text" name="lastname"  {% if return %} value="{{userInfos.lastname}}" {% endif %}>
+        <label for="lastname">Nachname</label>
 
-            <input type="text" name="street"  {% if return %} value="{{userInfos.street}}" {% endif %}>
-            <label for="street">Straße</label>
+        <input type="text" name="street"  {% if return %} value="{{userInfos.street}}" {% endif %}>
+        <label for="street">Straße</label>
 
-            <input type="number" name="housenumber"  {% if return %} value="{{userInfos.housenumber}}" {% endif %}>
-            <label for="housenumber">Hausnummer</label>
+        <input type="number" name="housenumber"  {% if return %} value="{{userInfos.housenumber}}" {% endif %}>
+        <label for="housenumber">Hausnummer</label>
 
-            <input type="number" name="zipcode"  {% if return %} value="{{userInfos.zipcode}}" {% endif %}>
-            <label for="zipcode">Postleitzahl</label>
+        <input type="number" name="zipcode"  {% if return %} value="{{userInfos.zipcode}}" {% endif %}>
+        <label for="zipcode">Postleitzahl</label>
 
-            <input type="text" name="city" {% if return %} value="{{userInfos.city}}" {% endif %}>
-            <label for="city">Ort</label>
+        <input type="text" name="city" {% if return %} value="{{userInfos.city}}" {% endif %}>
+        <label for="city">Ort</label>
 
-            <input type="text" name="phone" {% if return %} value="{{userInfos.phone}}" {% endif %}>
-            <label for="phone">Telefonnummer</label>
+        <input type="text" name="phone" {% if return %} value="{{userInfos.phone}}" {% endif %}>
+        <label for="phone">Telefonnummer</label>
 
-            <input type="email" name="email">
-            <label for="email">E-Mail</label>
+        <input type="email" name="email">
+        <label for="email">E-Mail</label>
 
-            <input type="email" name="email_confirmation">
-            <label for="email_confirmation">E-Mail bestätigen</label>
+        <input type="email" name="email_confirmation">
+        <label for="email_confirmation">E-Mail bestätigen</label>
 
-            <input type="password" name="password">
-            <label for="password">Passwort</label>
+        <input type="password" name="password">
+        <label for="password">Passwort</label>
 
-            <input type="password" name="password_confirmation">
-            <label for="password_confirmation">Passwort bestätigen</label>
+        <input type="password" name="password_confirmation">
+        <label for="password_confirmation">Passwort bestätigen</label>
 
-            <input type="text" name="user_manipulation_process" value="create_new_user" hidden>
+        <input type="text" name="user_manipulation_process" value="create_new_user" hidden>
 
-            <button type="submit">Registrieren</button>
+        <button class="button create-user__submit" type="submit">Registrieren</button>
 
-        </form>
-    </div>
+    </form>
 </div>
 
 {% endblock %}

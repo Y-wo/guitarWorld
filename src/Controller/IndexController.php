@@ -32,7 +32,7 @@ class IndexController extends AbstractController
     ): Response
     {        
         return $this->render("base.html.twig", [
-            'item' => $item ??  "no item body blabla"
+           'headline' => SystemWording::HELLO
         ]);
     }
 
@@ -70,49 +70,29 @@ class IndexController extends AbstractController
         $userManipulationProcess = $userService->getUserManipulationProcess($request);
 
         // process, if form ist submitted
-        if($userManipulationProcess == 'create_new_user'){
+        if ($userManipulationProcess == 'create_new_user') {
             $userInfos = $userService->createRequestUserAssociativeArray($request);
-            if($userService->emailExists($userInfos['email'], true)){   
-                $message = 'Die E-Mail "'. $userInfos['email'] . '" existiert bereits';
+            if ($userService->emailExists($userInfos['email'], true)) {   
                 return $this->render('create_user.html.twig', [
-                    'message' => $message,
+                    'message' => SystemWording::USER_ALREADY_EXISTS,
                     'userInfos' => $userInfos,
                     'return' => true,
                 ]);
             }
-            if($userInfos['email'] !== $userInfos['email_confirmation'] || $userInfos['password'] !== $userInfos['password_confirmation']){
-                $message = 'E-Mail oder Passwort stimmen nicht überein';
+            if ($userInfos['email'] !== $userInfos['email_confirmation'] || $userInfos['password'] !== $userInfos['password_confirmation']) {
                 return $this->render('create_user.html.twig', [
-                    'message' => $message,
+                    'message' => SystemWording::ERROR_REGISTRATION,
                     'userInfos' => $userInfos,
                     'return' => true,
                 ]);
             }
-    
-            $hashedPassword = hash('md5', $userInfos['password']);
-            $user = new User();
-            $user
-                ->setFirstname($userInfos['firstname'])
-                ->setLastname($userInfos['lastname'])
-                ->setEmail($userInfos['email'])
-                ->setStreet($userInfos['street'])
-                ->setHouseNumber($userInfos['housenumber'])
-                ->setPhone($userInfos['phone'])
-                ->setBirthday($userInfos['birthday'])
-                ->setCity($userInfos['city'])
-                ->setBegin(new \DateTimeImmutable())
-                ->setDeleted(0)
-                ->setPassword($hashedPassword)
-                ->setZipcode($userInfos['zipcode'])
-                ->setRoles(['ROLE_USER'])
-            ;
 
-            if($userService->store($user)){
+            if ($userService->createNewUser($userInfos)) {
                 return $this->redirectToRoute('user_success', [
-                    'message' => SystemWording::REGISTRATION_SUCCESS,
+                    'success' => true,
                 ]);
-
-            }else{
+            } 
+            else {
                 return $this->render('create_user.html.twig', [
                     'message' => SystemWording::ERROR_MESSAGE,
                     'userInfos' => $userInfos,
@@ -124,15 +104,16 @@ class IndexController extends AbstractController
         return $this->render('create_user.html.twig');
     }
 
+    
     #[Route(path: '/user-success', name: 'user_success')]
     public function userSuccess(
         Request $request,
         UserService $userService
     ): Response
     { 
-        $message = $request->query->get('message');
+        $message = $request->query->get('success') ? SystemWording::SUCCESS_REGISTRATION : 'Keine Information';
         return $this->render('user_success.html.twig', [
-            'message' => $message ?? 'Keine Information'
+            'message' => $message
         ]);
     }
 

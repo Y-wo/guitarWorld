@@ -1,4 +1,4 @@
-// ---------- COLORS ---------------
+// ---------- COLOR SETS ---------------
     
 // 32. Sonnengeküsst
 $color-white: ffff
@@ -13,19 +13,39 @@ $color-canteloupe: #FFA577
 $color-cotton: #f9f9ff
 $color-hot-chocolate: #896E69
 
-// 13. Herbstfarben
-// 12. Surf & Turf
 
+// ---------- COLOR SETUP ---------------
 $color-primary: $color-pumpkin
 $color-secondary: $color-canteloupe
 $color-tertiary: $color-hot-chocolate
 $color-quaternary: $color-cotton
 
+
+// ---------- COLOR "Alternatives" ---------------    
+// 13. Herbstfarben
+// 12. Surf & Turf
+
+
+// ---------- BREAKPOINTS ---------------
 $breakpoint-sm: 576px
 $breakpoint-md: 768px
 $breakpoint-lg: 992px
 $breakpoint-xl: 1200px
 $breakpoint-xxl: 1400px
 
+
+// ---------- PADDING ---------------    
 $global-padding: 0 0.5rem
 
+$padding-bottom-next-sm: 2rem
+$padding-bottom-next-m: 4rem
+$padding-bottom-next-l: 6rem
+
+
+
+
+
+.base
+    &__headline--big
+        text-align: center
+        color: $color-tertiary

@@ -26,11 +26,42 @@ body
 .form
     display: flex
     flex-direction: column
-    width: 75%
+    width: 100%
+    padding-bottom: $padding-bottom-next-l
 
-    input
-        height: 2rem
+    input, 
+    button
+        height: 2.5rem
         border-radius: 4px
+        font-weight: bold
+        color: $color-primary
+        border-color: $color-secondary
+        border-style: solid
+        background-color: $color-quaternary
+        // transition: box-shadow .25s
+
+        &:focus 
+            outline: none 
+            box-shadow: 2px 2px 7px 0px
+    
+        //remove arrows in number-input
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button 
+            -webkit-appearance: none
+            margin: 0
+
+        //remove arrows in number-input
+        &[type=number]
+            -moz-appearance: textfield
+        
+    label
+        padding-top: .25rem
+        padding-bottom: 1rem
+        color: $color-primary
+
+    button
+        color: $color-quaternary
+        background-color: $color-secondary
 
 
 .main

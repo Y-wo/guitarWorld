@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Constants\SystemWording;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,22 +15,6 @@ class UserService extends AbstractEntityService
     }
 
     public static $entityFqn = User::class;
-
-    // public function getAllUsers() :array
-    // {
-    //     $queryBuilder = $this
-    //         ->entityManager
-    //         ->getRepository(self::$entityFqn)
-    //         ->createQueryBuilder('r')
-    //         ->select('r')
-    //         ->where('r.deleted = 0')
-    //     ;
-
-    //     $query = $queryBuilder->getQuery();
-    //     $members = $query->execute();
-    //     return $members;
-    // }
-
 
     public function createRequestUserAssociativeArray(
         Request $request
@@ -81,6 +66,29 @@ class UserService extends AbstractEntityService
         return count($result) > 0;   
     }
 
+    public function createNewUser(
+        array $userInfos
+    ) : bool
+    {
+        $user = new User();
+        $hashedPassword = hash('md5', $userInfos['password']);
+        $user
+            ->setFirstname($userInfos['firstname'])
+            ->setLastname($userInfos['lastname'])
+            ->setEmail($userInfos['email'])
+            ->setStreet($userInfos['street'])
+            ->setHouseNumber($userInfos['housenumber'])
+            ->setPhone($userInfos['phone'])
+            ->setBirthday($userInfos['birthday'])
+            ->setCity($userInfos['city'])
+            ->setBegin(new \DateTimeImmutable())
+            ->setDeleted(0)
+            ->setPassword($hashedPassword)
+            ->setZipcode($userInfos['zipcode'])
+            ->setRoles([SystemWording::ROLE_USER])
+        ;
 
+        return $this->store($user) ? true : false;
+    }
 
 }
