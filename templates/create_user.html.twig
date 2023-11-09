@@ -13,7 +13,7 @@
             {% endif %}
         {% endif %}
 
-        <form class="form" action="{{path('save_user')}}" method="POST">
+        <form class="form" action="{{path('create_user')}}" method="POST">
             <input type="text" name="firstname" {% if return %} value="{{userInfos.firstname}}" {% endif %}>
             <label for="firstname">Vorname</label>
 
@@ -55,6 +55,4 @@
     </div>
 </div>
 
-
-{{dump(request)}}
 {% endblock %}

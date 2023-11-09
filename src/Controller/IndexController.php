@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Guitar;
+use App\Constants\SystemWording;
 use App\Entity\GuitarType;
 use App\Entity\User;
 use App\Entity\Image;
@@ -27,7 +28,7 @@ class IndexController extends AbstractController
 
 
     #[Route(path: '/', name: 'home')]
-    public function home(
+    public function home(   
     ): Response
     {        
         return $this->render("base.html.twig", [
@@ -66,81 +67,73 @@ class IndexController extends AbstractController
         UserService $userService
     ): Response
     {      
-          
-        $message = $request->request->get('message') ?? null;
-        return $this->render("create_user.html.twig", [
-            'message' => $message,
-            'request' => $request
-        ]);
-    }
-
-
-    #[Route(path: '/save-user', name: 'save_user')]
-    public function saveUser(
-        Request $request,
-        UserService $userService
-    ): Response
-    {        
-        $userInfos = $userService->createRequestUserAssociativeArray($request);
         $userManipulationProcess = $userService->getUserManipulationProcess($request);
 
-        // return create-user-template if user already exists
-        if($userService->emailExists($userInfos['email'], true)){
-            if($userManipulationProcess == 'create_new_user'){
+        // process, if form ist submitted
+        if($userManipulationProcess == 'create_new_user'){
+            $userInfos = $userService->createRequestUserAssociativeArray($request);
+            if($userService->emailExists($userInfos['email'], true)){   
                 $message = 'Die E-Mail "'. $userInfos['email'] . '" existiert bereits';
                 return $this->render('create_user.html.twig', [
                     'message' => $message,
                     'userInfos' => $userInfos,
                     'return' => true,
-                    'request' => $request
                 ]);
+            }
+            if($userInfos['email'] !== $userInfos['email_confirmation'] || $userInfos['password'] !== $userInfos['password_confirmation']){
+                $message = 'E-Mail oder Passwort stimmen nicht überein';
+                return $this->render('create_user.html.twig', [
+                    'message' => $message,
+                    'userInfos' => $userInfos,
+                    'return' => true,
+                ]);
+            }
+    
+            $hashedPassword = hash('md5', $userInfos['password']);
+            $user = new User();
+            $user
+                ->setFirstname($userInfos['firstname'])
+                ->setLastname($userInfos['lastname'])
+                ->setEmail($userInfos['email'])
+                ->setStreet($userInfos['street'])
+                ->setHouseNumber($userInfos['housenumber'])
+                ->setPhone($userInfos['phone'])
+                ->setBirthday($userInfos['birthday'])
+                ->setCity($userInfos['city'])
+                ->setBegin(new \DateTimeImmutable())
+                ->setDeleted(0)
+                ->setPassword($hashedPassword)
+                ->setZipcode($userInfos['zipcode'])
+                ->setRoles(['ROLE_USER'])
+            ;
+
+            if($userService->store($user)){
+                return $this->redirectToRoute('user_success', [
+                    'message' => SystemWording::REGISTRATION_SUCCESS,
+                ]);
+
             }else{
-                return $this->redirectToRoute('home');
+                return $this->render('create_user.html.twig', [
+                    'message' => SystemWording::ERROR_MESSAGE,
+                    'userInfos' => $userInfos,
+                    'return' => true,
+                ]);
             }
         }
 
-        if($userInfos['email'] !== $userInfos['email_confirmation']){
-            return new Response("Email stimmt nicht überein");
-        }
-
-        if($userInfos['password'] !== $userInfos['password_confirmation']){
-            return new Response("Passwort stimmt nicht überein");
-        }
-        
-        $hashedPassword = hash('md5', $userInfos['password']);
-        
-        $user = new User();
-
-        $user
-            ->setFirstname($userInfos['firstname'])
-            ->setLastname($userInfos['lastname'])
-            ->setEmail($userInfos['email'])
-            ->setStreet($userInfos['street'])
-            ->setHouseNumber($userInfos['housenumber'])
-            ->setPhone($userInfos['phone'])
-            ->setBirthday($userInfos['birthday'])
-            ->setCity($userInfos['city'])
-            ->setBegin(new \DateTimeImmutable())
-            ->setDeleted(0)
-            ->setPassword($hashedPassword)
-            ->setZipcode($userInfos['zipcode'])
-            ->setRoles(['ROLE_USER'])
-        ;
-        
-        $userService->store($user);
-
-        return $this->render("save_user.html.twig", 
-            [
-                'userInfos' => $userInfos ??  "no userInfos ",
-                'allUsers' => $allUsers ?? "no all Users ",
-                'emailExists' => $userService->emailExists($userInfos['email'], true) ?? "nassing hir",
-                'user_manipulation_process' => $userManipulationProcess,
-                'request' => $request
-            ]
-        );
+        return $this->render('create_user.html.twig');
     }
 
-
-
+    #[Route(path: '/user-success', name: 'user_success')]
+    public function userSuccess(
+        Request $request,
+        UserService $userService
+    ): Response
+    { 
+        $message = $request->query->get('message');
+        return $this->render('user_success.html.twig', [
+            'message' => $message ?? 'Keine Information'
+        ]);
+    }
 
 }
