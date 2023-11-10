@@ -6,11 +6,6 @@
 
 <div class="create-user__container">
 
-    {% if return %}
-        {% if message is defined %}
-            {{ message }}
-        {% endif %}
-    {% endif %}
 
     <form class="form" action="{{path('create_user')}}" method="POST">
         <input type="text" name="firstname" {% if return %} value="{{userInfos.firstname}}" {% endif %}>

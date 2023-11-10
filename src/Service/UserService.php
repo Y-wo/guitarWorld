@@ -91,4 +91,8 @@ class UserService extends AbstractEntityService
         return $this->store($user) ? true : false;
     }
 
+    public function getUserByEmail(String $email){
+        
+    }
+
 }

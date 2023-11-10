@@ -20,11 +20,9 @@
 
 <nav class="navbar__container ">
         Navbar
-        <form class="" action="{{ path('login') }}" method="post">
-            <input type="text" class="" name="member_id" placeholder="User">
-            <input type="password" class="" name="password" placeholder="Passwort">
-            <button class="button" type="submit">Login</button>
-        </form>
+        
+        {% include 'login.html.twig' %}
+
         <a class="button" href="{{path('create_user')}}"> Registrieren </a>
 
 </nav>

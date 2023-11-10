@@ -43,9 +43,11 @@ class IndexController extends AbstractController
     ): Response
     {
 
-        return new Response("login");
+
         //check if userData are correct
-        // $isAuthorized = $loginService->authenticate($request);
+        $isAuthorized = $loginService->authenticate($request);
+        return new Response("login");
+
 
         // if(!$isAuthorized){
         //     $message = "Login nicht möglich.";

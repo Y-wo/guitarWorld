@@ -1,0 +1,7 @@
+<h1 class="base__headline--big">
+    {% if headline is defined %} 
+        {{ headline }} 
+    {% else %}
+        {{ constant('App\\Constants\\SystemWording::HELLO') }}
+    {% endif %}
+</h1>

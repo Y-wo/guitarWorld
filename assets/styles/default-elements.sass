@@ -37,12 +37,14 @@ body
         color: $color-primary
         border-color: $color-secondary
         border-style: solid
-        background-color: $color-quaternary
-        // transition: box-shadow .25s
 
         &:focus 
             outline: none 
             box-shadow: 2px 2px 7px 0px
+
+            + label
+                padding-left: 2rem
+                font-weight: bold
     
         //remove arrows in number-input
         &::-webkit-outer-spin-button,
@@ -53,15 +55,21 @@ body
         //remove arrows in number-input
         &[type=number]
             -moz-appearance: textfield
-        
+
     label
         padding-top: .25rem
         padding-bottom: 1rem
         color: $color-primary
+        transition: padding-left .25s
 
     button
         color: $color-quaternary
-        background-color: $color-secondary
+        background-color: $color-primary
+        transition: background-color .25s
+        height: 2.75rem
+
+        &:hover
+            background-color: $color-secondary
 
 
 .main

@@ -18,13 +18,10 @@
 
         <div class="main">
             <div class="content">
-                <h1 class="base__headline--big">
-                    {% if headline is defined %} 
-                        {{ headline }} 
-                    {% else %}
-                        {{ constant('App\\Constants\\SystemWording::HELLO') }}
-                    {% endif %}
-                </h1>
+
+                {% include 'page_headline.html.twig' %}
+
+                {% include 'message.html.twig' %}
 
                 {% block content %}{% endblock %}
 
