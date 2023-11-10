@@ -1,28 +1,11 @@
-{# {% set tab = tab ?? '' %} #}
-
-{# {% set login_state = app.session.get('loggedIn') ? 'true' : 'false' %}
-{% set first_name = app.session.get('firstName') ?? null %}
-{% set last_name = app.session.get('lastName') ?? null %}
-{% set member_id = app.session.get('memberId') ?? null %} #}
-
-{# <nav class="d-flex justify-content-between align-items-center p-3 row" >
-    <div class="col-9">
-        <a class="navbar-brand" href="{{ path('index') }}">Der glühende Colt</a>
-    </div>
-    <div class="col-3 d-flex justify-content-between align-items-center">
-        {% if login_state == 'true' %}
-            <span class="user-font">User: {{ first_name }} {{ last_name }} </span>
-            <a class="nav-link {% if tab == 'members' %} fw-bold {% endif %}" href="{{ path('members') }}">Mitglieder</a>
-            <a class="nav-link btn logout-btn px-1" href="{{ path('logout') }}">Abmelden</a>
-        {% endif %}
-    </div>
-</nav> #}
-
 <nav class="navbar__container ">
-        Navbar
-        
-        {% include 'login.html.twig' %}
+        <a href="{{path('home')}}">LOGO</a>
+        <button class="js-profile">Profil</button>
 
-        <a class="button" href="{{path('create_user')}}"> Registrieren </a>
+        {# {% include 'login_form.html.twig' %} #}
+        {# <a class="button" href="{{path('logout')}}"> Logout </a>
+        <a class="button" href="{{path('create_user')}}"> Registrieren </a> #}
+
+ 
 
 </nav>

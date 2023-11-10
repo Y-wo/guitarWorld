@@ -6,19 +6,24 @@ namespace App\Service;
 
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Constants\SystemWording;
 
 class LoginService{
 
     private UserService $userService;
+    private UserPasswordHasherInterface $passwordHasher;
     // private JwtService $jwtService;
 
     public function __construct(
         UserService $userService,
+        UserPasswordHasherInterface $passwordHasher
         // JwtService $jwtService
 
     )
     {
         $this->userService = $userService;
+        $this->passwordHasher = $passwordHasher;
         // $this->jwtService = $jwtService;
     }
 
@@ -28,73 +33,43 @@ class LoginService{
     {
         $sentIdentifier = $request->request->get('identifier');
         $sentPassword = $request->request->get('password');
-
+        if(empty($sentIdentifier) || empty($sentPassword)) return false;
         $user = $this->userService->getUserByEmail($sentIdentifier);
-
-
-        // HIER WEITER: getUserByEmail schreiben
-
-
-
-
-
-        // if(!$member) {
-        //     return false;
-        // }
-
-        // $isAdmin = $this->adminEntityService->isAdmin($member->getId());
-
-        // if(!$isAdmin){
-        //     return false;
-        // }
-
-        // $sentHashedPassword = hash('md5', $sentPassword);
-        // $storedPassword = $this->adminEntityService->getPasswortByMemberId($sentMemberId);
-
-        // if($sentHashedPassword == $storedPassword){
-        //     $this->storeAuthenticationSessionVariables($request, $sentMemberId);
-        //     return true;
-        // }
-
+        if(empty($user)) return false;
+        $sentHashedPassword = hash('md5', $sentPassword);
+        if($sentHashedPassword == $user->getPassword()){
+            $this->storeAuthenticationSessionVariables($request, $user);
+            return true;
+        }
         return false;
     }
 
 
-    // public function storeAuthenticationSessionVariables(
-    //     Request $request,
-    //     int $memberId
-    // ) :void
-    // {
-    //     /** @var MemberEntity $member */
-    //     $member = $this->memberEntityService->get($memberId);
-    //     $jwt = $this->jwtService->createJwt();
-    //     $firstName = $member->getFirstName();
-    //     $lastName = $member->getLastName();
+    public function storeAuthenticationSessionVariables(
+        Request $request,
+        User $user
+    ) :void
+    {
+        $session = $request->getSession();
+        $session->set('logged_in', true);
+        $session->set('user', $user);
+    }
 
-    //     $session = $request->getSession();
+    public function clearSession(
+        Request $request
+    ) :void
+    {
+        $session = $request->getSession();
+        $session->clear();
+    }
 
-    //     $session->set('jwt', $jwt);
-    //     $session->set('memberId', $memberId);
-    //     $session->set('firstName', $firstName);
-    //     $session->set('lastName', $lastName);
-    //     $session->set('loggedIn', true);
-    // }
-
-    // public function clearSession(
-    //     Request $request
-    // ) :void
-    // {
-    //     $session = $request->getSession();
-    //     $session->clear();
-    // }
-
-    // public function isLoggedIn(Request $request)
-    // : bool
-    // {
-    //     $session = $request->getSession();
-    //     $state =  $session->get('loggedIn');
-    //     if($state) return true;
-    //     return false;
-    // }
+    public function isLoggedIn(Request $request)
+    : bool
+    {
+        $session = $request->getSession();
+        $state =  $session->get('loggedIn');
+        if($state) return true;
+        return false;
+    }
 
 }

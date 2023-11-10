@@ -1,0 +1,18 @@
+@import 'base'
+
+.sidebar
+    &__container
+        position: absolute
+        z-index: 200
+        width: 0
+        overflow: hidden
+        right: 0
+        height: 100vh
+        background-color: $color-quaternary
+        top: 0
+        transition: width .5s
+
+    
+        &.active
+            width: 25rem
+            box-shadow: -10px 0px 10px 1px $color-primary

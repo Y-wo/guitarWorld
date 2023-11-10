@@ -15,3 +15,6 @@ import './styles/default-elements.sass';
 import './styles/create-user.sass';
 import './styles/message.sass';
 import './styles/page-headline.sass';   
+import './styles/sidebar.sass';
+
+import './js/sidebar.js';

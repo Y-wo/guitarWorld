@@ -6,12 +6,17 @@ use App\Constants\SystemWording;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserService extends AbstractEntityService
 {
-    public function __construct(EntityManagerInterface $entityManager)
+
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher)
     {
         parent::__construct($entityManager);
+        $this->passwordHasher = $passwordHasher;
     }
 
     public static $entityFqn = User::class;
@@ -71,7 +76,9 @@ class UserService extends AbstractEntityService
     ) : bool
     {
         $user = new User();
+
         $hashedPassword = hash('md5', $userInfos['password']);
+
         $user
             ->setFirstname($userInfos['firstname'])
             ->setLastname($userInfos['lastname'])
@@ -83,16 +90,35 @@ class UserService extends AbstractEntityService
             ->setCity($userInfos['city'])
             ->setBegin(new \DateTimeImmutable())
             ->setDeleted(0)
-            ->setPassword($hashedPassword)
             ->setZipcode($userInfos['zipcode'])
             ->setRoles([SystemWording::ROLE_USER])
+            ->setPassword($hashedPassword)
         ;
+
+        // $hashedPassword = $this->passwordHasher->hashPassword(
+        //     $user,
+        //     $userInfos['password']
+        // );
+
+        // $user->setPassword($hashedPassword);
 
         return $this->store($user) ? true : false;
     }
 
-    public function getUserByEmail(String $email){
-        
+    public function getUserByEmail(String $email): ?User
+    {
+        $query = $this
+            ->entityManager
+            ->getRepository(self::$entityFqn)
+            ->createQueryBuilder('r')
+            ->select('r')
+            ->where('r.email = :email')
+            ->andWhere('r.deleted = 0')
+            ->setParameter('email', $email)
+            ;
+
+        $result = $query->getQuery()->execute();
+        return (count($result) > 0 ) ? $result[0] : null;
     }
 
 }

@@ -20,46 +20,63 @@ use App\Service\GuitarTypeService;
 use App\Service\ImageGuitarService;
 use App\Service\ImageService;
 use App\Service\OrderService;
+use App\Service\LoginService;
 use DateTimeImmutable;
 use Symfony\Component\Validator\Constraints\Date;
 
 class IndexController extends AbstractController
 {
 
-
     #[Route(path: '/', name: 'home')]
     public function home(   
+        Request $request
     ): Response
-    {        
+    {   
+        $message = $request->query->get('message') ?? null;
+        $info1 = $request->query->get('info1') ?? null;
+        $info2 = $request->query->get('info2') ?? null;
+        $info3 = $request->query->get('info3') ?? null;
+
+        $user = $request->getSession()->get('user') ?? null;
+
         return $this->render("base.html.twig", [
-           'headline' => SystemWording::HELLO
+           'headline' => SystemWording::HELLO,
+           'message' => $message,
+           'info1' => $info1,
+           'info2' => $info2,
+           'info3' => $info3,
+           'user' => $user
         ]);
     }
 
     #[Route(path: '/login', name: 'login')]
     public function login(
         Request $request,
-        EntityManagerInterface $entityManager
+        LoginService $loginService,
     ): Response
     {
-
-
-        //check if userData are correct
         $isAuthorized = $loginService->authenticate($request);
-        return new Response("login");
+        $message = $isAuthorized ? SystemWording::SUCCESS_LOGIN : SystemWording::ERROR_LOGIN;
+        return $this->redirectToRoute('home', [
+            'message' => $message,
+            'info1' => $request->getSession()->get('user') ?? 'kein User vorhanden'
+        ]);
+    }
 
 
-        // if(!$isAuthorized){
-        //     $message = "Login nicht möglich.";
-        //     return $this->redirectToRoute('login', [
-        //         'message' => $message,
-        //     ]);
-        // }else{
-        //     $message = "Herzlich Willkommen";
-        //     return $this->redirectToRoute('index', [
-        //         'message' => $message,
-        //     ]);
-        // }
+    #[Route(path: '/logout', name: 'logout')]
+    public function logout(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        LoginService $loginService,
+        UserService $userService
+    ): Response
+    {
+        $loginService->clearSession($request);
+        return $this->redirectToRoute('home', [
+            'message' => SystemWording::SUCCESS_LOGOUT
+        ]);
+
     }
 
 
