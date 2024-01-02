@@ -15,28 +15,22 @@ body
     @media (min-width: $breakpoint-xl)
         width: 50%
 
-.button
-    border-radius: 0.25rem
-    border: 1px solid $color-quaternary
-    padding: .25rem .5rem
-    cursor: pointer
-    text-decoration: none
-    color: $color-quaternary
 
-.form
+
+form
     display: flex
     flex-direction: column
     width: 100%
-    padding-bottom: $padding-bottom-next-l
 
-    input, 
-    button
+    input
         height: 2.5rem
         border-radius: 4px
         font-weight: bold
         color: $color-primary
         border-color: $color-secondary
         border-style: solid
+        background-color: $color-quaternary
+        height: 2.75rem
 
         &:focus 
             outline: none 
@@ -62,16 +56,27 @@ body
         color: $color-primary
         transition: padding-left .25s
 
-    button
-        color: $color-quaternary
-        background-color: $color-primary
-        transition: background-color .25s
-        height: 2.75rem
 
-        &:hover
-            background-color: $color-secondary
+button, .button
+    color: $color-quaternary
+    background-color: $color-primary
+    transition: background-color .25s
+    height: 2.75rem
+    border: 2px solid $color-secondary
+    border-radius: 4px
+    font-weight: bold
+    display: flex
+    justify-content: center
+    align-items: center
+    font-size: 1rem
+    line-height: normal
+    text-decoration: none
+    cursor: pointer
+
+    &:hover
+        background-color: $color-secondary
 
 
 .main
     display: flex
-    justify-content: center
+    justify-content: center 

@@ -1,3 +1,5 @@
+{% set user = getUser(app.request) %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,24 +27,10 @@
 
                 {% include 'sidebar.html.twig' %}
 
-                {% if info1 is defined and info1 is not null %}
-                    {{dump(info1)}}
-                {% endif %}
-
-                {% if info2 is defined and info2 is not null %}
-                    {{dump(info2)}}
-                {% endif %}
-
-                {% if info3 is defined and info3 is not null %}
-                    {{dump(info3)}}
-                {% endif %}
-
                 {% if user is defined and user is not null %}
                     {{dump(user)}}
+                    {{user.email}}
                 {% endif %}
-
-
-
 
                 {% block content %}{% endblock %}
 

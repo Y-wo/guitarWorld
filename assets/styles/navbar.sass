@@ -1,15 +1,35 @@
 @import 'base'
 
-.navbar__test
-    background-color: red
+.navbar
+    &__container
+        max-width: 100vw
+        min-height: 3rem
+        background-color: $color-secondary
+        display: flex
+        justify-content: space-between
+        align-items: center
+        color: $color-quaternary
+        padding: $global-padding
 
-.navbar__container
-    max-width: 100vw
-    min-height: 3rem
-    background-color: $color-secondary
-    display: flex
-    justify-content: space-between
-    align-items: center
-    color: $color-quaternary
-    padding: $global-padding
+    &__icon
+        max-width: 100%
+    
+    &__icon-container
+        max-width: 2rem
+        border-radius: 3rem
+        padding: .5rem
+        margin: .5rem
 
+        &:hover
+            cursor: pointer
+
+    &__logo-icon-container
+        background-color: inherit
+
+    &__logo-container
+        display: flex
+        text-decoration: none
+        color: $color-primary
+        font-weight: bold
+        font-size: 1.25rem
+        align-items: center

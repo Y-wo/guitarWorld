@@ -1,9 +1,14 @@
 <div class="sidebar__container js-sidebar">
 
-    {% include 'login_form.html.twig' %}
+    <div class="sidebar__cross-container">
+        <image class="sidebar__cross js-sidebar-cross" src="/guitarWorld/public/assets/icons/cross.svg">
+    </div>
 
-    <a class="button" href="{{path('logout')}}"> Logout </a>
-
-    <a class="button" href="{{path('create_user')}}"> Registrieren </a>
+    {% if user is defined and user is not null %}
+        <a class="button" href="{{path('logout')}}"> Logout </a>
+        <a class="button" href="{{path('create_user')}}"> Registrieren </a> 
+    {% else %}
+        {% include 'login_form.html.twig' %}
+    {% endif %}
 
 </div>

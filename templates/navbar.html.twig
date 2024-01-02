@@ -1,11 +1,13 @@
 <nav class="navbar__container ">
-        <a href="{{path('home')}}">LOGO</a>
-        <button class="js-profile">Profil</button>
+    <a href="{{path('home')}}" class="navbar__logo-container">
+        <div class="navbar__icon-container navbar__logo-icon-container">
+            <image class="navbar__icon" src="/guitarWorld/public/assets/icons/logo/guitar-pick-logo.svg">
+        </div>
+        <p>GUITAR WORLD</p>
+    </a>
 
-        {# {% include 'login_form.html.twig' %} #}
-        {# <a class="button" href="{{path('logout')}}"> Logout </a>
-        <a class="button" href="{{path('create_user')}}"> Registrieren </a> #}
-
- 
+    <div class="navbar__icon-container">
+        <image class="js-profile navbar__icon" src="/guitarWorld/public/assets/icons/profile-normal.svg">
+    <div>
 
 </nav>

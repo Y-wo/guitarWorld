@@ -42,12 +42,9 @@ class IndexController extends AbstractController
         return $this->render("base.html.twig", [
            'headline' => SystemWording::HELLO,
            'message' => $message,
-           'info1' => $info1,
-           'info2' => $info2,
-           'info3' => $info3,
-           'user' => $user
         ]);
     }
+
 
     #[Route(path: '/login', name: 'login')]
     public function login(
