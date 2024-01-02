@@ -21,6 +21,8 @@
         <div class="main">
             <div class="content">
 
+                {# <image class="" src="/guitarWorld/public/assets/images/img_bbs1_logo_20210129.png"> #}
+
                 {% include 'page_headline.html.twig' %}
 
                 {% include 'message.html.twig' %}
@@ -28,7 +30,7 @@
                 {% include 'sidebar.html.twig' %}
 
                 {% if user is defined and user is not null %}
-                    {{dump(user)}}
+                    {# {{dump(user)}} #}
                     {{user.email}}
                 {% endif %}
 

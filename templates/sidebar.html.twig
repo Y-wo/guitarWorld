@@ -5,10 +5,19 @@
     </div>
 
     {% if user is defined and user is not null %}
+        <h2>Hallo {{user.firstname}} {{user.lastname}}</h2>
+
+        {% if isAdmin(user) == true %}
+            <a href="{{path('create_guitar')}}">Gitarre anlegen</a>
+        {% endif %}
+
+
         <a class="button" href="{{path('logout')}}"> Logout </a>
-        <a class="button" href="{{path('create_user')}}"> Registrieren </a> 
+        
+
     {% else %}
         {% include 'login_form.html.twig' %}
+        <a class="button" href="{{path('create_user')}}"> Registrieren </a> 
     {% endif %}
 
 </div>

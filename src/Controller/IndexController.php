@@ -26,7 +26,6 @@ use Symfony\Component\Validator\Constraints\Date;
 
 class IndexController extends AbstractController
 {
-
     #[Route(path: '/', name: 'home')]
     public function home(   
         Request $request
@@ -131,6 +130,16 @@ class IndexController extends AbstractController
         return $this->render('user_success.html.twig', [
             'message' => $message
         ]);
+    }
+
+    #[Route(path: '/create-guitar', name: 'create_guitar')]
+    public function createGuitar(
+        Request $request,
+        UserService $userService
+    ): Response
+    { 
+        return new Response("blablabla neue Gitarre");
+        
     }
 
 }
