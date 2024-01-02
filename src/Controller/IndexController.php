@@ -123,7 +123,6 @@ class IndexController extends AbstractController
     #[Route(path: '/user-success', name: 'user_success')]
     public function userSuccess(
         Request $request,
-        UserService $userService
     ): Response
     { 
         $message = $request->query->get('success') ? SystemWording::SUCCESS_REGISTRATION : 'Keine Information';
@@ -139,7 +138,31 @@ class IndexController extends AbstractController
     ): Response
     { 
         return new Response("blablabla neue Gitarre");
-        
+    }
+
+    #[Route(path: '/create-guitar-type', name: 'create_guitar_type')]
+    public function createGuitarType(
+        Request $request,
+        GuitarTypeService $guitarTypeService
+    ): Response
+    { 
+        $guitarTypeManipulationsProcess = $guitarTypeService->getGuitarTypeManipulationProcess($request);
+      
+        var_dump($request->request);
+
+        if ($guitarTypeManipulationsProcess == 'create_new_guitar_type') {
+            $guitarTypeInfos = $guitarTypeService->createRequestGuitarTypeAssociativeArray($request);
+            var_dump($guitarTypeInfos);
+
+            return $this->render('create_guitar_type.html.twig', [
+                // 'message' => SystemWording::USER_ALREADY_EXISTS,
+                'guitarTypeInfos' => $guitarTypeInfos,
+                'return' => true,
+            ]);
+
+        }
+      
+        return $this->render('create_guitar_type.html.twig');
     }
 
 }

@@ -10,7 +10,8 @@ body
 
 .content
     padding: $global-padding
-    width: 100%
+    padding-bottom: 5rem
+    width: 75%
 
     @media (min-width: $breakpoint-xl)
         width: 50%
@@ -22,7 +23,7 @@ form
     flex-direction: column
     width: 100%
 
-    input
+    input, select
         height: 2.5rem
         border-radius: 4px
         font-weight: bold
@@ -31,6 +32,10 @@ form
         border-style: solid
         background-color: $color-quaternary
         height: 2.75rem
+        caret-color: transparent
+        padding-left: .75rem
+        padding-right: .75rem
+
 
         &:focus 
             outline: none 

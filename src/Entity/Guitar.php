@@ -29,7 +29,7 @@ class Guitar extends AbstractEntity
     private ?bool $deleted = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $price = null;
+    private ?int $price = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $used = null;
