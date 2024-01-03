@@ -40,6 +40,12 @@ class Guitar extends AbstractEntity
     #[ORM\OneToMany(mappedBy: 'guitar', targetEntity: ImageGuitar::class, cascade: ['persist', 'remove'])]
     private Collection $imageGuitar;
 
+    #[ORM\Column(length: 255)]
+    private ?string $body = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $pickup = null;
+
     public function __construct()
     {
         $this->imageGuitar = new ArrayCollection();
@@ -161,6 +167,30 @@ class Guitar extends AbstractEntity
                 $imageGuitar->setGuitar(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBody(): ?string
+    {
+        return $this->body;
+    }
+
+    public function setBody(string $body): static
+    {
+        $this->body = $body;
+
+        return $this;
+    }
+
+    public function getPickup(): ?string
+    {
+        return $this->pickup;
+    }
+
+    public function setPickup(string $pickup): static
+    {
+        $this->pickup = $pickup;
 
         return $this;
     }

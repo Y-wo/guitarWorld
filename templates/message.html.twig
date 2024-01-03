@@ -1,6 +1,6 @@
 {% if message is defined and message is not null %}
     
     <div class="message__container">
-        {{ message }}
+        {{ message|raw }}
     </div>
 {% endif %}

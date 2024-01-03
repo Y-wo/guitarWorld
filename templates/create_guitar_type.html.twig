@@ -5,17 +5,12 @@
 {% block content %}
 
 <form action="{{path('create_guitar_type')}}" method="POST">
-    <input type="text" name="version" {% if return %} value="{{ guitarTypeInfos.version }}" {% endif %} required>
-    <label for="firstname">Version</label>
 
     <input type="text" name="brand" {% if return %} value="{{ guitarTypeInfos.brand }}" {% endif %} required>
     <label for="brand">Marke</label>
 
-    <input type="text" name="body" {% if return %} value="{{ guitarTypeInfos.body }}" {% endif %} required>
-    <label for="body">Body</label>
-    
-    <input type="text" name="pickup" {% if return %} value="{{ guitarTypeInfos.pickup }}" {% endif %} required>
-    <label for="pickup">Pickup</label>
+    <input type="text" name="version" {% if return %} value="{{ guitarTypeInfos.version }}" {% endif %} required>
+    <label for="firstname">Version (Modell)</label>
 
     <select name="type" required>
         <option {% if return and guitarTypeInfos.type == 'Elektrisch' %} selected {% endif %} >Elektrisch</option>
@@ -23,20 +18,20 @@
     </select>
     <label for="type">Typ</label>
 
-    <input type="text" name="saddlewidth" {% if return %} value="{{ guitarTypeInfos.saddlewidth }}" {% endif %} required>
-    <label for="saddlewidth">Sattelbreite</label>
+    <input type="text" name="size" {% if return %} value="{{ guitarTypeInfos.size }}" {% endif %} required>
+    <label for="size">Größe (Beschreibung)</label>
 
     <input type="text" name="neck" {% if return %} value="{{ guitarTypeInfos.neck }}" {% endif %} required>
-    <label for="neck">Hals</label>
-
-    <input type="text" name="size" {% if return %} value="{{ guitarTypeInfos.size }}" {% endif %} required>
-    <label for="size">Größe</label>
+    <label for="neck">Hals (Material)</label>
 
     <input type="text" name="fretboard" {% if return %} value="{{ guitarTypeInfos.fretboard }}" {% endif %} required>
-    <label for="fretboard">Griffbrett</label>
+    <label for="fretboard">Griffbrett (Material)</label>
 
-    <input type="text" name="scale" {% if return %} value="{{ guitarTypeInfos.scale }}" {% endif %} required>
-    <label for="scale">Mensur</label>
+    <input type="number" name="saddlewidth" {% if return %} value="{{ guitarTypeInfos.saddlewidth }}" {% endif %} required>
+    <label for="saddlewidth">Sattelbreite (in mm)</label>
+
+    <input type="number" name="scale" {% if return %} value="{{ guitarTypeInfos.scale }}" {% endif %} required>
+    <label for="scale">Mensur (in mm)</label>
     
     <input type="text" name="guitar_type_manipulation_process" value="create_new_guitar_type" hidden>
     

@@ -95,13 +95,6 @@ class UserService extends AbstractEntityService
             ->setPassword($hashedPassword)
         ;
 
-        // $hashedPassword = $this->passwordHasher->hashPassword(
-        //     $user,
-        //     $userInfos['password']
-        // );
-
-        // $user->setPassword($hashedPassword);
-
         return $this->store($user) ? true : false;
     }
 

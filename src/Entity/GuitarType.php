@@ -22,12 +22,6 @@ class GuitarType extends AbstractEntity
     private ?string $brand = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $body = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $pickup = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $type = null;
 
     #[ORM\Column(nullable: true)]
@@ -81,30 +75,6 @@ class GuitarType extends AbstractEntity
     public function setBrand(string $brand): static
     {
         $this->brand = $brand;
-
-        return $this;
-    }
-
-    public function getBody(): ?string
-    {
-        return $this->body;
-    }
-
-    public function setBody(?string $body): static
-    {
-        $this->body = $body;
-
-        return $this;
-    }
-
-    public function getPickup(): ?string
-    {
-        return $this->pickup;
-    }
-
-    public function setPickup(?string $pickup): static
-    {
-        $this->pickup = $pickup;
 
         return $this;
     }

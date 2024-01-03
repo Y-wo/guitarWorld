@@ -27,10 +27,8 @@ class GuitarTypeService extends AbstractEntityService
         Request $request
     ): array {
         return [
-            'version' => $request->request->get('version'),
+            'version' => $request->request->get('version') ,
             'brand' => $request->request->get('brand'),
-            'body' => $request->request->get('body'),
-            'pickup' => $request->request->get('pickup'),
             'type' => $request->get('type'),
             'saddlewidth' => $request->request->get('saddlewidth'),
             'deleted' => $request->request->get('deleted'),
@@ -39,5 +37,42 @@ class GuitarTypeService extends AbstractEntityService
             'fretboard' => $request->request->get('fretboard'),
             'scale' => $request->request->get('scale'),
         ];
+    }
+
+    public function guitarTypeExists(string $brand, string $version) : bool 
+    {
+        $query = $this
+            ->entityManager
+            ->getRepository(self::$entityFqn)
+            ->createQueryBuilder('r')
+            ->select('r')
+            ->where('r.brand = :brand')
+            ->andwhere('r.version = :version')
+            ->setParameter('brand', $brand)
+            ->setParameter('version', $version)
+            ;
+
+        $result = $query->getQuery()->execute();
+        return count($result) > 0;   
+    }
+
+
+    public function createNewGuitarType(array $infos) : bool
+    {
+        $guitarType = new GuitarType();
+        
+        $guitarType 
+            ->setVersion($infos['version'])
+            ->setBrand($infos['brand'])
+            ->setType($infos['type'])
+            ->setSaddlewidth($infos['saddlewidth'])
+            ->setDeleted(0)
+            ->setNeck($infos['neck'])
+            ->setSize($infos['size'])
+            ->setFretboard($infos['fretboard'])
+            ->setScale($infos['scale'])
+            ;
+
+        return $this->store($guitarType) ? true : false;
     }
 }
