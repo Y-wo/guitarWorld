@@ -7,14 +7,9 @@
 
 <form action="{{path('create_guitar')}}" method="POST">
 
-    {{ setInputField('text', 'model', 'Variante', infos, return) | raw }}
-    {{ setInputField('text', 'color', 'Farbe', infos, return) | raw }}
-    {{ setInputField('text', 'body', 'Body', infos, return) | raw }}
-    {{ setInputField('text', 'pickup', 'Pickup', infos, return) | raw }}
-    {{ setInputField('number', 'price', 'Preis', infos, return) | raw }}
-    {{ setInputField('text', 'submit', '', infos, return, false, true) | raw }}
-    
-    <button class="button create-guitar-type__submit" type="submit">Anlegen</button> 
+    {% include '/forms/guitar_form.html.twig' with {
+        'submit_label' : 'Anlegen'
+    } %}
 
 </form>
 

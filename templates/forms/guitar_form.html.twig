@@ -1,0 +1,15 @@
+{{ setInputField('text', 'model', 'Variante', infos, return) | raw }}
+{{ setInputField('text', 'color', 'Farbe', infos, return) | raw }}
+{{ setInputField('text', 'body', 'Body', infos, return) | raw }}
+{{ setInputField('text', 'pickup', 'Pickup', infos, return) | raw }}
+{{ setInputField('number', 'price', 'Preis', infos, return) | raw }}
+{{ setInputField('text', 'submit', '', infos, return, false, true) | raw }}
+
+<select name='guitarTypeId' required>
+    {% for guitarType in guitarTypes %}
+        <option value={{guitarType.id}}>{{guitarType.brand}} - {{guitarType.version}} - {{guitarType.type}}</option>
+    {% endfor %}
+</select>
+<label for='guitarType'>Gitarrentyp</label>
+
+<button class="button create-guitar-type__submit" type="submit">{{submit_label}}</button>

@@ -176,10 +176,12 @@ class IndexController extends AbstractController
     #[Route(path: '/create-guitar', name: 'create_guitar')]
     public function createGuitar(
         Request $request,
-        GuitarService $guitarService
+        GuitarService $guitarService,
+        GuitarTypeService $guitarTypeService
     ): Response
     { 
         $isSubmit = $guitarService->isSubmit($request);
+        $guitarTypes = $guitarTypeService->getAll();
 
         // process if input is submitted
         if ($isSubmit) {
@@ -190,6 +192,7 @@ class IndexController extends AbstractController
                 return $this->render('create_guitar.html.twig', [
                     'message' => SystemWording::GUITAR_ALREADY_EXISTS,
                     'infos' => $guitarInfos,
+                    'guitarTypes' => $guitarTypes,
                     'return' => true,
                 ]);
             }
@@ -198,19 +201,23 @@ class IndexController extends AbstractController
                     return $this->render('create_guitar.html.twig', [
                         'message' => SystemWording::SUCCESS_GUITAR_CREATION,
                         'infos' => $guitarInfos,
+                        'guitarTypes' => $guitarTypes,
                         'return' => false,
                     ]);
                 }else{
                     return $this->render('create_guitar.html.twig', [
                         'message' => SystemWording::FAILURE_MESSAGE,
                         'infos' => $guitarInfos,
+                        'guitarTypes' => $guitarTypes,
                         'return' => true,
                     ]);
                 }
             }
         }
 
-        return $this->render('create_guitar.html.twig');
+        return $this->render('create_guitar.html.twig', [
+            'guitarTypes' => $guitarTypes,
+        ]);
     }
 
 }

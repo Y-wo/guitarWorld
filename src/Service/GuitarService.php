@@ -5,21 +5,29 @@ namespace App\Service;
 use App\Entity\Guitar;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use App\Service\GuitarTypeService;
 
 class GuitarService extends AbstractEntityService
 {
-    public function __construct(EntityManagerInterface $entityManager)
+
+    private GuitarTypeService $guitarTypeService;
+
+    public function __construct(EntityManagerInterface $entityManager, GuitarTypeService $guitarTypeService)
     {
         parent::__construct($entityManager);
+        $this->guitarTypeService = $guitarTypeService;
     }
 
     public static $entityFqn = Guitar::class;
 
 
-
+    /*
+    * creates new guitar
+    */
     public function createNewGuitar($infos) : bool 
     {
         $guitar = new Guitar();
+        $guitarType = $this->guitarTypeService->get($infos['guitarTypeId']);
 
         $guitar
             ->setModel($infos['model'])
@@ -29,6 +37,7 @@ class GuitarService extends AbstractEntityService
             ->setUsed(0)
             ->setBody($infos['body'])
             ->setPickup($infos['pickup'])
+            ->setGuitarType($guitarType)
             ;
         
         return $this->store($guitar) ? true : false;
