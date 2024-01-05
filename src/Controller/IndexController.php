@@ -220,4 +220,14 @@ class IndexController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/upload-image', name: 'upload_image')]
+    public function uploadImage(
+        Request $request,
+        ImageService $imageService
+    ): Response
+    {
+        $imageService->uploadImage();
+        return new Response("<br><br><br>huhu");
+    }
+
 }

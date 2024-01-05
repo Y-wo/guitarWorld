@@ -5,12 +5,10 @@
 
 {% block content %}
 
-<form action="{{path('create_guitar')}}" method="POST">
 
     {% include '/forms/guitar_form.html.twig' with {
         'submit_label' : 'Anlegen'
     } %}
 
-</form>
 
 {% endblock %}
