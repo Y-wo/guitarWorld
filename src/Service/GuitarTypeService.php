@@ -15,14 +15,6 @@ class GuitarTypeService extends AbstractEntityService
 
     public static $entityFqn = GuitarType::class;
 
-
-    public function getGuitarTypeManipulationProcess(
-        Request $request
-    ) : ?String
-    {
-        return $request->request->get('guitar_type_manipulation_process') ?? null;
-    }
-
     public function guitarTypeExists(string $brand, string $version) : bool 
     {
         $query = $this

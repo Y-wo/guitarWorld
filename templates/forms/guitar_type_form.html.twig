@@ -1,0 +1,20 @@
+<form action="{{path('create_guitar_type')}}" method="POST">
+    {{ setInputField('text', 'brand', 'Marke', guitarTypeInfos, return) | raw }}
+    {{ setInputField('text', 'version', 'Version (Modell)', guitarTypeInfos, return) | raw }}
+
+    <select name="type" required>
+        <option {% if return and guitarTypeInfos.type == 'Elektrisch' %} selected {% endif %} >Elektrisch</option>
+        <option {% if return and guitarTypeInfos.type == 'Akustisch' %} selected {% endif %} >Akustisch</option>
+    </select>
+    <label for="type">Typ</label>
+
+    {{ setInputField('text', 'size', 'Größe (Beschreibung)', guitarTypeInfos, return) | raw }}
+    {{ setInputField('text', 'neck', 'Hals (Material)', guitarTypeInfos, return) | raw }}
+    {{ setInputField('text', 'fretboard', 'Griffbrett (Material)', guitarTypeInfos, return) | raw }}
+    {{ setInputField('number', 'saddlewidth', 'Sattelbreite (in mm)', guitarTypeInfos, return) | raw }}
+    {{ setInputField('number', 'scale', 'Mensur (in mm)', guitarTypeInfos, return) | raw }}
+    {{ setInputField('text', 'submit', '', guitarTypeInfos, return, false, true) | raw }}
+
+    <button class="button" type="submit">{{submit_label}}</button>
+
+</form>

@@ -138,10 +138,10 @@ class IndexController extends AbstractController
         GuitarTypeService $guitarTypeService
     ): Response
     { 
-        $guitarTypeManipulationsProcess = $guitarTypeService->getGuitarTypeManipulationProcess($request);
-
+        $isSubmit = $guitarTypeService->isSubmit($request);
+        
         // process if input is submitted
-        if ($guitarTypeManipulationsProcess == 'create_new_guitar_type') {
+        if ($isSubmit) {
             $guitarTypeInfos = $request->request->all();
             $guitarTypeExists = $guitarTypeService->guitarTypeExists($guitarTypeInfos['brand'], $guitarTypeInfos['version']);
             $messageAddition = '- Marke: ' .  $guitarTypeInfos['brand'] . '<br>- Typ: ' . $guitarTypeInfos['version'];
@@ -169,7 +169,9 @@ class IndexController extends AbstractController
                 }
             }
         }
-        return $this->render('create_guitar_type.html.twig');
+        return $this->render('create_guitar_type.html.twig', [
+            'guitarTypeInfos' => null
+        ]);
     }
 
 
