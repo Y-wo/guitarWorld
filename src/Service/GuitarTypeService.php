@@ -23,22 +23,6 @@ class GuitarTypeService extends AbstractEntityService
         return $request->request->get('guitar_type_manipulation_process') ?? null;
     }
 
-    public function createRequestGuitarTypeAssociativeArray(
-        Request $request
-    ): array {
-        return [
-            'version' => $request->request->get('version') ,
-            'brand' => $request->request->get('brand'),
-            'type' => $request->get('type'),
-            'saddlewidth' => $request->request->get('saddlewidth'),
-            'deleted' => $request->request->get('deleted'),
-            'neck' => $request->request->get('neck'),
-            'size' => $request->request->get('size'),
-            'fretboard' => $request->request->get('fretboard'),
-            'scale' => $request->request->get('scale'),
-        ];
-    }
-
     public function guitarTypeExists(string $brand, string $version) : bool 
     {
         $query = $this

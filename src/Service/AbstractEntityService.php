@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\AbstractEntity;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractEntityService
 {
@@ -52,6 +53,11 @@ abstract class AbstractEntityService
         $this->entityManager->remove($entity);
         $this->entityManager->flush();
         return $this;
+    }
+
+    public function isSubmit(Request $request) : bool 
+    {
+        return $request->request->get('submit') ? true : false;
     }
 
 }

@@ -19,6 +19,10 @@ abstract class SystemWording
     const GUITAR_TYPE_ALREADY_EXISTS = "Der Gitarrentyp mit den folgenden Daten existiert bereits: <br><br>";
     const SUCCESS_GUITAR_TYPE_CREATION = "Neuer Gitarrentyp erfolgreich angelegt: <br><br>";
 
+    // Guitar
+    const SUCCESS_GUITAR_CREATION = "Neue Gitarre erfolgreich angelegt.";
+    const GUITAR_ALREADY_EXISTS = "Die Gitarre exitiert bereits";
+
     // Roles
     const ROLE_USER = 'ROLE_USER';
     const ROLE_ADMIN = 'ROLE_ADMIN';

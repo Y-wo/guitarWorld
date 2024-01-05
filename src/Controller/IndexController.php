@@ -131,15 +131,6 @@ class IndexController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/create-guitar', name: 'create_guitar')]
-    public function createGuitar(
-        Request $request,
-        UserService $userService
-    ): Response
-    { 
-        return new Response("blablabla neue Gitarre");
-    }
-
     
     #[Route(path: '/create-guitar-type', name: 'create_guitar_type')]
     public function createGuitarType(
@@ -151,7 +142,7 @@ class IndexController extends AbstractController
 
         // process if input is submitted
         if ($guitarTypeManipulationsProcess == 'create_new_guitar_type') {
-            $guitarTypeInfos = $guitarTypeService->createRequestGuitarTypeAssociativeArray($request);
+            $guitarTypeInfos = $request->request->all();
             $guitarTypeExists = $guitarTypeService->guitarTypeExists($guitarTypeInfos['brand'], $guitarTypeInfos['version']);
             $messageAddition = '- Marke: ' .  $guitarTypeInfos['brand'] . '<br>- Typ: ' . $guitarTypeInfos['version'];
             if ($guitarTypeExists) {
@@ -179,6 +170,47 @@ class IndexController extends AbstractController
             }
         }
         return $this->render('create_guitar_type.html.twig');
+    }
+
+
+    #[Route(path: '/create-guitar', name: 'create_guitar')]
+    public function createGuitar(
+        Request $request,
+        GuitarService $guitarService
+    ): Response
+    { 
+        $isSubmit = $guitarService->isSubmit($request);
+
+        // process if input is submitted
+        if ($isSubmit) {
+            $guitarInfos = $request->request->all();
+            $guitarExists = $guitarService->guitarExists($guitarInfos);
+
+            if($guitarExists){
+                return $this->render('create_guitar.html.twig', [
+                    'message' => SystemWording::GUITAR_ALREADY_EXISTS,
+                    'infos' => $guitarInfos,
+                    'return' => true,
+                ]);
+            }
+            else {
+                if ($guitarService->createNewGuitar($guitarInfos)){
+                    return $this->render('create_guitar.html.twig', [
+                        'message' => SystemWording::SUCCESS_GUITAR_CREATION,
+                        'infos' => $guitarInfos,
+                        'return' => false,
+                    ]);
+                }else{
+                    return $this->render('create_guitar.html.twig', [
+                        'message' => SystemWording::FAILURE_MESSAGE,
+                        'infos' => $guitarInfos,
+                        'return' => true,
+                    ]);
+                }
+            }
+        }
+
+        return $this->render('create_guitar.html.twig');
     }
 
 }
