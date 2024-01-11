@@ -228,7 +228,18 @@ class IndexController extends AbstractController
         ImageService $imageService
     ): Response
     {
-        $imageService->uploadImage();
+
+// Route, von wo das kam, um zurückzugehen
+
+        $referer = $request->headers->get('referer');
+        $isSubmit = $imageService->isSubmit($request);
+        if($isSubmit) return new Response("<br><br><br>huhu" . $referer);
+
+        // return $this->redirect($referer); // 
+
+        return $this->render('upload_image.html.twig');
+
+        // $imageService->uploadImage();
         return new Response("<br><br><br>huhu");
     }
 

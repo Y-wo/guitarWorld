@@ -17,5 +17,6 @@ import './styles/message.sass';
 import './styles/page-headline.sass';   
 import './styles/sidebar.sass';
 import './styles/login-form.sass';
+import './styles/guitar-form.sass';
 
 import './js/sidebar.js';
