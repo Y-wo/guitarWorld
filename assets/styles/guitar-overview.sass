@@ -1,0 +1,43 @@
+@import 'base'
+@import 'default-elements'
+    
+.guitar-overview
+    
+    &__container
+        width: 45%
+        padding: 1rem 0.5rem
+        border-radius: 0.5rem
+        margin-bottom: 1rem
+        box-shadow: $shadow
+        cursor: pointer
+        transition: box-shadow 0.15s
+
+        &:hover
+            box-shadow: $shadow-hover
+
+        img
+            max-width: 100%
+            padding-bottom: 2rem
+
+        p
+            padding-bottom: .5rem 
+
+        h3
+            font-size: 1rem
+
+        div
+            &:nth-of-type(1)
+                min-height: 2rem
+
+            &:nth-of-type(2)
+                min-height: 2rem
+
+            &:nth-of-type(3)
+                min-height: 2rem
+                // text-align: end
+                background-color: $color-secondary
+
+            
+
+
+    

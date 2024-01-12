@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="home__guitars-container">
+
+    {% for guitar in guitars %}
+
+        {% include 'guitar-overview.html.twig' %}
+
+    {% endfor %}
+
+    <div>
+
+{% endblock %}

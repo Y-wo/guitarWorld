@@ -18,5 +18,7 @@ import './styles/page-headline.sass';
 import './styles/sidebar.sass';
 import './styles/login-form.sass';
 import './styles/guitar-form.sass';
+import './styles/guitar-overview.sass';
+import './styles/home.sass';
 
 import './js/sidebar.js';

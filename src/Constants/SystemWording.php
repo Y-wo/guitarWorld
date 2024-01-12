@@ -29,5 +29,11 @@ abstract class SystemWording
 
     // Use Cases
     const HELLO = 'Herzlich Willkommen!';
-    CONST FAILURE_MESSAGE = "Es ist ein unerwarteter Fehler aufgetreten:";
+    const FAILURE_MESSAGE = "Es ist ein unerwarteter Fehler aufgetreten:";
+
+    // Image Upload
+    const UPLOAD_WRONG_TYPE = 'Der Dateityp ist leider nicht erlaubt.';
+    const UPLOAD_EXISTS = 'Die Datei existiert bereits.';
+    const UPLOAD_TOO_BIG = 'Die Datei ist zu groß.';
+    const UPLOAD_SUCCESS = 'Das Bild wurde erfolgreich angelegt.';
 }

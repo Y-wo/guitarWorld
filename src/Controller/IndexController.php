@@ -28,19 +28,18 @@ class IndexController extends AbstractController
 {
     #[Route(path: '/', name: 'home')]
     public function home(   
-        Request $request
+        Request $request,
+        GuitarService $guitarService
     ): Response
     {   
         $message = $request->query->get('message') ?? null;
-        $info1 = $request->query->get('info1') ?? null;
-        $info2 = $request->query->get('info2') ?? null;
-        $info3 = $request->query->get('info3') ?? null;
 
-        $user = $request->getSession()->get('user') ?? null;
+        $guitars = $guitarService->getAll();
 
-        return $this->render("base.html.twig", [
+        return $this->render("home.html.twig", [
            'headline' => SystemWording::HELLO,
            'message' => $message,
+           'guitars' => $guitars ?? null
         ]);
     }
 
@@ -184,6 +183,7 @@ class IndexController extends AbstractController
     { 
         $isSubmit = $guitarService->isSubmit($request);
         $guitarTypes = $guitarTypeService->getAll();
+        $message = $request->query->get('message') ?? null;
 
         // process if input is submitted
         if ($isSubmit) {
@@ -219,6 +219,7 @@ class IndexController extends AbstractController
 
         return $this->render('create_guitar.html.twig', [
             'guitarTypes' => $guitarTypes,
+            'message' => $message
         ]);
     }
 
@@ -228,19 +229,19 @@ class IndexController extends AbstractController
         ImageService $imageService
     ): Response
     {
-
-// Route, von wo das kam, um zurückzugehen
-
-        $referer = $request->headers->get('referer');
         $isSubmit = $imageService->isSubmit($request);
-        if($isSubmit) return new Response("<br><br><br>huhu" . $referer);
+        if ($isSubmit) {
+            $uploadInfos = $imageService->uploadImage();
 
-        // return $this->redirect($referer); // 
+            var_dump($uploadInfos);
+
+            // return $this->render('upload_image.html.twig');
+            return $this->redirectToRoute('create_guitar', [
+                'message' => $uploadInfos['message']
+            ]);
+        }
 
         return $this->render('upload_image.html.twig');
-
-        // $imageService->uploadImage();
-        return new Response("<br><br><br>huhu");
     }
 
 }

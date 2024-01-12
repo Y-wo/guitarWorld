@@ -1,7 +1,5 @@
 <form action="{{path('upload_image')}}" method="POST" enctype="multipart/form-data">
-    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="file" name="fileToUpload" id="fileToUpload" required>
     <label for='fileToUpload'>Bild </label>
     <input type="submit" class="button" value="Upload Image" name="submit">
 </form>
-
-{{dump(app.request)}}
