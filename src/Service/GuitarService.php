@@ -86,4 +86,28 @@ class GuitarService extends AbstractEntityService
         return count($result) > 0;   
     }
 
+    /*
+    * change Guitar
+    */
+    public function changeGuitar(array $infos) : bool 
+    {
+        $guitar = $this->get($infos['id']);
+        $guitarType = $this->guitarTypeService->get($infos['guitarTypeId']);
+
+        $guitar
+            ->setModel($infos['model'])
+            ->setColor($infos['color'])
+            ->setDeleted(0)
+            ->setPrice($infos['price'])
+            ->setUsed(0)
+            ->setBody($infos['body'])
+            ->setPickup($infos['pickup'])
+            ->setGuitarType($guitarType)
+            ;
+        
+        return $this->store($guitar) ? true : false;
+    }
+
+
+
 }

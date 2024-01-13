@@ -176,6 +176,10 @@ class IndexController extends AbstractController
     }
 
 
+
+    /*
+    * Create Guitar
+    */
     #[Route(path: '/create-guitar', name: 'create_guitar')]
     public function createGuitar(
         Request $request,
@@ -207,8 +211,7 @@ class IndexController extends AbstractController
 
                 if ($guitarUploadInfos['isUploadSuccessfull']){
 
-                    //create new ImageGuiutar-Entity
-                    var_dump($guitarUploadInfos);
+                    //create new ImageGuitar-Entity
                     if(!empty($guitarUploadInfos['imageId'])){
                         $imageGuitarService
                             ->createNewImageGuitar(
@@ -242,6 +245,10 @@ class IndexController extends AbstractController
         ]);
     }
 
+
+    /*
+    * Change Guitar
+    */
     #[Route(path: '/change-guitar', name: 'change_guitar')]
     public function changeGuitar(
         Request $request,
@@ -250,9 +257,46 @@ class IndexController extends AbstractController
         ImageGuitarService $imageGuitarService
     ): Response
     {
-
+        $isSubmit = $guitarService->isSubmit($request);
         
-        return new Response("heuheuhuh asdffdsa");
+        $message = '';
+
+        $guitarTypes = $guitarTypeService->getAll();
+        $guitarId = $request->query->get('id');
+        $guitar = $guitarService->get($guitarId);
+
+        if ($isSubmit){
+
+            // HIER NOCH BILD ÄNDERN MÖGLICH MACHEN  + die AUFLÖSUNG VON DEM BILD DAVOR !
+
+            $guitarInfos = $request->request->all();
+            if ($guitarService->changeGuitar($guitarInfos)){
+                $message = SystemWording::SUCCESS_GUITAR_CHANGE;
+            }
+            
+        }
+
+        $guitarInfos = [
+            'id' => $guitar->getId(),
+            'model' => $guitar->getModel(),
+            'color' => $guitar->getColor(),
+            'price' => $guitar->getPrice(),
+            'body' => $guitar->getBody(),
+            'pickup' => $guitar->getPickup(),
+            'submit' => '',
+            'guitarTypeId' => $guitar->getGuitarType()->getId()
+        ];
+
+        $imageGuitar = $guitar->getImageGuitar()[0] ?? null;
+
+        return $this->render('change_guitar.html.twig', [
+            'guitarTypes' => $guitarTypes,
+            'return' => true,
+            'infos' => $guitarInfos,
+            'guitarChange' => true,
+            'message' => $message,
+            'targetFile' => $imageGuitar ? $imageGuitar->getImage()->getName() : null
+        ]);
     }
 
 
@@ -266,8 +310,6 @@ class IndexController extends AbstractController
         $isSubmit = $imageService->isSubmit($request);
         if ($isSubmit) {
             $uploadInfos = $imageService->uploadImage();
-
-            var_dump($uploadInfos);
 
             if ($uploadInfos['isUploaded']){
                 return $this->redirectToRoute('create_guitar', [

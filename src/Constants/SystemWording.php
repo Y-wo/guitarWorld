@@ -22,6 +22,7 @@ abstract class SystemWording
     // Guitar
     const SUCCESS_GUITAR_CREATION = "Neue Gitarre erfolgreich angelegt.";
     const GUITAR_ALREADY_EXISTS = "Die Gitarre exitiert bereits";
+    const SUCCESS_GUITAR_CHANGE = "Gitarre erfolgreich angepasst.";
 
     // Roles
     const ROLE_USER = 'ROLE_USER';

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% set return = (return is defined and return == true) ? true : false %}
+{% set infos = infos is defined ? infos : null %}
+
+{% block content %}
+
+
+    {% include '/forms/guitar_form.html.twig' with {
+        'submit_label' : 'Speichern'
+    } %}
+
+{% endblock %}

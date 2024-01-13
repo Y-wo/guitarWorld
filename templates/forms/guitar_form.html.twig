@@ -1,3 +1,12 @@
+{% set isChangeProcess = false %}
+{% if guitarChange is defined and guitarChange == true %}
+    {% set isChangeProcess = true %}
+{% endif %}
+
+
+
+{# ---------------------------- IMAGE --------------#}
+
 <div class="guitar-form__guitar-container">
     <a class="guitar-form__guitar-image-hyperlink" href="{{path('upload_image')}}">
         <image class="guitar-form__guitar-image" src="
@@ -10,11 +19,26 @@
     </a>
 </div>
 
-<form action="{{path('create_guitar')}}" method="POST">
+
+
+{# ---------------------------- INPUT --------------#}
+
+<form action="
+    {% if isChangeProcess %}
+        {{path('change_guitar')}}?id={{infos.id}}
+    {% else %}
+        {{path('create_guitar')}}
+    {% endif %}
+" method="POST">
 
     {% if targetFile is defined and targetFile is not null %}
         <input type="text" name="image" value="{{targetFile}}" hidden>
     {% endif %}
+
+    {% if isChangeProcess %}
+        <input type="text" name="id" value="{{infos.id}}" hidden>
+    {% endif %}
+
 
     {{ setInputField('text', 'model', 'Variante', infos, return) | raw }}
     {{ setInputField('text', 'color', 'Farbe', infos, return) | raw }}
@@ -25,7 +49,14 @@
 
     <select name='guitarTypeId' required>
         {% for guitarType in guitarTypes %}
-            <option value={{guitarType.id}}>{{guitarType.brand}} - {{guitarType.version}} - {{guitarType.type}}</option>
+            <option value={{guitarType.id}}
+            
+            {% if infos.guitarTypeId is defined and infos.guitarTypeId == guitarType.id %}
+                selected="selected"
+            {% endif %}
+            >
+                {{guitarType.brand}} - {{guitarType.version}} - {{guitarType.type}}
+            </option>
         {% endfor %}
     </select>
     <label for='guitarType'>Gitarrentyp</label>
