@@ -1,17 +1,20 @@
-{# <form action="{{path('upload_image')}}" method="POST" enctype="multipart/form-data">
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <label for='fileToUpload'>Bild </label>
-    <input type="submit" value="Upload Image" name="submit">
-</form> #}
-
-
 <div class="guitar-form__guitar-container">
     <a class="guitar-form__guitar-image-hyperlink" href="{{path('upload_image')}}">
-        <image class="guitar-form__guitar-image" src="{{asset('assets/placeholder/placeholder-guitar.svg')}}"> 
+        <image class="guitar-form__guitar-image" src="
+            {% if targetFile is defined and targetFile is not null %}
+                {{asset(targetFile)}}
+            {% else %}
+                {{asset('assets/placeholder/placeholder-guitar.svg')}}
+            {% endif %}
+        "> 
     </a>
 </div>
 
 <form action="{{path('create_guitar')}}" method="POST">
+
+    {% if targetFile is defined and targetFile is not null %}
+        <input type="text" name="image" value="{{targetFile}}" hidden>
+    {% endif %}
 
     {{ setInputField('text', 'model', 'Variante', infos, return) | raw }}
     {{ setInputField('text', 'color', 'Farbe', infos, return) | raw }}

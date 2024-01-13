@@ -1,6 +1,12 @@
 <div class="guitar-overview__container">
 
-    <img class="guitar-overview__img" src="{{asset('assets/placeholder/placeholder-guitar.svg')}}">
+    <img class="guitar-overview__img" src="
+        {% if guitar.imageGuitar is not empty %}
+            {{asset(guitar.imageGuitar.first.image.name)}}
+        {% else %} 
+            {{asset('assets/placeholder/placeholder-guitar.svg')}}
+        {% endif %}
+    ">
 
     <div>
         <h3><strong>{{guitar.guitarType.brand}} - {{guitar.guitarType.version}} ({{ guitar.guitarType.type }}) </strong></h3>    
@@ -14,4 +20,7 @@
         <p>{{guitar.price}},00 € </p> 
     </div>
 
+    <a href="{{path('change_guitar', {
+        'test': 'TEEEEEEEEEST123'
+    })}}">Bearbeiten</a>
 </div>

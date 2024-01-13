@@ -22,7 +22,9 @@ use App\Service\ImageService;
 use App\Service\OrderService;
 use App\Service\LoginService;
 use DateTimeImmutable;
+use LDAP\Result;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class IndexController extends AbstractController
 {
@@ -178,7 +180,8 @@ class IndexController extends AbstractController
     public function createGuitar(
         Request $request,
         GuitarService $guitarService,
-        GuitarTypeService $guitarTypeService
+        GuitarTypeService $guitarTypeService,
+        ImageGuitarService $imageGuitarService
     ): Response
     { 
         $isSubmit = $guitarService->isSubmit($request);
@@ -199,7 +202,21 @@ class IndexController extends AbstractController
                 ]);
             }
             else {
-                if ($guitarService->createNewGuitar($guitarInfos)){
+
+                $guitarUploadInfos = $guitarService->createNewGuitar($guitarInfos);
+
+                if ($guitarUploadInfos['isUploadSuccessfull']){
+
+                    //create new ImageGuiutar-Entity
+                    var_dump($guitarUploadInfos);
+                    if(!empty($guitarUploadInfos['imageId'])){
+                        $imageGuitarService
+                            ->createNewImageGuitar(
+                                $guitarUploadInfos['imageId'], 
+                                $guitarUploadInfos['guitarId']
+                            );
+                    }
+                   
                     return $this->render('create_guitar.html.twig', [
                         'message' => SystemWording::SUCCESS_GUITAR_CREATION,
                         'infos' => $guitarInfos,
@@ -219,9 +236,26 @@ class IndexController extends AbstractController
 
         return $this->render('create_guitar.html.twig', [
             'guitarTypes' => $guitarTypes,
-            'message' => $message
+            'message' => $message,
+            'imageIsUploaded' => $request->query->get('isUploaded') ?? false,
+            'targetFile' => $request->query->get('targetFile') ?? null
         ]);
     }
+
+    #[Route(path: '/change-guitar', name: 'change_guitar')]
+    public function changeGuitar(
+        Request $request,
+        GuitarService $guitarService,
+        GuitarTypeService $guitarTypeService,
+        ImageGuitarService $imageGuitarService
+    ): Response
+    {
+
+        
+        return new Response("heuheuhuh asdffdsa");
+    }
+
+
 
     #[Route(path: '/upload-image', name: 'upload_image')]
     public function uploadImage(
@@ -235,10 +269,17 @@ class IndexController extends AbstractController
 
             var_dump($uploadInfos);
 
-            // return $this->render('upload_image.html.twig');
-            return $this->redirectToRoute('create_guitar', [
+            if ($uploadInfos['isUploaded']){
+                return $this->redirectToRoute('create_guitar', [
+                    'message' => $uploadInfos['message'],
+                    'isUploaded' => $uploadInfos['isUploaded'],
+                    'targetFile' => $uploadInfos['targetFile']
+                ]);
+            }
+            return $this->render('upload_image.html.twig', [
                 'message' => $uploadInfos['message']
             ]);
+        
         }
 
         return $this->render('upload_image.html.twig');

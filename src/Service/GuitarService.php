@@ -6,16 +6,19 @@ use App\Entity\Guitar;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\GuitarTypeService;
+use App\Service\ImageService;
 
 class GuitarService extends AbstractEntityService
 {
 
     private GuitarTypeService $guitarTypeService;
+    private ImageService $imageService;
 
-    public function __construct(EntityManagerInterface $entityManager, GuitarTypeService $guitarTypeService)
+    public function __construct(EntityManagerInterface $entityManager, GuitarTypeService $guitarTypeService, ImageService $imageService)
     {
         parent::__construct($entityManager);
         $this->guitarTypeService = $guitarTypeService;
+        $this->imageService = $imageService;
     }
 
     public static $entityFqn = Guitar::class;
@@ -24,10 +27,12 @@ class GuitarService extends AbstractEntityService
     /*
     * creates new guitar
     */
-    public function createNewGuitar($infos) : bool 
+    public function createNewGuitar($infos) : array 
     {
         $guitar = new Guitar();
         $guitarType = $this->guitarTypeService->get($infos['guitarTypeId']);
+        $imageId = null;
+        $isUploadSuccessfull = false;
 
         $guitar
             ->setModel($infos['model'])
@@ -39,8 +44,21 @@ class GuitarService extends AbstractEntityService
             ->setPickup($infos['pickup'])
             ->setGuitarType($guitarType)
             ;
+
+        if (!empty($infos['image'])) {
+            //create Image-Entity
+            $imageId = $this->imageService->createNewImage($infos['image']);
+        }
         
-        return $this->store($guitar) ? true : false;
+        if($this->store($guitar)) $isUploadSuccessfull = true;
+
+        $guitarUploadInfos = [
+            'imageId' => $imageId,
+            'guitarId' => $guitar->getId() ?? null,
+            'isUploadSuccessfull' => $isUploadSuccessfull
+        ];
+
+        return $guitarUploadInfos;
     }
 
 

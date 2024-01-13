@@ -65,8 +65,20 @@ class ImageService extends AbstractEntityService
 
         return [
             'isUploaded' => $isUploaded,
-            'message' => $message
+            'message' => $message,
+            'targetFile' => $target_file
         ];
+    }
+
+    
+    /*
+    * creates new image
+    */
+    public function createNewImage($source) : ?int 
+    {
+        $image = new Image();
+        $image->setName($source);
+        return $this->store($image) ? $image->getId() : null;
     }
 
 }

@@ -37,7 +37,7 @@ class Guitar extends AbstractEntity
     #[ORM\ManyToOne(inversedBy: 'guitar')]
     private ?Order $guitarOrder = null;
 
-    #[ORM\OneToMany(mappedBy: 'guitar', targetEntity: ImageGuitar::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'guitar', targetEntity: ImageGuitar::class, cascade: ['persist', 'remove'], fetch: "EAGER")]
     private Collection $imageGuitar;
 
     #[ORM\Column(length: 255)]
