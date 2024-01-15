@@ -23,6 +23,7 @@ class ImageService extends AbstractEntityService
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
         $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
         $message = "";
+        $fileExists = false;
 
         if($check !== false) {
             $message = "File is an image - " . $check["mime"] . ".";
@@ -35,7 +36,8 @@ class ImageService extends AbstractEntityService
         // Check if file already exists
         if (file_exists($target_file)) {
             $message = "Sorry, file already exists.";
-            $uploadOk = 0;
+            $uploadOk = 1;
+            $fileExists = true;
         }
 
         // Check file size
@@ -55,18 +57,27 @@ class ImageService extends AbstractEntityService
         // var_dump("Sorry, your file was not uploaded.");
         // if everything is ok, try to upload file
         } else {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                $message = "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+            if ($fileExists) {
+                $message = "Die File hat bereits existiert. Verknüpfung wurde erstellt.";
                 $isUploaded = true;
-            } else {
-                $message = "Sorry, there was an error uploading your file.";
+            }
+            else {
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    $message = "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+                    $isUploaded = true;
+                    $this->createNewImage($target_file);
+                } 
+                else {
+                    $message = "Sorry, there was an error uploading your file.";
+                }
             }
         }
 
         return [
             'isUploaded' => $isUploaded,
             'message' => $message,
-            'targetFile' => $target_file
+            'targetFile' => $target_file,
+            'fileExists' => $fileExists
         ];
     }
 
@@ -79,6 +90,23 @@ class ImageService extends AbstractEntityService
         $image = new Image();
         $image->setName($source);
         return $this->store($image) ? $image->getId() : null;
+    }
+
+    /*
+    * Get Image by name
+    */
+    public function getImageByName(string $name) : ?Image
+    {
+        $query = $this
+            ->entityManager
+            ->getRepository(self::$entityFqn)
+            ->createQueryBuilder('r')
+            ->select('r')
+            ->where('r.name = :name')
+            ->setParameter('name', $name)
+        ;
+
+        return $query->getQuery()->execute()[0] ?? null;
     }
 
 }

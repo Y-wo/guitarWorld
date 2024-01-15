@@ -23,6 +23,8 @@ abstract class SystemWording
     const SUCCESS_GUITAR_CREATION = "Neue Gitarre erfolgreich angelegt.";
     const GUITAR_ALREADY_EXISTS = "Die Gitarre exitiert bereits";
     const SUCCESS_GUITAR_CHANGE = "Gitarre erfolgreich angepasst.";
+    const CHANGE_GUITAR = "change_guitar";
+    const CREATE_GUITAR = "create_guitar";
 
     // Roles
     const ROLE_USER = 'ROLE_USER';
@@ -37,4 +39,5 @@ abstract class SystemWording
     const UPLOAD_EXISTS = 'Die Datei existiert bereits.';
     const UPLOAD_TOO_BIG = 'Die Datei ist zu groß.';
     const UPLOAD_SUCCESS = 'Das Bild wurde erfolgreich angelegt.';
+
 }

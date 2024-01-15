@@ -47,7 +47,8 @@ class GuitarService extends AbstractEntityService
 
         if (!empty($infos['image'])) {
             //create Image-Entity
-            $imageId = $this->imageService->createNewImage($infos['image']);
+            // $imageId = $this->imageService->createNewImage($infos['image']);
+            $imageId = $this->imageService->getImageByName($infos['image'])->getId();
         }
         
         if($this->store($guitar)) $isUploadSuccessfull = true;
@@ -59,6 +60,54 @@ class GuitarService extends AbstractEntityService
         ];
 
         return $guitarUploadInfos;
+    }
+
+
+    /*
+    * change Guitar
+    */
+    public function changeGuitar(array $infos) : array 
+    {
+        $guitar = $this->get($infos['id']);
+        $guitarType = $this->guitarTypeService->get($infos['guitarTypeId']);
+        $imageId = null;
+
+        $guitar
+            ->setModel($infos['model'])
+            ->setColor($infos['color'])
+            ->setDeleted(0)
+            ->setPrice($infos['price'])
+            ->setUsed(0)
+            ->setBody($infos['body'])
+            ->setPickup($infos['pickup'])
+            ->setGuitarType($guitarType)
+            ;
+
+        if (!empty($infos['image'])) {
+
+            if (!empty($infos['fileExists']) && $infos['fileExists'] == true) {
+                $imageId = $this->imageService->getImageByName($infos['image'])->getId();
+            } 
+            else {
+                //create Image-Entity   
+                // $imageId = $this->imageService->createNewImage($infos['image']);
+                $imageId = $this->imageService->getImageByName($infos['image'])->getId();
+            }
+        }
+
+        if($this->store($guitar)) $isUploadSuccessfull = true;
+
+        $guitarUploadInfos = [
+            'imageId' => $imageId,
+            'guitarId' => $infos['id'],
+            'isUploadSuccessfull' => $isUploadSuccessfull,
+            'fileExists' => $infos['fileExists'] ?? null
+        ];
+
+        return $guitarUploadInfos;
+
+
+        // return $this->store($guitar) ? true : false;
     }
 
 
@@ -86,27 +135,7 @@ class GuitarService extends AbstractEntityService
         return count($result) > 0;   
     }
 
-    /*
-    * change Guitar
-    */
-    public function changeGuitar(array $infos) : bool 
-    {
-        $guitar = $this->get($infos['id']);
-        $guitarType = $this->guitarTypeService->get($infos['guitarTypeId']);
 
-        $guitar
-            ->setModel($infos['model'])
-            ->setColor($infos['color'])
-            ->setDeleted(0)
-            ->setPrice($infos['price'])
-            ->setUsed(0)
-            ->setBody($infos['body'])
-            ->setPickup($infos['pickup'])
-            ->setGuitarType($guitarType)
-            ;
-        
-        return $this->store($guitar) ? true : false;
-    }
 
 
 

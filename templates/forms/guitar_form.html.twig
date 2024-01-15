@@ -23,6 +23,7 @@
 
 {# ---------------------------- INPUT --------------#}
 
+{# control the route #}
 <form action="
     {% if isChangeProcess %}
         {{path('change_guitar')}}?id={{infos.id}}
@@ -31,12 +32,19 @@
     {% endif %}
 " method="POST">
 
+
+    {# output only if an image exists #}
     {% if targetFile is defined and targetFile is not null %}
         <input type="text" name="image" value="{{targetFile}}" hidden>
     {% endif %}
 
+    {# output only if an existing guitar shall be changed #}
     {% if isChangeProcess %}
         <input type="text" name="id" value="{{infos.id}}" hidden>
+    {% endif %}
+
+    {% if infos.fileExists is defined and infos.fileExists == true %}
+        <input type="text" name="fileExists" value="{{infos.fileExists}}" hidden>
     {% endif %}
 
 
