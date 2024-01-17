@@ -8,8 +8,8 @@
         <h2>Hallo {{user.firstname}} {{user.lastname}}</h2>
 
         {% if isAdmin(user) == true %}
-            <a href="{{path('create_guitar_type')}}">Gitarrentyp anlegen</a>
-            <a href="{{path('create_guitar')}}">Gitarre anlegen</a>
+            <a href="{{path('create_guitar_type')}}" class="button">Gitarrentyp anlegen</a>
+            <a href="{{path('create_guitar')}}" class="button">Gitarre anlegen</a>
         {% endif %}
 
 

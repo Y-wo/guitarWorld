@@ -34,10 +34,12 @@ abstract class SystemWording
     const HELLO = 'Herzlich Willkommen!';
     const FAILURE_MESSAGE = "Es ist ein unerwarteter Fehler aufgetreten:";
 
-    // Image Upload
+    // Image 
     const UPLOAD_WRONG_TYPE = 'Der Dateityp ist leider nicht erlaubt.';
     const UPLOAD_EXISTS = 'Die Datei existiert bereits.';
     const UPLOAD_TOO_BIG = 'Die Datei ist zu groß.';
     const UPLOAD_SUCCESS = 'Das Bild wurde erfolgreich angelegt.';
+    const IMAGE_GUITAR_REMOVED = "Das Bild wurde erfolgreich entfernt.";
+    
 
 }

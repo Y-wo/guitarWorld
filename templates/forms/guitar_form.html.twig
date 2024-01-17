@@ -17,7 +17,11 @@
             {% endif %}
         "> 
     </a>
+    {% if targetFile is defined and targetFile is not null %}
+        <a href="{{path('remove_image_guitar')}}" class="button" >Bild löschen</a> 
+    {% endif %}
 </div>
+
 
 
 
@@ -46,7 +50,6 @@
     {% if infos.fileExists is defined and infos.fileExists == true %}
         <input type="text" name="fileExists" value="{{infos.fileExists}}" hidden>
     {% endif %}
-
 
     {{ setInputField('text', 'model', 'Variante', infos, return) | raw }}
     {{ setInputField('text', 'color', 'Farbe', infos, return) | raw }}

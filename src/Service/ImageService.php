@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Constants\SystemWording;
 use App\Entity\Image;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -26,29 +27,28 @@ class ImageService extends AbstractEntityService
         $fileExists = false;
 
         if($check !== false) {
-            $message = "File is an image - " . $check["mime"] . ".";
             $uploadOk = 1;
         } else {
-            $message = "File is not an image.";
+            $message = SystemWording::UPLOAD_WRONG_TYPE;
             $uploadOk = 0;
         }
 
         // Check if file already exists
         if (file_exists($target_file)) {
-            $message = "Sorry, file already exists.";
+            $message = SystemWording::UPLOAD_EXISTS;
             $uploadOk = 1;
             $fileExists = true;
         }
 
         // Check file size
         if ($_FILES["fileToUpload"]["size"] > 500000) {
-            $message = "Sorry, your file is too large.";
+            $message = SystemWording::UPLOAD_TOO_BIG;
             $uploadOk = 0;
         }
 
         // Allow certain file formats
         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-            $message = "Sorry, only JPG, JPEG and PNG files are allowed.";
+            $message = SystemWording::UPLOAD_WRONG_TYPE;
             $uploadOk = 0;
         }
 

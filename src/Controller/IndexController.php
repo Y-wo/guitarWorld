@@ -386,4 +386,30 @@ class IndexController extends AbstractController
         return $this->render('upload_image.html.twig');
     }
 
+
+    /*
+    * remove ImageGuitarEntity from Database
+    */
+    #[Route(path: '/remove-image-guitar', name: 'remove_image_guitar')]
+    public function removeImageGuitar(
+        Request $request,
+        ImageService $imageService,
+        GuitarService $guitarService,
+        ImageGuitarService $imageGuitarService
+    ): Response
+    {
+        $session = $request->getSession();
+        $guitarId = $session->get('guitar_id');
+        $guitar = $guitarService->get($guitarId);
+        $imageGuitar = $guitar->getImageGuitar()[0] ?? null;
+
+        if(!empty($imageGuitar)) $imageGuitarService->remove($imageGuitar);
+
+        $redirection = $session->get('guitar_manipulation_process') ?? SystemWording::CREATE_GUITAR;
+        return $this->redirectToRoute($redirection, [
+            'message' => SystemWording::IMAGE_GUITAR_REMOVED,
+            'id' => $session->get('guitar_id') ?? null,
+        ]);
+    }
+
 }
