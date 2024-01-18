@@ -197,7 +197,7 @@ class IndexController extends AbstractController
         $guitarInfos = $request->request->all();
         $isSubmit = $guitarService->isSubmit($request);
         $guitarTypes = $guitarTypeService->getAll();
-        
+
         $pocessData['message'] = $request->query->get('message') ?? null;
         $processData['guitarTypes'] =  $guitarTypes;
         $processData['infos'] = $guitarInfos;
@@ -250,19 +250,16 @@ class IndexController extends AbstractController
         GuitarService $guitarService,
         GuitarTypeService $guitarTypeService,
         ImageGuitarService $imageGuitarService,
-        ImageService $imageService
     ): Response
     {
         $isSubmit = $guitarService->isSubmit($request);
-
         $message = $request->query->get('message') ?? null;
-
         $fileExists = $request->query->get('fileExists') ?? null;
-
         $guitarTypes = $guitarTypeService->getAll();
         $guitarId = $request->query->get('id');
         $guitar = $guitarService->get($guitarId);
 
+        // session variables for handling on following pages
         $session = $request->getSession();
         $session->set('guitar_manipulation_process', SystemWording::CHANGE_GUITAR);
         $session->set('guitar_id', $guitarId);
@@ -271,40 +268,41 @@ class IndexController extends AbstractController
         $targetFile = $imageGuitar ? $imageGuitar->getImage()->getName() : null;
         $targetFile = $request->query->get('targetFile') ?? $targetFile;
 
+        // process if guitar-changes shall be changed
         if ($isSubmit){
             $guitarInfos = $request->request->all();
-            $guitarUploadInfos = $guitarService->changeGuitar($guitarInfos);
+            $guitarChangeInfos = $guitarService->changeGuitar($guitarInfos);
 
-            if ($guitarUploadInfos['isUploadSuccessfull']) {
+            if ($guitarChangeInfos['isUploadSuccessfull']) {
 
-                //create new ImageGuitar-Entity
-                if(!empty($guitarUploadInfos['imageId'])) {
+                //add new Image to guitar
+                if(!empty($guitarChangeInfos['imageId'])) {
                     
                     $storedImage = $imageGuitar?->getImage() ?? null;
                     $storedImageId = $storedImage?->getId() ?? null;
                     
                     // check if image is new to guitar
-                    if ($storedImageId !== $guitarUploadInfos['imageId']) {
+                    if ($storedImageId !== $guitarChangeInfos['imageId']) {
 
+                        // remove last image by deletin the concerning imageGuitar-Entity
                         if (!empty($storedImageId)) $imageGuitarService->remove($imageGuitar);
 
                         $imageGuitarId = $imageGuitarService
                             ->createNewImageGuitar(
-
-                                // hier wird ne Image nicht ne id gegeben. 
-                                $guitarUploadInfos['imageId'], 
+                                $guitarChangeInfos['imageId'], 
                                 $guitarId
                         );
 
                         $imageGuitar = $imageGuitarService->get($imageGuitarId);
-                        $newTargetFile = $imageGuitar->getImage()->getName();
-                        $targetFile = $newTargetFile;
+                        $targetFile = $imageGuitar->getImage()->getName();
+                        // $targetFile = $newTargetFile;
                         }
                     }
                 $message = SystemWording::SUCCESS_GUITAR_CHANGE;
             }
         }        
 
+        // these infos are needed for the setInputField()-method in the following template
         $guitarInfos = [
             'id' => $guitar->getId(),
             'model' => $guitar->getModel(),
@@ -329,6 +327,7 @@ class IndexController extends AbstractController
     }
 
 
+    
 
     #[Route(path: '/upload-image', name: 'upload_image')]
     public function uploadImage(
