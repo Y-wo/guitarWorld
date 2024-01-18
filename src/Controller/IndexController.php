@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Guitar;
+// use App\Entity\Guitar;
 use App\Constants\SystemWording;
-use App\Entity\GuitarType;
-use App\Entity\User;
-use App\Entity\Image;
-use App\Entity\ImageGuitar;
-use App\Entity\Order;
+// use App\Entity\GuitarType;
+// use App\Entity\User;
+// use App\Entity\Image;
+// use App\Entity\ImageGuitar;
+// use App\Entity\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,12 +19,12 @@ use App\Service\GuitarService;
 use App\Service\GuitarTypeService;
 use App\Service\ImageGuitarService;
 use App\Service\ImageService;
-use App\Service\OrderService;
+// use App\Service\OrderService;
 use App\Service\LoginService;
-use DateTimeImmutable;
-use LDAP\Result;
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Validator\Constraints\Regex;
+// use DateTimeImmutable;
+// use LDAP\Result;
+// use Symfony\Component\Validator\Constraints\Date;
+// use Symfony\Component\Validator\Constraints\Regex;
 
 class IndexController extends AbstractController
 {
