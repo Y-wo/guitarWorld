@@ -141,7 +141,7 @@ class IndexController extends AbstractController
     { 
         $isSubmit = $guitarTypeService->isSubmit($request);
         
-        // process if input is submitted
+        // process if new guitarType is submitted
         if ($isSubmit) {
             $guitarTypeInfos = $request->request->all();
             $guitarTypeExists = $guitarTypeService->guitarTypeExists($guitarTypeInfos['brand'], $guitarTypeInfos['version']);
@@ -170,6 +170,7 @@ class IndexController extends AbstractController
                 }
             }
         }
+
         return $this->render('create_guitar_type.html.twig', [
             'guitarTypeInfos' => null
         ]);
@@ -188,64 +189,55 @@ class IndexController extends AbstractController
         ImageGuitarService $imageGuitarService
     ): Response
     { 
+        $processData = [];
+
         $session = $request->getSession();
         $session->set('guitar_manipulation_process', SystemWording::CREATE_GUITAR);
 
+        $guitarInfos = $request->request->all();
         $isSubmit = $guitarService->isSubmit($request);
         $guitarTypes = $guitarTypeService->getAll();
-        $message = $request->query->get('message') ?? null;
+        
+        $pocessData['message'] = $request->query->get('message') ?? null;
+        $processData['guitarTypes'] =  $guitarTypes;
+        $processData['infos'] = $guitarInfos;
+        $processData['imageIsUploaded'] = $request->query->get('isUploaded') ?? false;
+        $processData['targetFile'] = $request->query->get('targetFile') ?? null;
 
-        // process if input is submitted
+        // process if new guitar is submitted
         if ($isSubmit) {
-            $guitarInfos = $request->request->all();
             $guitarExists = $guitarService->guitarExists($guitarInfos);
 
+            // Does not create new guitar, if guitar already exists
             if($guitarExists){
-                return $this->render('create_guitar.html.twig', [
-                    'message' => SystemWording::GUITAR_ALREADY_EXISTS,
-                    'infos' => $guitarInfos,
-                    'guitarTypes' => $guitarTypes,
-                    'return' => true,
-                ]);
+                $processData['message'] = SystemWording::GUITAR_ALREADY_EXISTS;
+                $processData['return'] = true;
             }
-            else {
 
+            // creates new guitar
+            else {  
                 $guitarUploadInfos = $guitarService->createNewGuitar($guitarInfos);
-
                 if ($guitarUploadInfos['isUploadSuccessfull']){
 
-                    //create new ImageGuitar-Entity
+                    //adds image to guitar
                     if(!empty($guitarUploadInfos['imageId'])){
                         $imageGuitarService
                             ->createNewImageGuitar(
                                 $guitarUploadInfos['imageId'], 
                                 $guitarUploadInfos['guitarId']
                             );
-                    }
-                   
-                    return $this->render('create_guitar.html.twig', [
-                        'message' => SystemWording::SUCCESS_GUITAR_CREATION,
-                        'infos' => $guitarInfos,
-                        'guitarTypes' => $guitarTypes,
-                        'return' => false,
-                    ]);
-                }else{
-                    return $this->render('create_guitar.html.twig', [
-                        'message' => SystemWording::FAILURE_MESSAGE,
-                        'infos' => $guitarInfos,
-                        'guitarTypes' => $guitarTypes,
-                        'return' => true,
-                    ]);
+                    }   
+                    $processData['message'] = SystemWording::SUCCESS_GUITAR_CREATION;
+                    $processData['return'] = false;
+                } 
+                else {
+                    $processData['message'] = SystemWording::FAILURE_MESSAGE;
+                    $processData['return'] = true;
                 }
             }
         }
 
-        return $this->render('create_guitar.html.twig', [
-            'guitarTypes' => $guitarTypes,
-            'message' => $message,
-            'imageIsUploaded' => $request->query->get('isUploaded') ?? false,
-            'targetFile' => $request->query->get('targetFile') ?? null
-        ]);
+        return $this->render('create_guitar.html.twig', $processData);
     }
 
 
