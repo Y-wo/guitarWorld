@@ -52,7 +52,7 @@ class CustomTwigExtension extends AbstractExtension
         $attributes .= $hidden ? 'hidden' : '';
         $asterisk = $isRequired ? '*' : '';
         $value = '';
-        if ($return) $value = "value=" . $infos[$name];
+        if ($return) $value = "value='$infos[$name]'";
         if ($name == 'submit') $value = "value=submit";
 
         return "
