@@ -52,23 +52,19 @@ class ImageService extends AbstractEntityService
             $uploadOk = 0;
         }
 
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-        // var_dump("Sorry, your file was not uploaded.");
-        // if everything is ok, try to upload file
-        } else {
+        if ($uploadOk == 1) {
             if ($fileExists) {
                 $message = "Die File hat bereits existiert. Verknüpfung wurde erstellt.";
                 $isUploaded = true;
             }
             else {
                 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    $message = "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+                    $message = SystemWording::UPLOAD_SUCCESS . htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])) ;
                     $isUploaded = true;
                     $this->createNewImage($target_file);
                 } 
                 else {
-                    $message = "Sorry, there was an error uploading your file.";
+                    $message = SystemWording::ERROR_MESSAGE;
                 }
             }
         }
