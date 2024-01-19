@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="guitar-detail__container">
+        <h2> 
+            {% include 'guitar-headline.html.twig'%}
+        </h2>
+
+        {{guitar.price}},00 €
+
+        <div class="guitar-detail__image-container"> 
+            {% include 'guitar-image.html.twig' with { 'classes' : 'image-frame' }%}   
+        </div>
+
+        <table>
+
+            {% if isAdmin %}
+                <tr>
+                    <td>ID: </td>
+                    <td> {{guitar.id}} </td>
+                <tr>
+                <tr>
+                    <td>Gelöscht:</td>
+                    <td>{% if guitar.deleted == true %}{{guitar.deleted}} {% else %} - {% endif %}</td>
+                </tr>
+                <tr>
+                    <td>In Verwendung: </td>
+                    <td>{% if guitar.used == true %}{{guitar.used}} {% else %} - {% endif %}</td>
+                </tr>
+                {# <tr>
+                    <td>Rechnungsnummer: </td>
+                    <td>{% if guitar.guitarOrder == true %}{{guitar.order}} {% else %} - {% endif %}</td>
+                </tr> #}
+
+            {% endif %}
+
+            <tr>
+                <td>Marke:</td>
+                <td>{{guitar.guitarType.brand}}</td>
+            </tr>
+            <tr>
+                <td>Version:</td>
+                <td>{{guitar.guitarType.version}}</td>
+            </tr>
+            <tr>
+                <td>Modell:</td>
+                <td>{{guitar.model}}</td>
+            </tr>
+            <tr>
+                <td>Typ:</td>
+                <td>{{guitar.guitarType.type}}</td>
+            </tr>
+            <tr>
+                <td>Farbe:</td>
+                <td>{{guitar.color}}</td>
+            </tr>
+
+            <tr>
+                <td>Body:</td>
+                <td>{{guitar.body}}</td>
+            </tr>
+            <tr>
+                <td>Pickup:</td>
+                <td>{{guitar.pickup}}</td>
+            </tr>
+            <tr>
+                <td>Hals:</td>
+                <td>{{guitar.guitarType.neck}}</td>
+            </tr>
+            <tr>
+                <td>Sattelbreite:</td>
+                <td>{{guitar.guitarType.saddlewidth}}</td>
+            </tr>
+            <tr>
+                <td>Griffbrett:</td>
+                <td>{{guitar.guitarType.fretboard}}</td>
+            </tr>
+            <tr>
+                <td>Mensur:</td>
+                <td>{{guitar.guitarType.scale}}</td>
+            </tr>
+            <tr>
+                <td>Größe:</td>
+                <td>{{guitar.guitarType.size}}</td>
+            </tr>
+        </table>
+
+
+
+
+    </div>
+
+{% endblock %}

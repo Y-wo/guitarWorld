@@ -1,26 +1,25 @@
 <div class="guitar-overview__container">
+    <a href="{{path('guitar', {'guitarId' : guitar.id})}}">
 
-    <img class="guitar-overview__img" src="
-        {% if guitar.imageGuitar is not empty %}
-            {{asset(guitar.imageGuitar.first.image.name)}}
-        {% else %} 
-            {{asset('assets/placeholder/placeholder-guitar.svg')}}
-        {% endif %}
-    ">
+        {% include 'guitar-image.html.twig'%}
 
-    <div>
-        <h3><strong>{{guitar.guitarType.brand}} - {{guitar.guitarType.version}} ({{ guitar.guitarType.type }}) </strong></h3>    
-    </div>
-    
-    <div>
-        <p>{{guitar.model}} </p>
-    </div>
-    
-    <div>
-        <p>{{guitar.price}},00 € </p> 
-    </div>
+        <div>
+            <h3><strong>{{guitar.guitarType.brand}} - {{guitar.guitarType.version}} ({{ guitar.guitarType.type }}) </strong></h3>    
+        </div>
+        
+        <div>
+            <p>{{guitar.model}} </p>
+        </div>
+        
+        <div>
+            <p>{{guitar.price}},00 € </p> 
+        </div>
 
-    <a href="{{path('change_guitar', {
-        'id': guitar.id
-    })}}" class="button">Bearbeiten</a>
+    </a>
+    {# put button out if user has rights #}
+    {% if user is defined and user is not null and isAdmin(user) == true %}
+        <a href="{{path('change_guitar', {
+            'id': guitar.id
+        })}}" class="button">Bearbeiten</a>
+    {% endif %}
 </div>

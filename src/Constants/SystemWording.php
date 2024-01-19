@@ -25,6 +25,7 @@ abstract class SystemWording
     const SUCCESS_GUITAR_CHANGE = "Gitarre erfolgreich angepasst.";
     const CHANGE_GUITAR = "change_guitar";
     const CREATE_GUITAR = "create_guitar";
+    const NO_GUITAR_FOUND = "Es wurde leider keine Gitarre mit dieser ID gefunden.";
 
     // Roles
     const ROLE_USER = 'ROLE_USER';

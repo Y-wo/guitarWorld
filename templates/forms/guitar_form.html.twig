@@ -8,7 +8,7 @@
 {# ---------------------------- IMAGE --------------#}
 
 <div class="guitar-form__guitar-container">
-    <a class="guitar-form__guitar-image-hyperlink" href="{{path('upload_image')}}">
+    <a class="guitar-form__guitar-image-hyperlink image-frame" href="{{path('upload_image')}}">
         <image class="guitar-form__guitar-image" src="
             {% if targetFile is defined and targetFile is not null %}
                 {{asset(targetFile)}}

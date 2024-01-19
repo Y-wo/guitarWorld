@@ -1,4 +1,8 @@
 {% set user = getUser(app.request) %}
+{% set isAdmin = false %}
+{% if user is defined and user is not null and isAdmin(user) == true %}
+    {% set isAdmin = true %}
+{% endif %}
 
 <!DOCTYPE html>
 <html>

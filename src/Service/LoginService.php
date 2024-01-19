@@ -27,6 +27,9 @@ class LoginService{
         // $this->jwtService = $jwtService;
     }
 
+    /*
+    * Checks if user data is correct and user has access-right
+    */
     public function authenticate(
         Request $request
     ):bool
@@ -67,7 +70,7 @@ class LoginService{
     : bool
     {
         $session = $request->getSession();
-        $state =  $session->get('loggedIn');
+        $state =  $session->get('logged_in');
         if($state) return true;
         return false;
     }

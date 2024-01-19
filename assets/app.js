@@ -20,5 +20,6 @@ import './styles/login-form.sass';
 import './styles/guitar-form.sass';
 import './styles/guitar-overview.sass';
 import './styles/home.sass';
+import './styles/guitar-detail.sass';
 
 import './js/sidebar.js';

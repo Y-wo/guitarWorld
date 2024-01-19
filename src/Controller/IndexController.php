@@ -76,6 +76,26 @@ class IndexController extends AbstractController
 
     }
 
+    #[Route(path: '/guitar', name: 'guitar')]
+    public function guitar(
+        Request $request,
+        GuitarService $guitarService
+    ): Response
+    {
+        $guitarId = $request->query->get('guitarId') ?? null;
+        $guitar = $guitarService->get($guitarId) ?? null;
+
+        if(empty($guitar)) return $this->redirectToRoute('home', [
+            'message' => SystemWording::NO_GUITAR_FOUND
+        ]);
+
+        return $this->render('guitar-detail.html.twig', [
+            'guitar' => $guitar
+        ]);
+    }
+
+
+
 
     #[Route(path: '/create-user', name: 'create_user')]
     public function createUser(
