@@ -20,9 +20,16 @@
         border-radius: 3rem
         padding: .5rem
         margin: .5rem
-
+        
         &:hover
             cursor: pointer
+
+        &--right
+            display: flex
+            margin-right: 5.5rem
+
+            .navbar__icon:first-of-type
+                padding-right: 2rem
 
     &__logo-icon-container
         background-color: inherit
@@ -34,3 +41,19 @@
         font-weight: bold
         font-size: 1.25rem
         align-items: center
+
+    &__shopping-cart-counter
+        background: blue 
+        border-radius: 1rem
+        position: relative
+        left: 124%
+        top: -10px
+        display: flex
+        align-items: center
+        justify-content: center
+        height: 1rem
+        min-width: 1rem 
+        font-size: 0.75rem
+        font-weight: bold
+        color: white
+        visibility: hidden

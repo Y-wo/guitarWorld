@@ -22,6 +22,7 @@ import './styles/guitar-overview.sass';
 import './styles/home.sass';
 import './styles/guitar-detail.sass';
 import './styles/image.sass';
+import './styles/shopping-cart.sass';
 
 import './js/shopping-cart.js';
 import './js/sidebar.js';

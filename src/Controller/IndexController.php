@@ -428,4 +428,19 @@ class IndexController extends AbstractController
         ]);
     }
 
+
+    /*
+    * shows the shopping cart
+    */
+    #[Route(path: '/shopping-cart', name: 'shopping_cart')]
+    public function shoppingCart(
+        Request $request,
+        ImageService $imageService,
+        GuitarService $guitarService,
+        ImageGuitarService $imageGuitarService
+    ): Response
+    {
+        return $this->render('shopping-cart.html.twig');
+    }
+
 }
