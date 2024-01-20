@@ -135,8 +135,30 @@ class GuitarService extends AbstractEntityService
         return count($result) > 0;   
     }
 
+    /*
+    * sets deleted true
+    */
+    public function deleteById(int $id) : bool 
+    {
+        $guitar = $this->get($id);
+        $guitar->setDeleted(true);
+        return ($this->store($guitar)) ? true : false;   
+    }
 
+    /*
+    * gets all guitars where deleted != true
+    */
+    public function getAllNotDeletedGuitars() : array 
+    {
+        $query = $this
+            ->entityManager
+            ->getRepository(self::$entityFqn)
+            ->createQueryBuilder('r')
+            ->select('r')
+            ->where('r.deleted != true')
+            ;
 
-
+        return $query->getQuery()->execute();
+    }
 
 }

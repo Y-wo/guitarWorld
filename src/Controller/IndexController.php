@@ -2,13 +2,7 @@
 
 namespace App\Controller;
 
-// use App\Entity\Guitar;
 use App\Constants\SystemWording;
-// use App\Entity\GuitarType;
-// use App\Entity\User;
-// use App\Entity\Image;
-// use App\Entity\ImageGuitar;
-// use App\Entity\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,12 +13,7 @@ use App\Service\GuitarService;
 use App\Service\GuitarTypeService;
 use App\Service\ImageGuitarService;
 use App\Service\ImageService;
-// use App\Service\OrderService;
 use App\Service\LoginService;
-// use DateTimeImmutable;
-// use LDAP\Result;
-// use Symfony\Component\Validator\Constraints\Date;
-// use Symfony\Component\Validator\Constraints\Regex;
 
 class IndexController extends AbstractController
 {
@@ -36,7 +25,7 @@ class IndexController extends AbstractController
     {   
         $message = $request->query->get('message') ?? null;
 
-        $guitars = $guitarService->getAll();
+        $guitars = $guitarService->getAllNotDeletedGuitars();
 
         return $this->render("home.html.twig", [
            'headline' => SystemWording::HELLO,
@@ -346,7 +335,23 @@ class IndexController extends AbstractController
         ]);
     }
 
-
+    
+    /*
+    * Delete Guitar Route
+    */
+    #[Route(path: '/delete-guitar', name: 'delete_guitar')]
+    public function deleteGuitar(
+        Request $request,
+        GuitarService $guitarService
+    ): Response
+    {
+        $guitarId = $request->query->get('id');
+        $guitarService->deleteById($guitarId);
+        $message = SystemWording::SUCCESS_GUITAR_DELETED . "(ID: " .$guitarId . ")";
+        return $this->redirectToRoute('home', [
+            'message' => $message
+        ]);
+    }
     
 
     #[Route(path: '/upload-image', name: 'upload_image')]

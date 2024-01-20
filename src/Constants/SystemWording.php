@@ -21,6 +21,7 @@ abstract class SystemWording
 
     // Guitar
     const SUCCESS_GUITAR_CREATION = "Neue Gitarre erfolgreich angelegt.";
+    const SUCCESS_GUITAR_DELETED = "Gitarre erfolgreich geslöscht ";
     const GUITAR_ALREADY_EXISTS = "Die Gitarre exitiert bereits";
     const SUCCESS_GUITAR_CHANGE = "Gitarre erfolgreich angepasst.";
     const CHANGE_GUITAR = "change_guitar";

@@ -3,14 +3,13 @@
 {% block content %}
 
     <div class="guitar-detail__container">
-        <h2> 
-            {% include 'guitar-headline.html.twig'%}
-        </h2>
+        
+        {% include 'guitar-headline.html.twig'%}
 
         {{guitar.price}},00 €
 
         <div class="guitar-detail__image-container"> 
-            {% include 'guitar-image.html.twig' with { 'classes' : 'image-frame' }%}   
+            {% include 'guitar-image.html.twig' with { 'classes' : 'image__frame' }%}   
         </div>
 
         <table>
