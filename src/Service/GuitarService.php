@@ -138,7 +138,7 @@ class GuitarService extends AbstractEntityService
     /*
     * sets deleted true
     */
-    public function deleteById(int $id) : bool 
+    public function setDeletedById(int $id) : bool 
     {
         $guitar = $this->get($id);
         $guitar->setDeleted(true);

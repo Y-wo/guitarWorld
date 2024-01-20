@@ -346,7 +346,7 @@ class IndexController extends AbstractController
     ): Response
     {
         $guitarId = $request->query->get('id');
-        $guitarService->deleteById($guitarId);
+        $guitarService->setDeletedById($guitarId);
         $message = SystemWording::SUCCESS_GUITAR_DELETED . "(ID: " .$guitarId . ")";
         return $this->redirectToRoute('home', [
             'message' => $message
