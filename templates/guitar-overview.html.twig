@@ -28,4 +28,17 @@
             class="button">Löschen
         </a>
     {% endif %}
+
+    {# put buttons out if user has rights #}
+    {% if isAdmin == false %}
+        <button 
+            class="js-add-to-cart-button" 
+            data-guitar-id="{{guitar.id}}"
+            data-name="{% include 'guitar-headline-content.html.twig' %}"
+            data-image-src="{% if guitar.imageGuitar is not empty %}{{asset(guitar.imageGuitar.first.image.name)}}{% else %}{{asset('assets/placeholder/placeholder-guitar.svg')}}{% endif %}"
+            >
+            In den Warenkorb
+        </button>
+    {% endif %}
+
 </div>
