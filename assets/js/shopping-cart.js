@@ -1,15 +1,26 @@
+const serverUrl = "http://localhost/guitarWorld"; 
+const shoppingCartPageUrl = "/public/shopping-cart";
+const guitarDetailPageUrl = '/public/guitar?guitarId='
+
 document.addEventListener("DOMContentLoaded", async function() {
     let addToCartButtons = document.querySelectorAll('.js-add-to-cart-button');
     let storedGuitars = JSON.parse(localStorage.getItem('guitars') ?? '{}');
 
+    console.log(window.location.href);
+
     refreshSidebarEntries(storedGuitars);
+
+    
+    refreshShoppingCartPageOverview(storedGuitars);
+    
+
 
     addToCartButtons.forEach((addToCartButton) => {
         addToCartButton.addEventListener('click', (event) => {
             addToShoppingCart(event.target);
         })
     })
-
+});
 
     /*
     * adds target to shopping cart if not already in there
@@ -64,6 +75,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         localStorage.setItem("guitars", JSON.stringify(storedGuitars));
 
         refreshSidebarEntries(storedGuitars); 
+        refreshShoppingCartPageOverview(storedGuitars);
     }
 
 
@@ -73,54 +85,59 @@ document.addEventListener("DOMContentLoaded", async function() {
     */
     function refreshSidebarEntries(storedGuitars) {
         let sidebarShoppingElements = document.querySelector(".js-sidebar-shopping-elements-container");
+        appendShoppingItemsToTarget(sidebarShoppingElements, storedGuitars);
+    }
 
-        // debug
-        console.log(storedGuitars);
 
-        // Clear existing content in the sidebar
-        sidebarShoppingElements.innerHTML = '';
-        // let guitarIds = [];
-        // let counter = 1;
+
+    /*
+    * appends shopping items to view
+    */ 
+    function appendShoppingItemsToTarget(appendingTarget, storedGuitars) {
+        // Clears existing content in the sidebar
+        appendingTarget.innerHTML = '';
+
         let length = Object.keys(storedGuitars).length;
         refreshShoppingCartCounter(length);
 
-        // create elements and append them to the sidebar form
+
+        // create elements and append them to the target
         for (let key in storedGuitars) {
             let guitarValue = storedGuitars[key];
-    
-            // guitarIds.push(guitarValue.id);
 
-            let pElement = document.createElement('p');
-            pElement.textContent = guitarValue.name;
-            sidebarShoppingElements.appendChild(pElement);
+            let shoppingItemContainer = document.createElement('div');
+            shoppingItemContainer.className = "shopping-cart__item-container";
+            shoppingItemContainer.style.paddingBottom = "1rem"
+
+            let aTagToGuitar = document.createElement('a');
+            aTagToGuitar.href = serverUrl + guitarDetailPageUrl + guitarValue.id;
 
             let imageElement = document.createElement('img');
             imageElement.src = guitarValue.imageSrc;
-            sidebarShoppingElements.appendChild(imageElement);
+            imageElement.className = 'image__frame'
+
+            aTagToGuitar.appendChild(imageElement);
+            shoppingItemContainer.appendChild(aTagToGuitar);
+
+            let pElement = document.createElement('p');
+            pElement.textContent = guitarValue.name;
+            shoppingItemContainer.appendChild(pElement);
 
             let removeButton = document.createElement('div');
             removeButton.setAttribute('data-guitar-id', guitarValue.id);
             removeButton.className = "button";
             removeButton.innerHTML = "Aus Warenkorb entfernen";
-            sidebarShoppingElements.appendChild(removeButton);
+            shoppingItemContainer.appendChild(removeButton);
+
             removeButton.addEventListener('click', function(event) {
                 event.stopPropagation();
                 removeFromShoppingCart(event.target); 
             })
 
-            // hands over ids of guitars in the shopping cart
-            // if (counter == length) {
-            //     let inputElement = document.createElement('input');
-            //     inputElement.type = 'text';
-            //     inputElement.value = guitarIds;
-            //     inputElement.hidden = true
-            //     inputElement.name = 'ids'
-            //     sidebarShoppingElements.appendChild(inputElement);  
-            // }  
-            // counter++;
+            appendingTarget.appendChild(shoppingItemContainer);
         }
-    }
 
+    }
 
 
 
@@ -139,17 +156,11 @@ document.addEventListener("DOMContentLoaded", async function() {
     * refreshs shopping cart if on page 'shopping-cart'
     */
    function refreshShoppingCartPageOverview(storedGuitars) {
-        let overviewContainer = document.querySelector('.js-shopping-cart-overview-container');
-        
-        for (let key in storedGuitars) {
-            let guitarValue = storedGuitars[key];
-
-
+        if(window.location.href == serverUrl + shoppingCartPageUrl){
+            let overviewContainer = document.querySelector('.js-shopping-cart-overview-container');
+            appendShoppingItemsToTarget(overviewContainer, storedGuitars);
         }
-        
-
    }
 
 
 
-});

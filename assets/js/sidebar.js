@@ -22,4 +22,7 @@ document.addEventListener("DOMContentLoaded", async function(){
             isSidebarOpen = false;
         }
     });
+
+    
+
 });

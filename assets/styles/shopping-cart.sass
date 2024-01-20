@@ -1,0 +1,26 @@
+@import 'base'
+
+.shopping-cart
+
+    &__overview-container
+        display: flex
+        flex-direction: column
+        max-width: 100%
+
+    &__item-container
+        display: flex
+        max-width: 100%
+        overview: hidden
+        transition: box-shadow 0.15s
+
+        &:hover
+            box-shadow: $shadow-hover
+
+        img
+            width: 30%
+        
+        p
+            width: 50%
+        
+        .button
+            width: 20%
