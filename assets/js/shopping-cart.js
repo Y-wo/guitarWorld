@@ -5,16 +5,8 @@ const guitarDetailPageUrl = '/public/guitar?guitarId='
 document.addEventListener("DOMContentLoaded", async function() {
     let addToCartButtons = document.querySelectorAll('.js-add-to-cart-button');
     let storedGuitars = JSON.parse(localStorage.getItem('guitars') ?? '{}');
-
-    console.log(window.location.href);
-
     refreshSidebarEntries(storedGuitars);
-
-    
     refreshShoppingCartPageOverview(storedGuitars);
-    
-
-
     addToCartButtons.forEach((addToCartButton) => {
         addToCartButton.addEventListener('click', (event) => {
             addToShoppingCart(event.target);
@@ -151,6 +143,37 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 
 
+    /*
+    * refreshs shopping cart form for guitars
+    */
+    function refreshShoppingCartFormGuitars(storedGuitars) {
+        let shoppingCartFormGuitars = document.querySelector('js-shopping-cart-form-guitars');
+        shoppingCartFormGuitars.innerHTML = '';
+        
+        let guitarInput = document.createElement('input');
+
+
+
+        // let guitarIds = [];
+        // let counter = 1;
+        // guitarIds.push(guitarValue.id);
+
+        // hands over ids of guitars in the shopping cart
+            // if (counter == length) {
+            //     let inputElement = document.createElement('input');
+            //     inputElement.type = 'text';
+            //     inputElement.value = guitarIds;
+            //     inputElement.hidden = true
+            //     inputElement.name = 'ids'
+            //     sidebarShoppingElements.appendChild(inputElement);  
+            // }  
+            // counter++;
+
+
+
+    }
+
+
 
     /*
     * refreshs shopping cart if on page 'shopping-cart'
@@ -159,6 +182,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         if(window.location.href == serverUrl + shoppingCartPageUrl){
             let overviewContainer = document.querySelector('.js-shopping-cart-overview-container');
             appendShoppingItemsToTarget(overviewContainer, storedGuitars);
+
         }
    }
 
