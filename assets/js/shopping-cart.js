@@ -63,7 +63,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         if(!isInShoppingCart(guitarId)) return;
 
         delete storedGuitars[guitarId];
-        console.log(storedGuitars);
         localStorage.setItem("guitars", JSON.stringify(storedGuitars));
 
         refreshSidebarEntries(storedGuitars); 
@@ -147,27 +146,36 @@ document.addEventListener("DOMContentLoaded", async function() {
     * refreshs shopping cart form for guitars
     */
     function refreshShoppingCartFormGuitars(storedGuitars) {
-        let shoppingCartFormGuitars = document.querySelector('js-shopping-cart-form-guitars');
-        shoppingCartFormGuitars.innerHTML = '';
         
-        let guitarInput = document.createElement('input');
+        let shoppingCartFormGuitars = document.querySelector('.js-shopping-cart-form-guitars');
+        let guitarIds = [];
+        let counter = 0;
 
+        shoppingCartFormGuitars.innerHTML = '';
 
+        for (let key in storedGuitars) {
+            guitarIds.push(key);
+            counter++;
+        }
 
-        // let guitarIds = [];
-        // let counter = 1;
-        // guitarIds.push(guitarValue.id);
+        console.log("na")
 
-        // hands over ids of guitars in the shopping cart
-            // if (counter == length) {
-            //     let inputElement = document.createElement('input');
-            //     inputElement.type = 'text';
-            //     inputElement.value = guitarIds;
-            //     inputElement.hidden = true
-            //     inputElement.name = 'ids'
-            //     sidebarShoppingElements.appendChild(inputElement);  
-            // }  
-            // counter++;
+        if (counter > 0) {
+            let guitarInput = document.createElement('input');
+            guitarInput.name = "ids";
+            guitarInput.value = guitarIds;
+            guitarInput.required = true
+            guitarInput.hidden = true
+            shoppingCartFormGuitars.append(guitarInput);
+
+            let submitButton = document.createElement('input');
+            submitButton.type = 'submit'
+            submitButton.className = 'button'
+            submitButton.value = "Jetzt kostenpflichtig bestellen"
+            // submitButton.target = 'serverUrl + shoppingCartPageUrl'
+            shoppingCartFormGuitars.append(submitButton);
+        }
+
 
 
 
@@ -182,7 +190,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         if(window.location.href == serverUrl + shoppingCartPageUrl){
             let overviewContainer = document.querySelector('.js-shopping-cart-overview-container');
             appendShoppingItemsToTarget(overviewContainer, storedGuitars);
-
+            refreshShoppingCartFormGuitars(storedGuitars);
         }
    }
 

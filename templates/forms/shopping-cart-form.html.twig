@@ -1,21 +1,22 @@
-<form>
-    <input type="text" name="firstname">
+<form action="{{path('shopping_cart')}}" method="post">
+    <input type="text" name="firstname" required>
     <label for>Vorname</label>
-    <input type="text" name="lastname">
+    <input type="text" name="lastname" required>
     <label for>Nachname</label>
-    <input type="text" name="email">
+    <input type="text" name="email" required>
     <label for>E-Mail</label>
-    <input type="text" name="street">
+    <input type="text" name="street" required>
     <label for>Straße</label>
-    <input type="text" name="housenumber">
+    <input type="text" name="housenumber" required>
     <label for>Hausnummer</label>
-    <input type="number" name="zipcode">
+    <input type="number" name="zipcode" required>
     <label for>PLZ</label>
-    <input type="text" name="city">
+    <input type="text" name="city" required>
     <label for>Ort</label>
 
     <div class="js-shopping-cart-form-guitars ">
-    test123
+
     </div>
+
     {# roles muss serverseitig angelegt werden #}
 </form>
