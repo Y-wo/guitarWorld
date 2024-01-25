@@ -36,6 +36,7 @@
             data-guitar-id="{{guitar.id}}"
             data-name="{% include 'guitar-headline-content.html.twig' %}"
             data-image-src="{% if guitar.imageGuitar is not empty %}{{asset(guitar.imageGuitar.first.image.name)}}{% else %}{{asset('assets/placeholder/placeholder-guitar.svg')}}{% endif %}"
+            data-price="{{guitar.price}}"
             >
             In den Warenkorb
         </button>

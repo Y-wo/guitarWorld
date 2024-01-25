@@ -22,16 +22,19 @@ document.addEventListener("DOMContentLoaded", async function() {
         // gets stored stored guitars - converts string to object
         storedGuitars = JSON.parse(localStorage.getItem('guitars') ?? '{}');
 
-        let guitarId = guitarTarget.getAttribute('data-guitar-id')
+        let guitarId = guitarTarget.getAttribute('data-guitar-id');
 
         if(isInShoppingCart(guitarId)) return;
 
-        let guitarName = guitarTarget.getAttribute('data-name')
-        let guitarImageSrc = guitarTarget.getAttribute('data-image-src')
+        let guitarName = guitarTarget.getAttribute('data-name');
+        let guitarImageSrc = guitarTarget.getAttribute('data-image-src');
+        let guitarPrice = guitarTarget.getAttribute('data-price');
+
         storedGuitars[guitarId] = {
             'id': guitarId,
             'name': guitarName,
-            'imageSrc': guitarImageSrc
+            'imageSrc': guitarImageSrc,
+            'price' : guitarPrice
         }
 
         // sets changed guitars as new stored guitars - converts object to string
@@ -77,6 +80,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     function refreshSidebarEntries(storedGuitars) {
         let sidebarShoppingElements = document.querySelector(".js-sidebar-shopping-elements-container");
         appendShoppingItemsToTarget(sidebarShoppingElements, storedGuitars);
+        console.log(storedGuitars)
     }
 
 
@@ -91,10 +95,14 @@ document.addEventListener("DOMContentLoaded", async function() {
         let length = Object.keys(storedGuitars).length;
         refreshShoppingCartCounter(length);
 
+        let totalPrice = parseInt(0);
+
 
         // create elements and append them to the target
         for (let key in storedGuitars) {
             let guitarValue = storedGuitars[key];
+
+            totalPrice += parseInt(guitarValue.price);
 
             let shoppingItemContainer = document.createElement('div');
             shoppingItemContainer.className = "shopping-cart__item-container";
@@ -102,17 +110,23 @@ document.addEventListener("DOMContentLoaded", async function() {
 
             let aTagToGuitar = document.createElement('a');
             aTagToGuitar.href = serverUrl + guitarDetailPageUrl + guitarValue.id;
+            aTagToGuitar.className = 'image__frame'
 
             let imageElement = document.createElement('img');
             imageElement.src = guitarValue.imageSrc;
-            imageElement.className = 'image__frame'
 
             aTagToGuitar.appendChild(imageElement);
             shoppingItemContainer.appendChild(aTagToGuitar);
 
-            let pElement = document.createElement('p');
-            pElement.textContent = guitarValue.name;
-            shoppingItemContainer.appendChild(pElement);
+            let nameElement = document.createElement('p');
+            nameElement.className = "shopping-cart__name"
+            nameElement.textContent = guitarValue.name;
+            shoppingItemContainer.appendChild(nameElement);
+
+            let priceElement = document.createElement('p');
+            priceElement.className = "shopping-cart__price"
+            priceElement.textContent = guitarValue.price + ',00 €';
+            shoppingItemContainer.appendChild(priceElement);
 
             let removeButton = document.createElement('div');
             removeButton.setAttribute('data-guitar-id', guitarValue.id);
@@ -128,12 +142,17 @@ document.addEventListener("DOMContentLoaded", async function() {
             appendingTarget.appendChild(shoppingItemContainer);
         }
 
+        totalPriceElement = document.createElement('p');
+        totalPriceElement.innerHTML = 'TOTALPREIS: ' + totalPrice + ',00 €';
+        appendingTarget.appendChild(totalPriceElement);
+        console.log(totalPrice);
+
     }
 
 
 
     /*
-    * refreshs shopping cart counter
+    * refreshs shopping cart counter in the navbar
     */
     function refreshShoppingCartCounter(number) {
         let shoppingCartCounter = document.querySelector('.js-shopping-cart-counter');
@@ -158,8 +177,6 @@ document.addEventListener("DOMContentLoaded", async function() {
             counter++;
         }
 
-        console.log("na")
-
         if (counter > 0) {
             let guitarInput = document.createElement('input');
             guitarInput.name = "ids";
@@ -172,7 +189,6 @@ document.addEventListener("DOMContentLoaded", async function() {
             submitButton.type = 'submit'
             submitButton.className = 'button'
             submitButton.value = "Jetzt kostenpflichtig bestellen"
-            // submitButton.target = 'serverUrl + shoppingCartPageUrl'
             shoppingCartFormGuitars.append(submitButton);
         }
 
@@ -193,6 +209,15 @@ document.addEventListener("DOMContentLoaded", async function() {
             refreshShoppingCartFormGuitars(storedGuitars);
         }
    }
+
+
+
+   /*
+   *
+   */
+  function refreshTotalPrice(storedGuitars){
+
+  }
 
 
 
