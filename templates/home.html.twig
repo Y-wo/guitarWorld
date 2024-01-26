@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block script %}
+    {% if localStorageScript is defined and localStorageScript is not null %}
+        {{localStorageScript|raw }}
+    {% endif %}
+{% endblock %}
+
+
 {% block content %}
 
     <div class="home__guitars-container">

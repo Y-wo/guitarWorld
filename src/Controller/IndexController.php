@@ -24,13 +24,14 @@ class IndexController extends AbstractController
     ): Response
     {   
         $message = $request->query->get('message') ?? null;
-
+        $localStorageScript = $request->query->get('localStorageScript') ?? null;
         $guitars = $guitarService->getAllNotDeletedGuitars();
 
         return $this->render("home.html.twig", [
            'headline' => SystemWording::HELLO,
            'message' => $message,
-           'guitars' => $guitars ?? null
+           'guitars' => $guitars ?? null,
+           'localStorageScript' => $localStorageScript ?? null
         ]);
     }
 
@@ -43,8 +44,13 @@ class IndexController extends AbstractController
     {
         $isAuthorized = $loginService->authenticate($request);
         $message = $isAuthorized ? SystemWording::SUCCESS_LOGIN : SystemWording::ERROR_LOGIN;
+
+        // removes items from shopping-cart if admin is logged in
+        $localStorageScript = $isAuthorized ? "<script>localStorage.clear()</script>" : null;
+        
         return $this->redirectToRoute('home', [
             'message' => $message,
+            'localStorageScript' => $localStorageScript,
             'info1' => $request->getSession()->get('user') ?? 'kein User vorhanden'
         ]);
     }
