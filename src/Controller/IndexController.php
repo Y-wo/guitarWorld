@@ -14,6 +14,8 @@ use App\Service\GuitarTypeService;
 use App\Service\ImageGuitarService;
 use App\Service\ImageService;
 use App\Service\LoginService;
+use App\Service\OrderService;
+use App\Service\HelperService;
 
 class IndexController extends AbstractController
 {
@@ -25,7 +27,11 @@ class IndexController extends AbstractController
     {   
         $message = $request->query->get('message') ?? null;
         $localStorageScript = $request->query->get('localStorageScript') ?? null;
-        $guitars = $guitarService->getAllNotDeletedGuitars();
+        
+        // only guitars not deleted and not ordered
+        $guitars = $guitarService->getAllSelectedGuitars(false, false);
+
+        $message = count($guitars);
 
         return $this->render("home.html.twig", [
            'headline' => SystemWording::HELLO,
@@ -70,6 +76,8 @@ class IndexController extends AbstractController
         ]);
 
     }
+
+
 
     #[Route(path: '/guitar', name: 'guitar')]
     public function guitar(
@@ -360,6 +368,7 @@ class IndexController extends AbstractController
     }
     
 
+
     #[Route(path: '/upload-image', name: 'upload_image')]
     public function uploadImage(
         Request $request,
@@ -409,6 +418,7 @@ class IndexController extends AbstractController
     }
 
 
+
     /*
     * remove ImageGuitarEntity from Database
     */
@@ -435,18 +445,33 @@ class IndexController extends AbstractController
     }
 
 
+
     /*
     * shows the shopping cart
     */
     #[Route(path: '/shopping-cart', name: 'shopping_cart')]
     public function shoppingCart(
         Request $request,
-        ImageService $imageService,
-        GuitarService $guitarService,
-        ImageGuitarService $imageGuitarService
+        OrderService $orderService,
+        HelperService $helperService
     ): Response
     {
-        return $this->render('shopping-cart.html.twig');
+        $isSubmit = $orderService->isSubmit($request);
+        if ($isSubmit) {
+            $orderInfos = $request->request->all();
+
+            
+
+            $result = $orderService->createOrder($orderInfos);
+
+            $message = 'submit kam an: ' . $result;
+        }
+
+
+        return $this->render('shopping-cart.html.twig', [
+            'message' => $message ?? null,
+            'orderInfos' => $orderInfos ?? null,
+        ]);
     }
 
 }

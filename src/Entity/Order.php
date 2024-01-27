@@ -18,10 +18,11 @@ class Order extends AbstractEntity
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $payDate = null;
 
-    #[ORM\OneToOne(mappedBy: 'guitarOrder', cascade: ['persist', 'remove'])]
+    // #[ORM\OneToOne(mappedBy: 'guitarOrder', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'guitarOrder')]
     private ?Guitar $guitar = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]

@@ -161,4 +161,32 @@ class GuitarService extends AbstractEntityService
         return $query->getQuery()->execute();
     }
 
+    /*
+    * gets all guitars where deleted != true
+    */
+    public function getAllSelectedGuitars(bool $deletedIncluded, bool $orderedIncluded) : array 
+    {
+        $query = $this
+            ->entityManager
+            ->getRepository(self::$entityFqn)
+            ->createQueryBuilder('r')
+            ->select('r')
+            ;
+
+        if(!$deletedIncluded){
+            $query
+                ->where('r.deleted = false')
+                ;
+        }
+
+        if(!$orderedIncluded){
+            $query
+                ->andWhere('r.guitarOrder is null')
+                ;
+        }
+
+
+        return $query->getQuery()->execute();
+    }
+
 }

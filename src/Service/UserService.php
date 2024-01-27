@@ -98,6 +98,35 @@ class UserService extends AbstractEntityService
         return $this->store($user) ? true : false;
     }
 
+
+    public function createNewUserForOrder(
+        array $userInfos
+    ) : bool
+    {
+        $user = new User();
+
+        $user
+            ->setFirstname($userInfos['firstname'])
+            ->setLastname($userInfos['lastname'])
+            ->setEmail($userInfos['email'])
+            ->setStreet($userInfos['street'])
+            ->setHouseNumber($userInfos['housenumber'])
+            ->setPhone($userInfos['phone'])
+            ->setCity($userInfos['city'])
+            ->setBegin(new \DateTimeImmutable())
+            ->setBirthday(new \DateTimeImmutable())
+            ->setDeleted(0)
+            ->setZipcode($userInfos['zipcode'])
+            ->setRoles([SystemWording::ROLE_USER])
+        ;
+
+        var_dump($user);
+
+        return $this->store($user) ? $user->getId() : false;
+    }
+
+
+
     public function getUserByEmail(String $email): ?User
     {
         $query = $this

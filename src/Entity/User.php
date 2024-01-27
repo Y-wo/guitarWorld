@@ -27,7 +27,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]

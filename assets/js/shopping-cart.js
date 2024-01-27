@@ -181,14 +181,15 @@ document.addEventListener("DOMContentLoaded", async function() {
             let guitarInput = document.createElement('input');
             guitarInput.name = "ids";
             guitarInput.value = guitarIds;
-            guitarInput.required = true
-            guitarInput.hidden = true
+            guitarInput.required = true;
+            guitarInput.hidden = true;
             shoppingCartFormGuitars.append(guitarInput);
 
             let submitButton = document.createElement('input');
-            submitButton.type = 'submit'
-            submitButton.className = 'button'
-            submitButton.value = "Jetzt kostenpflichtig bestellen"
+            submitButton.type = 'submit';
+            submitButton.className = 'button';
+            submitButton.value = "Jetzt kostenpflichtig bestellen";
+            submitButton.name = 'submit';
             shoppingCartFormGuitars.append(submitButton);
         }
 
