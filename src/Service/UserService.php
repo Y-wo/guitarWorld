@@ -101,7 +101,7 @@ class UserService extends AbstractEntityService
 
     public function createNewUserForOrder(
         array $userInfos
-    ) : bool
+    ) : ?int
     {
         $user = new User();
 
@@ -120,9 +120,11 @@ class UserService extends AbstractEntityService
             ->setRoles([SystemWording::ROLE_USER])
         ;
 
-        var_dump($user);
-
-        return $this->store($user) ? $user->getId() : false;
+        if ($this->store($user)) {
+            return $user->getId();
+        } else {
+            return null;
+        }
     }
 
 

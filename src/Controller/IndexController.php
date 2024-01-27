@@ -447,30 +447,80 @@ class IndexController extends AbstractController
 
 
     /*
-    * shows the shopping cart
+    * shows the shopping cart and creates order
     */
     #[Route(path: '/shopping-cart', name: 'shopping_cart')]
     public function shoppingCart(
         Request $request,
         OrderService $orderService,
-        HelperService $helperService
     ): Response
     {
         $isSubmit = $orderService->isSubmit($request);
         if ($isSubmit) {
             $orderInfos = $request->request->all();
-
-            
-
             $result = $orderService->createOrder($orderInfos);
-
             $message = 'submit kam an: ' . $result;
         }
-
 
         return $this->render('shopping-cart.html.twig', [
             'message' => $message ?? null,
             'orderInfos' => $orderInfos ?? null,
+        ]);
+    }
+
+    /*
+    * shows orders and handles order-management
+    */
+    #[Route(path: '/orders', name: 'orders')]
+    public function orders(
+        Request $request,
+        OrderService $orderService,
+    ): Response
+    {
+        $orders = $orderService->getAll();
+        $isSubmit = $orderService->isSubmit($request);
+
+        if ($isSubmit) {
+            $orderChangeInfos = $request->request->all();
+
+            // handles state-handling
+            if (!empty($orderChangeInfos['paidId'])) {
+                $orderService->switchPaid($orderChangeInfos['paidId'], true);
+            } 
+            else if (!empty($orderChangeInfos['resetPaidId'])) {
+                $orderService->switchPaid($orderChangeInfos['resetPaidId'], false);
+            } 
+            else if (!empty($orderChangeInfos['canceledId'])) {
+                $orderService->switchCanceled($orderChangeInfos['canceledId'], true);
+            }
+            else if (!empty($orderChangeInfos['resetCanceledId'])) {
+                $orderService->switchCanceled($orderChangeInfos['resetCanceledId'], false);
+            }
+        }
+
+        return $this->render('orders.html.twig', [
+            'orders' => $orders,
+        ]);
+
+    }
+
+
+    /*
+    * test
+    */
+    #[Route(path: '/test', name: 'test')]
+    public function test(
+        Request $request,
+        OrderService $orderService,
+        GuitarService $guitarService
+    ): Response
+    {
+
+        $order = $orderService->get(35);
+        $test = $guitarService->getAllByOrderId(35);
+        // $test = $orderService->get(23);
+        return $this->render('test.html.twig', [
+            'test' => $test ?? ''
         ]);
     }
 

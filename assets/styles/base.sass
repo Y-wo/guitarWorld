@@ -19,6 +19,9 @@ $color-primary: $color-pumpkin
 $color-secondary: $color-canteloupe
 $color-tertiary: $color-hot-chocolate
 $color-quaternary: $color-cotton
+$color-success: rgb(0,255,0, 0.3)
+$color-failure: rgb(255,0,0, 0.3)
+$color-disabled: rgb(190,190,190, 0.5)
 
 
 // ---------- COLOR "Alternatives" ---------------    
@@ -60,3 +63,23 @@ a
 
 img
     max-width: 100%
+
+.bg-success
+    background-color: $color-success
+
+.bg-failure
+    background-color: $color-failure
+
+.bg-disabled
+    background-color: $color-disabled
+
+@mixin item-container
+    display: flex
+    max-width: 100%
+    overview: hidden
+    transition: box-shadow 0.15s
+    box-shadow: $shadow
+
+    &:hover
+        box-shadow: $shadow-hover
+

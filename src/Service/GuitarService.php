@@ -173,20 +173,43 @@ class GuitarService extends AbstractEntityService
             ->select('r')
             ;
 
-        if(!$deletedIncluded){
+        if (!$deletedIncluded) {
             $query
                 ->where('r.deleted = false')
                 ;
         }
 
-        if(!$orderedIncluded){
+        if (!$orderedIncluded) {
             $query
                 ->andWhere('r.guitarOrder is null')
                 ;
         }
+        return $query->getQuery()->execute();
+    }
+
+
+
+
+    
+    public function getAllByOrderId($id) 
+    {
+        // $id = $order->getId();
+
+        // var_dump($id);
+
+        $query = $this
+            ->entityManager
+            ->getRepository(self::$entityFqn)
+            ->createQueryBuilder('r')
+            ->select('r')
+            ->where('r.guitarOrder = :order')
+            ->setParameter('order', $id)
+            ;
+
 
 
         return $query->getQuery()->execute();
     }
+
 
 }

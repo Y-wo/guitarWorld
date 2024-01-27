@@ -8,13 +8,7 @@
         max-width: 100%
 
     &__item-container
-        display: flex
-        max-width: 100%
-        overview: hidden
-        transition: box-shadow 0.15s
-
-        &:hover
-            box-shadow: $shadow-hover
+        @include item-container
 
         a
             width: 20%

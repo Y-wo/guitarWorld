@@ -7,9 +7,10 @@
     {% if user is defined and user is not null %}
         <h2>Hallo {{user.firstname}} {{user.lastname}}</h2>
 
-        {% if isAdmin(user) == true %}
+        {% if isAdmin %}
             <a href="{{path('create_guitar_type')}}" class="button">Gitarrentyp anlegen</a>
             <a href="{{path('create_guitar')}}" class="button">Gitarre anlegen</a>
+            <a class="button" href="{{path('orders')}}"> Bestellungen </a> 
         {% endif %}
 
 
@@ -21,6 +22,9 @@
         <a class="button" href="{{path('create_user')}}"> Registrieren </a> 
     {% endif %}
 
-    {% include 'forms/sidebar-shopping-form.html.twig' %}
+    {% if isAdmin == false %}   
+        {% include 'forms/sidebar-shopping-form.html.twig' %}
+    {% endif %}    
+
 
 </div>
