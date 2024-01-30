@@ -504,6 +504,45 @@ class IndexController extends AbstractController
 
     }
 
+    /*
+    * creates and downloads invoice of order
+    */
+    #[Route(path: '/invoice', name: 'invoice')]
+    public function invoice(
+        Request $request,
+        OrderService $orderService,
+        GuitarService $guitarService
+    ): Response
+    {
+
+
+        $myfile = fopen("invoices/newfile.txt", "w") or die("Unable to open file!");
+        $txt = "John Doe test123\n";
+        fwrite($myfile, $txt);
+        $txt = "Jane Doe\n";
+        fwrite($myfile, $txt);
+        fclose($myfile);
+
+        $file_url = 'http://localhost/guitarWorld/public/invoices/newfile.txt';
+        header('Content-Type: application/octet-stream');
+        header("Content-Transfer-Encoding: Binary"); 
+        header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
+        readfile($file_url);
+        exit(); 
+
+
+
+
+
+        // $order = $orderService->get(35);
+        // $test = $guitarService->getAllByOrderId(35);
+        // // $test = $orderService->get(23);
+        return $this->render('test.html.twig', [
+            'test' => $test ?? ''
+        ]);
+    }
+
+
 
     /*
     * test
@@ -516,9 +555,28 @@ class IndexController extends AbstractController
     ): Response
     {
 
-        $order = $orderService->get(35);
-        $test = $guitarService->getAllByOrderId(35);
-        // $test = $orderService->get(23);
+
+        $myfile = fopen("invoices/newfile.txt", "w") or die("Unable to open file!");
+        $txt = "John Doe test123\n";
+        fwrite($myfile, $txt);
+        $txt = "Jane Doe\n";
+        fwrite($myfile, $txt);
+        fclose($myfile);
+
+        $file_url = 'http://localhost/guitarWorld/public/invoices/newfile.txt';
+        // header('Content-Type: application/octet-stream');
+        // header("Content-Transfer-Encoding: Binary"); 
+        header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
+        readfile($file_url);
+        exit(); 
+
+
+
+
+
+        // $order = $orderService->get(35);
+        // $test = $guitarService->getAllByOrderId(35);
+        // // $test = $orderService->get(23);
         return $this->render('test.html.twig', [
             'test' => $test ?? ''
         ]);
