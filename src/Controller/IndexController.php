@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Constants\SystemWording;
+use App\Constants\JsScripts;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,8 +27,9 @@ class IndexController extends AbstractController
     ): Response
     {   
         $message = $request->query->get('message') ?? null;
-        $localStorageScript = $request->query->get('localStorageScript') ?? null;
-        
+        $clearLocalStorage = $request->query->get('clearLocalStorage') ?? false;
+        $localStorageScript = $clearLocalStorage ? JsScripts::CLEAR_LOCAL_STORAGE : null;
+
         // only guitars not deleted and not ordered
         $guitars = $guitarService->getAllSelectedGuitars(false, false);
 
@@ -52,11 +54,11 @@ class IndexController extends AbstractController
         $message = $isAuthorized ? SystemWording::SUCCESS_LOGIN : SystemWording::ERROR_LOGIN;
 
         // removes items from shopping-cart if admin is logged in
-        $localStorageScript = $isAuthorized ? "<script>localStorage.clear()</script>" : null;
+        $clearLocalStorage = $isAuthorized ? true : false;
         
         return $this->redirectToRoute('home', [
             'message' => $message,
-            'localStorageScript' => $localStorageScript,
+            'clearLocalStorage' => $clearLocalStorage,
             'info1' => $request->getSession()->get('user') ?? 'kein User vorhanden'
         ]);
     }
@@ -459,12 +461,14 @@ class IndexController extends AbstractController
         if ($isSubmit) {
             $orderInfos = $request->request->all();
             $result = $orderService->createOrder($orderInfos);
-            $message = 'submit kam an: ' . $result;
+            $message = 'Bestellung erfolgreich: Bestellnummer ' . $result;
+            $localStorageScript = JsScripts::CLEAR_LOCAL_STORAGE;
         }
 
         return $this->render('shopping-cart.html.twig', [
             'message' => $message ?? null,
             'orderInfos' => $orderInfos ?? null,
+            'localStorageScript' => $localStorageScript ?? null
         ]);
     }
 
@@ -483,7 +487,7 @@ class IndexController extends AbstractController
         if ($isSubmit) {
             $orderChangeInfos = $request->request->all();
 
-            // handles state-handling
+            // handles handling of order-state 
             if (!empty($orderChangeInfos['paidId'])) {
                 $orderService->switchPaid($orderChangeInfos['paidId'], true);
             } 

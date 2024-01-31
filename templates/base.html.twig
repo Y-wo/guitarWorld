@@ -31,7 +31,11 @@
 
                 {% include 'sidebar.html.twig' %}
 
-                {% block script %}{% endblock %}
+                {% block script %}
+                    {% if localStorageScript is defined and localStorageScript is not null %}
+                        {{localStorageScript|raw }}
+                    {% endif %}
+                {% endblock %}
 
                 {% block content %}{% endblock %}
 
