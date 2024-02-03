@@ -193,10 +193,6 @@ class GuitarService extends AbstractEntityService
     
     public function getAllByOrderId($id) 
     {
-        // $id = $order->getId();
-
-        // var_dump($id);
-
         $query = $this
             ->entityManager
             ->getRepository(self::$entityFqn)

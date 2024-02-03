@@ -481,7 +481,7 @@ class IndexController extends AbstractController
         OrderService $orderService,
     ): Response
     {
-        $orders = $orderService->getAll();
+        $orders = $orderService->getAllSortByDate(false);
         $isSubmit = $orderService->isSubmit($request);
 
         if ($isSubmit) {
@@ -514,35 +514,13 @@ class IndexController extends AbstractController
     #[Route(path: '/invoice', name: 'invoice')]
     public function invoice(
         Request $request,
-        OrderService $orderService,
-        GuitarService $guitarService
+        OrderService $orderService
     ): Response
     {
-
-
-        $myfile = fopen("invoices/newfile.txt", "w") or die("Unable to open file!");
-        $txt = "John Doe test123\n";
-        fwrite($myfile, $txt);
-        $txt = "Jane Doe\n";
-        fwrite($myfile, $txt);
-        fclose($myfile);
-
-        $file_url = 'http://localhost/guitarWorld/public/invoices/newfile.txt';
-        header('Content-Type: application/octet-stream');
-        header("Content-Transfer-Encoding: Binary"); 
-        header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
-        readfile($file_url);
-        exit(); 
-
-
-
-
-
-        // $order = $orderService->get(35);
-        // $test = $guitarService->getAllByOrderId(35);
-        // // $test = $orderService->get(23);
-        return $this->render('test.html.twig', [
-            'test' => $test ?? ''
+        $orderId = $request->request->get('id');
+        $orderService->provideInvoice($orderId);
+        return $this->redirectToRoute('home', [
+            'message' => SystemWording::ERROR_MESSAGE
         ]);
     }
 

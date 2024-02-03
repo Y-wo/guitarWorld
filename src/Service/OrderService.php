@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Service\UserService;
 use App\Service\GuitarService;
 use App\Service\HelperService;
+use App\Constants\ConfigurationVariables;
 
 class OrderService extends AbstractEntityService
 {
@@ -79,10 +80,6 @@ class OrderService extends AbstractEntityService
     }
 
 
-
-
-    // TODO: Überarbeiten - schöner machen
-
     /*
     * switches canceled state
     */
@@ -113,4 +110,100 @@ class OrderService extends AbstractEntityService
         }
         return $returnValue;
     }
+
+
+    public function getAllSortByDate(bool $isAsc)
+    {
+        $direction = $isAsc ? 'ASC' : 'DESC';
+
+        return $this
+            ->entityManager
+            ->getRepository(static::$entityFqn)
+            ->findBy([], ['date' => $direction])
+            ;
+    }
+
+    public function provideInvoice(int $id)
+    {
+        $order = $this->get($id);
+        $invoiceFileName = 'invoice_' . $id .'.txt';
+        
+        $invoiceFile = fopen("invoices/" . $invoiceFileName, "w") or die("Unable to open file!");
+        $this->writeInvoiceToFile($invoiceFile, $order);
+        fclose($invoiceFile);
+
+
+        $file_url = ConfigurationVariables::LOCAL_PATH . '/invoices/' . $invoiceFileName;
+        header('Content-Type: application/octet-stream');
+        header("Content-Transfer-Encoding: Binary"); 
+        header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
+        readfile($file_url);
+        exit();
+    }
+
+    public function createInvoiceItemText($guitar){
+        return "        |   ID: " . $guitar->getId() ."   | " . $guitar->getGuitarType()->getBrand() . " " . $guitar->getModel() . " - " . $guitar->getPrice() .",00 €";
+    }
+
+    public function computeTotalPrice($order){
+        $guitars = $this->guitarService->getAllByOrderId($order->getId());
+        $totalPrice = 0;
+        foreach ($guitars as $guitar){
+            $totalPrice = $totalPrice + $guitar->getPrice();
+        }
+        return $totalPrice;
+    }
+
+    public function coumputeSaleTax($price) {
+        return ($price / 100) * 19; 
+    }
+
+
+
+    public function writeInvoiceToFile($file, $order) {
+        $guitars = $this->guitarService->getAllByOrderId($order->getId());
+        $guitarItemsText = "";
+        foreach ($guitars as $guitar){
+            $guitarItemsText = $guitarItemsText . "\n" . $this->createInvoiceItemText($guitar);
+        }
+
+        $totalPrice = $this->computeTotalPrice($order);
+        $totalSalesTax = $this->coumputeSaleTax($totalPrice);
+
+        $txt =         
+        "
+        Max Mustermann
+        Musterstraße 123
+        12345 Musterstadt
+
+        Guitar World
+        Muster 456
+        54321 Musterstadt
+
+        Rechnung Nr.: " . $order->getId() . " 
+        Rechnungsdatum: " . $order->getDate()->format('d.m.Y') . "
+
+
+        Positionen:
+        " . $guitarItemsText ."
+
+        Enthaltene Umsatzsteuer (19%): " . $totalSalesTax  . " €
+
+        Gesamtsumme: " . $totalPrice . ",00 €
+
+        Zahlungsbedingungen: Zahlbar innerhalb von 14 Tagen nach Rechnungsdatum ohne Abzug.
+
+        Bankverbindung:
+        Max Mustermann
+        Musterbank AG
+        IBAN: DE12345678901234567890
+        BIC: MUSTERBICXXX
+
+        Vielen Dank für Ihren Einkauf!
+        ";
+        fwrite($file, $txt);
+        return $file;
+    }
+
+
 }

@@ -35,8 +35,17 @@
                 }%}
 
             {% elseif order.canceled is not null %}
-                ------------------- STORNIERT -------------------
+                 STORNIERT 
             {% endif %} 
+
+
+            {# --- invoice form --- #}
+            {% if order.canceled is null %}
+                <form action="{{path('invoice')}}" method="post">
+                    <input type="text" name="id" value="{{order.id}}" hidden>
+                    <input type="submit" class="button" name="submit" value="Rechnung">
+                </form>
+            {% endif %}
 
         </div>
     {% endfor %}
