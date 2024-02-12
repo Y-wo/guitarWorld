@@ -26,20 +26,31 @@ class IndexController extends AbstractController
         GuitarService $guitarService
     ): Response
     {   
+        $isSubmit = $request->query->get('submit');
+        $searchPhrase = $request->query->get('search-phrase');
         $message = $request->query->get('message') ?? null;
         $clearLocalStorage = $request->query->get('clearLocalStorage') ?? false;
         $localStorageScript = $clearLocalStorage ? JsScripts::CLEAR_LOCAL_STORAGE : null;
 
-        // only guitars not deleted and not ordered
-        $guitars = $guitarService->getAllSelectedGuitars(false, false);
+        // handling if guitar is searched
+        if ($isSubmit && !empty($searchPhrase)) {
+            $guitars = $guitarService->getAllByPhrase($searchPhrase, false, false);
+            $message = (count($guitars) > 0) ?
+                'Ergebnis der Suche "' .  $searchPhrase . '".'
+                :
+                'Leider wurde kein passendes Ergebnis gefunden.'
+                ;  
+        }   
 
-        $message = $message . " + ZUSATZINFO: Gitarrenanzahl " .  count($guitars);
+        if (!$isSubmit || (count($guitars) <= 0)) {
+            $guitars = $guitarService->getAllSelectedGuitars(false, false);
+        }
 
         return $this->render("home.html.twig", [
            'headline' => SystemWording::HELLO,
            'message' => $message,
            'guitars' => $guitars ?? null,
-           'localStorageScript' => $localStorageScript ?? null
+           'localStorageScript' => $localStorageScript ?? null,
         ]);
     }
 
@@ -78,6 +89,31 @@ class IndexController extends AbstractController
         ]);
 
     }
+
+    #[Route(path: '/search', name: 'search')]
+    public function search(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        GuitarService $guitarService
+    ): Response
+    {
+        $searchPhrase = $request->query->get('search-phrase');
+
+        $searchedGuitars = $guitarService->getAllByPhrase($searchPhrase, false, false);
+
+        // return $this->render("test.html.twig", [
+        //     'test' => $searchedGuitars,
+        //     'test2' => $searchPhrase
+        // ]);
+        
+        return $this->redirectToRoute('home', [
+            'message' => 'Ergebnis der Suche "' .  $searchPhrase . '":',
+            'searchedGuitars' => $searchedGuitars,
+            'bla' => 'blubb'
+        ]);
+
+    }
+
 
 
 

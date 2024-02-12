@@ -47,7 +47,6 @@ class GuitarService extends AbstractEntityService
 
         if (!empty($infos['image'])) {
             //create Image-Entity
-            // $imageId = $this->imageService->createNewImage($infos['image']);
             $imageId = $this->imageService->getImageByName($infos['image'])->getId();
         }
         
@@ -116,7 +115,7 @@ class GuitarService extends AbstractEntityService
     */
     public function guitarExists(array $infos) : bool 
     {
-        $query = $this
+        $queryBuilder = $this
             ->entityManager
             ->getRepository(self::$entityFqn)
             ->createQueryBuilder('r')
@@ -131,7 +130,7 @@ class GuitarService extends AbstractEntityService
             ->setParameter('pickup', $infos['pickup'])
             ;
 
-        $result = $query->getQuery()->execute();
+        $result = $queryBuilder->getQuery()->execute();
         return count($result) > 0;   
     }
 
@@ -150,7 +149,7 @@ class GuitarService extends AbstractEntityService
     */
     public function getAllNotDeletedGuitars() : array 
     {
-        $query = $this
+        $queryBuilder = $this
             ->entityManager
             ->getRepository(self::$entityFqn)
             ->createQueryBuilder('r')
@@ -158,42 +157,91 @@ class GuitarService extends AbstractEntityService
             ->where('r.deleted != true')
             ;
 
-        return $query->getQuery()->execute();
+        return $queryBuilder->getQuery()->execute();
     }
 
+
+
     /*
-    * gets all guitars where deleted != true
+    * create query which queries all guitars
     */
-    public function getAllSelectedGuitars(bool $deletedIncluded, bool $orderedIncluded) : array 
-    {
-        $query = $this
+    public function createQueryBuilder() {
+        $queryBuilder = $this
             ->entityManager
             ->getRepository(self::$entityFqn)
             ->createQueryBuilder('r')
             ->select('r')
             ;
 
+        return $queryBuilder;
+    }
+
+
+
+    /*
+    * adds criteria to query
+    */
+    public function addCriteriaToQueryBuilder($queryBuilder, bool $deletedIncluded, bool $orderedIncluded) {
         if (!$deletedIncluded) {
-            $query
+            $queryBuilder
                 ->where('r.deleted = false')
                 ;
         }
 
         if (!$orderedIncluded) {
-            $query
+            $queryBuilder
                 ->andWhere('r.guitarOrder is null')
                 ;
         }
-        return $query->getQuery()->execute();
+
+        return $queryBuilder;
+    }
+
+
+
+    /*
+    * selects guitars according to criteria
+    */
+    public function getAllSelectedGuitars(bool $deletedIncluded, bool $orderedIncluded) : array 
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $queryBuilder = $this->addCriteriaToQueryBuilder($queryBuilder, $deletedIncluded, $orderedIncluded);
+        return $queryBuilder->getQuery()->execute();
+    }
+
+
+    
+    /*
+    * search guitar by phrase
+    */
+    public function getAllByPhrase(string $phrase, bool $deletedIncluded, bool $orderedIncluded) : array 
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $queryBuilder = $this->addCriteriaToQueryBuilder($queryBuilder, $deletedIncluded, $orderedIncluded);
+        $queryBuilder
+            ->innerJoin('r.GuitarType', 'gt')
+            ->where('
+            r.model LIKE :phrase OR
+            gt.version LIKE :phrase OR
+            gt.brand LIKE :phrase OR 
+            gt.type LIKE :phrase
+            ')
+            ->setParameter('phrase', '%' . $phrase . '%')
+            ;
+
+
+        return $queryBuilder->getQuery()->execute();
     }
 
 
 
 
-    
+    /*
+    * gets guitar by id
+    */
     public function getAllByOrderId($id) 
     {
-        $query = $this
+        $queryBuilder = $this
             ->entityManager
             ->getRepository(self::$entityFqn)
             ->createQueryBuilder('r')
@@ -204,7 +252,7 @@ class GuitarService extends AbstractEntityService
 
 
 
-        return $query->getQuery()->execute();
+        return $queryBuilder->getQuery()->execute();
     }
 
 

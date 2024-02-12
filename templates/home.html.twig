@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{# {% block script %}
-    {% if localStorageScript is defined and localStorageScript is not null %}
-        {{localStorageScript|raw }}
-    {% endif %}
-{% endblock %} #}
+{% block searchbar %}
+
+    {% include 'forms/searchbar-form.html.twig' %}
+
+{% endblock %}
 
 
 {% block content %}
