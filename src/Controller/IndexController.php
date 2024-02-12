@@ -33,7 +33,7 @@ class IndexController extends AbstractController
         // only guitars not deleted and not ordered
         $guitars = $guitarService->getAllSelectedGuitars(false, false);
 
-        $message = count($guitars);
+        $message = $message . " + ZUSATZINFO: Gitarrenanzahl " .  count($guitars);
 
         return $this->render("home.html.twig", [
            'headline' => SystemWording::HELLO,
@@ -463,6 +463,12 @@ class IndexController extends AbstractController
             $result = $orderService->createOrder($orderInfos);
             $message = 'Bestellung erfolgreich: Bestellnummer ' . $result;
             $localStorageScript = JsScripts::CLEAR_LOCAL_STORAGE;
+
+            return $this->redirectToRoute('home', [
+                'message' => $message,
+                'clearLocalStorage' => true,
+            ]);
+
         }
 
         return $this->render('shopping-cart.html.twig', [
