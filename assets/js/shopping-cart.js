@@ -212,12 +212,10 @@ document.addEventListener("DOMContentLoaded", async function() {
 
 
     /*
-    * refreshs add-to-cart-Buttons if on page 'home' 
+    * refreshs add-to-cart-Buttons
     */
     function refreshAddToCartButtons(storedGuitars) {
-        if(window.location.href != serverUrl) return;
 
-        console.log(serverUrl);
         let allButtons = document.querySelectorAll('.js-add-to-cart-button');
         allButtons.forEach((button) => {
             let buttonGuitarId = button.getAttribute('data-guitar-id');
