@@ -1,12 +1,13 @@
-const serverUrl = "http://localhost/guitarWorld"; 
-const shoppingCartPageUrl = "/public/shopping-cart";
-const guitarDetailPageUrl = '/public/guitar?guitarId='
+const serverUrl = "http://localhost/guitarWorld/public/"; 
+const shoppingCartPageUrl = "shopping-cart";
+const guitarDetailPageUrl = 'guitar?guitarId='
 
 document.addEventListener("DOMContentLoaded", async function() {
     let addToCartButtons = document.querySelectorAll('.js-add-to-cart-button');
     let storedGuitars = JSON.parse(localStorage.getItem('guitars') ?? '{}');
     refreshSidebarEntries(storedGuitars);
     refreshShoppingCartPageOverview(storedGuitars);
+    refreshAddToCartButtons(storedGuitars);
     addToCartButtons.forEach((addToCartButton) => {
         addToCartButton.addEventListener('click', (event) => {
             addToShoppingCart(event.target);
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         localStorage.setItem("guitars", JSON.stringify(storedGuitars));
 
         refreshSidebarEntries(storedGuitars);
+        refreshAddToCartButtons(storedGuitars);
     }
 
 
@@ -70,6 +72,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         refreshSidebarEntries(storedGuitars); 
         refreshShoppingCartPageOverview(storedGuitars);
+        refreshAddToCartButtons(storedGuitars);
     }
 
 
@@ -80,7 +83,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     function refreshSidebarEntries(storedGuitars) {
         let sidebarShoppingElements = document.querySelector(".js-sidebar-shopping-elements-container");
         appendShoppingItemsToTarget(sidebarShoppingElements, storedGuitars);
-        console.log(storedGuitars)
     }
 
 
@@ -96,7 +98,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         refreshShoppingCartCounter(length);
 
         let totalPrice = parseInt(0);
-
 
         // create elements and append them to the target
         for (let key in storedGuitars) {
@@ -145,8 +146,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         totalPriceElement = document.createElement('p');
         totalPriceElement.innerHTML = 'TOTALPREIS: ' + totalPrice + ',00 €';
         appendingTarget.appendChild(totalPriceElement);
-        console.log(totalPrice);
-
     }
 
 
@@ -212,13 +211,23 @@ document.addEventListener("DOMContentLoaded", async function() {
    }
 
 
+    /*
+    * refreshs add-to-cart-Buttons if on page 'home' 
+    */
+    function refreshAddToCartButtons(storedGuitars) {
+        if(window.location.href != serverUrl) return;
 
-   /*
-   *
-   */
-  function refreshTotalPrice(storedGuitars){
-
-  }
+        console.log(serverUrl);
+        let allButtons = document.querySelectorAll('.js-add-to-cart-button');
+        allButtons.forEach((button) => {
+            let buttonGuitarId = button.getAttribute('data-guitar-id');
+            if (buttonGuitarId in storedGuitars) {
+                button.disabled = true;
+            } else {
+                button.disabled = false;
+            }
+        });
+    }
 
 
 
