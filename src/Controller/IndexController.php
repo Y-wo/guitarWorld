@@ -237,6 +237,18 @@ class IndexController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/change-guitar-type-overview', name: 'change_guitar_type_overview')]
+    public function changeGuitarType(
+        Request $request,
+        GuitarTypeService $guitarTypeService
+    ): Response
+    { 
+        $guitarTypes = $guitarTypeService->getAll();
+
+        return $this->render('change_guitar_type_overview.html.twig', [
+            'guitarTypes' => $guitarTypes
+        ]);
+    }
 
 
     /*

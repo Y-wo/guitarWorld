@@ -26,6 +26,7 @@ import './styles/shopping-cart.sass';
 import './styles/usability-classes.sass';
 import './styles/order.sass';
 import './styles/searchbar-form.sass';
+import './styles/guitar-type-overview.sass';
 
 import './js/shopping-cart.js';
 import './js/sidebar.js';

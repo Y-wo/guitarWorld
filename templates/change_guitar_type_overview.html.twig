@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{# {% set return = (return is defined and return == true) ? true : false %}
+{% set infos = infos is defined ? infos : null %} #}
+
+{% block content %}
+
+    {{dump(guitarTypes)}}
+
+    {% for guitarType in guitarTypes %}
+        
+        <div class="guitar-type-overview__item-container ">
+            
+           {{guitarType.brand}}
+
+        <a class="button" href="">Löschen</a>
+        <a class="button" href="">Anpassen</a>
+
+        </div>
+
+
+    {% endfor %}
+
+{% endblock %}
