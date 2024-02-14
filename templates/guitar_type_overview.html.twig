@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{# {% set return = (return is defined and return == true) ? true : false %}
+{% set infos = infos is defined ? infos : null %} #}
+
+{% block content %}
+
+    {{dump(guitarTypes)}}
+
+    {% for guitarType in guitarTypes %}
+        
+        <div class="guitar-type-overview__item-container ">
+            <ul>
+                <li>{{guitarType.brand}}</li>
+                <li>{{guitarType.version}}</li>
+                <li>{{guitarType.type}}</li>
+                <li>{{guitarType.saddlewidth}}</li>
+                <li>{{guitarType.neck}}</li>
+                <li>{{guitarType.size}}</li>
+                <li>{{guitarType.fretboard}}</li>
+                <li>{{guitarType.scale}}</li>
+            </ul> 
+
+            <a class="button" href="{{path('change_guitar_type', {'id': guitarType.id })}}">Anpassen</a>
+            <a class="button" href="{{path('delete_guitar_type', {'id': guitarType.id })}}">Löschen</a>
+
+        </div>
+
+
+    {% endfor %}
+
+{% endblock %}

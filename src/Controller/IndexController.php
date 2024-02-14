@@ -237,15 +237,69 @@ class IndexController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/change-guitar-type-overview', name: 'change_guitar_type_overview')]
-    public function changeGuitarType(
+    /*
+    * gives guitartype overview
+    */ 
+    #[Route(path: '/guitar-type-overview', name: 'guitar_type_overview')]
+    public function guitarTypeOverview(
         Request $request,
         GuitarTypeService $guitarTypeService
     ): Response
     { 
         $guitarTypes = $guitarTypeService->getAll();
 
-        return $this->render('change_guitar_type_overview.html.twig', [
+        return $this->render('guitar_type_overview.html.twig', [
+            'guitarTypes' => $guitarTypes
+        ]);
+    }
+
+
+
+    #[Route(path: '/change-guitar-type/{id}', name: 'change_guitar_type')]
+    public function changeGuitarType(
+        Request $request,
+        GuitarTypeService $guitarTypeService,
+        int $id
+    ): Response
+    { 
+        $guitarType = $guitarTypeService->get($id);
+
+        $guitarTypeArray = [];
+
+        $guitarTypeArray['brand'] = $guitarType->getBrand();
+        $guitarTypeArray['version'] = $guitarType->getVersion();
+        $guitarTypeArray['saddlewidth'] = $guitarType->getSaddlewidth();
+        // $guitarTypeArray['deleted'] = $guitarType->getDeleted();
+        $guitarTypeArray['neck'] = $guitarType->getNeck();
+        $guitarTypeArray['size'] = $guitarType->getSize();
+        $guitarTypeArray['fretboard'] = $guitarType->getFretboard();
+        $guitarTypeArray['scale'] = $guitarType->getScale();
+        // $guitarType[''] = $guitarType->;
+        // $guitarType[''] = $guitarType->;
+        // $guitarType[''] = $guitarType->;
+
+
+        return $this->render('forms/guitar_type_form.html.twig', [
+            'guitarTypeInfos' => $guitarTypeArray,
+            'return' => true
+        ]);
+    }
+
+
+
+    #[Route(path: '/delete-guitar-type/{id}', name: 'delete_guitar_type')]
+    public function deleteGuitarType(
+        Request $request,
+        GuitarTypeService $guitarTypeService,
+        int $id
+    ): Response
+    { 
+
+        return new Response("lösche " . $id);
+
+        $guitarTypes = $guitarTypeService->getAll();
+
+        return $this->render('guitar_type_overview.html.twig', [
             'guitarTypes' => $guitarTypes
         ]);
     }
