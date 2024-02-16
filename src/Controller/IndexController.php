@@ -16,6 +16,7 @@ use App\Service\ImageGuitarService;
 use App\Service\ImageService;
 use App\Service\LoginService;
 use App\Service\OrderService;
+use App\Service\RequestService;
 use App\Service\HelperService;
 
 class IndexController extends AbstractController
@@ -101,10 +102,6 @@ class IndexController extends AbstractController
 
         $searchedGuitars = $guitarService->getAllByPhrase($searchPhrase, false, false);
 
-        // return $this->render("test.html.twig", [
-        //     'test' => $searchedGuitars,
-        //     'test2' => $searchPhrase
-        // ]);
         
         return $this->redirectToRoute('home', [
             'message' => 'Ergebnis der Suche "' .  $searchPhrase . '":',
@@ -237,6 +234,8 @@ class IndexController extends AbstractController
         ]);
     }
 
+
+
     /*
     * gives guitartype overview
     */ 
@@ -259,29 +258,38 @@ class IndexController extends AbstractController
     public function changeGuitarType(
         Request $request,
         GuitarTypeService $guitarTypeService,
+        RequestService $requestService,
         int $id
     ): Response
     { 
+        $isSubmit = $requestService->isSubmit($request);
+
+        $message = '';
         $guitarType = $guitarTypeService->get($id);
+
+        if ($isSubmit) {
+            $guitarTypeService->changeGuitarType($id, $request);
+            $message = SystemWording::GUITAR_TYPE_CHANGED;
+        } 
+
 
         $guitarTypeArray = [];
 
         $guitarTypeArray['brand'] = $guitarType->getBrand();
         $guitarTypeArray['version'] = $guitarType->getVersion();
         $guitarTypeArray['saddlewidth'] = $guitarType->getSaddlewidth();
-        // $guitarTypeArray['deleted'] = $guitarType->getDeleted();
         $guitarTypeArray['neck'] = $guitarType->getNeck();
         $guitarTypeArray['size'] = $guitarType->getSize();
         $guitarTypeArray['fretboard'] = $guitarType->getFretboard();
         $guitarTypeArray['scale'] = $guitarType->getScale();
-        // $guitarType[''] = $guitarType->;
-        // $guitarType[''] = $guitarType->;
-        // $guitarType[''] = $guitarType->;
+        $guitarTypeArray['type'] = $guitarType->getType();
 
-
-        return $this->render('forms/guitar_type_form.html.twig', [
+        return $this->render('change_guitar_type.html.twig', [
             'guitarTypeInfos' => $guitarTypeArray,
-            'return' => true
+            'return' => true,
+            'submit_label' => 'Speichern',
+            'guitarTypeId' => $id,
+            'message' => $message
         ]);
     }
 

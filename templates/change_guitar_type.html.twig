@@ -4,8 +4,10 @@
 
 {% block content %}
 
+
     {% include '/forms/guitar_type_form.html.twig' with {
-        'submit_label' : 'Anlegen'
+        'submit_label' : 'Speichern',
+        'route' : 'change_guitar_type'
     } %}
 
 {% endblock %}

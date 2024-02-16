@@ -51,4 +51,22 @@ class GuitarTypeService extends AbstractEntityService
 
         return $this->store($guitarType) ? true : false;
     }
+
+    public function changeGuitarType(int $id, Request $request) : bool
+    {
+        $guitarType = $this->get($id);
+
+        $guitarType 
+            ->setVersion($request->request->get('version'))
+            ->setBrand($request->request->get('brand'))
+            ->setType($request->request->get('type'))
+            ->setSaddlewidth($request->request->get('saddlewidth'))
+            ->setNeck($request->request->get('neck'))
+            ->setSize($request->request->get('size'))
+            ->setFretboard($request->request->get('fretboard'))
+            ->setScale($request->request->get('scale'))
+            ;
+
+        return $this->store($guitarType) ? true : false;
+    }
 }
