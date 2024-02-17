@@ -9,14 +9,12 @@
 
         {% if isAdmin %}
             <a href="{{path('create_guitar_type')}}" class="button">Gitarrentyp anlegen</a>
-            <a href="{{path('guitar_type_overview')}}" class="button">Gitarrentyp bearbeiten</a>
+            <a href="{{path('guitar_type_overview')}}" class="button">Gitarrentypen verwalten</a>
             <a href="{{path('create_guitar')}}" class="button">Gitarre anlegen</a>
             <a class="button" href="{{path('orders')}}"> Bestellungen </a> 
         {% endif %}
 
-
         <a class="button" href="{{path('logout')}}"> Logout </a>
-        
 
     {% else %}
         {% include 'login_form.html.twig' %}

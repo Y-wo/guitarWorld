@@ -60,4 +60,25 @@ abstract class AbstractEntityService
         return $request->request->get('submit') ? true : false;
     }
 
+    /*
+    * sets deleted true
+    */
+    public function setDeletedById(int $id) : bool 
+    {
+        $entity = $this->get($id);
+        $entity->setDeleted(true);
+        return ($this->store($entity)) ? true : false;   
+    }
+
+    
+    /*
+    * sets deleted false
+    */
+    public function setNotDeletedById(int $id) : bool 
+    {
+        $guitar = $this->get($id);
+        $guitar->setDeleted(false);
+        return ($this->store($guitar)) ? true : false;   
+    }
+
 }

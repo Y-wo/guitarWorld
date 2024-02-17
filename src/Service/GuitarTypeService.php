@@ -92,5 +92,4 @@ class GuitarTypeService extends AbstractEntityService
 
         return $guitarTypeArray;
     }
-
 }

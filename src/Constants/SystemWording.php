@@ -19,6 +19,8 @@ abstract class SystemWording
     const GUITAR_TYPE_ALREADY_EXISTS = "Der Gitarrentyp mit den folgenden Daten existiert bereits: <br><br>";
     const SUCCESS_GUITAR_TYPE_CREATION = "Neuer Gitarrentyp erfolgreich angelegt: <br><br>";
     const GUITAR_TYPE_CHANGED = "Gitarrentyp gändert.";
+    const GUITAR_TYPE_DELETED = "Gitarrentyp gelöscht: ID - ";
+
 
     // Guitar
     const SUCCESS_GUITAR_CREATION = "Neue Gitarre erfolgreich angelegt.";

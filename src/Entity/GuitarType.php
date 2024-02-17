@@ -42,7 +42,7 @@ class GuitarType extends AbstractEntity
     #[ORM\Column(nullable: true)]
     private ?int $scale = null;
 
-    #[ORM\OneToMany(mappedBy: 'GuitarType', targetEntity: Guitar::class)]
+    #[ORM\OneToMany(mappedBy: 'GuitarType', targetEntity: Guitar::class, fetch: "EAGER")]
     private Collection $guitar;
 
     public function __construct()

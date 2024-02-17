@@ -134,15 +134,22 @@ class GuitarService extends AbstractEntityService
         return count($result) > 0;   
     }
 
+
+
     /*
-    * sets deleted true
+    * sets all guitars deleted true by guitarTypeId
     */
-    public function setDeletedById(int $id) : bool 
+    public function setDeletedByGuitarTypeId(int $id) : void 
     {
-        $guitar = $this->get($id);
-        $guitar->setDeleted(true);
-        return ($this->store($guitar)) ? true : false;   
+        $guitarType = $this->guitarTypeService->get($id);
+        $guitarTypesGuitars = $guitarType->getGuitar()->toArray();
+        if (!empty($guitarTypesGuitars)) {
+            foreach ($guitarTypesGuitars as $guitar) {
+                $this->setDeletedById($guitar->getId());  
+            }
+        }
     }
+
 
     /*
     * gets all guitars where deleted != true

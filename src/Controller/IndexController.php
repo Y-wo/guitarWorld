@@ -246,9 +246,11 @@ class IndexController extends AbstractController
     ): Response
     { 
         $guitarTypes = $guitarTypeService->getAll();
+        $message = $request->query->get('message') ?? null;
 
         return $this->render('guitar_type_overview.html.twig', [
-            'guitarTypes' => $guitarTypes
+            'guitarTypes' => $guitarTypes,
+            'message' => $message ?? ''
         ]);
     }
 
@@ -284,19 +286,27 @@ class IndexController extends AbstractController
 
 
 
+    /*
+    * deletes guitarType by id
+    */
     #[Route(path: '/delete-guitar-type/{id}', name: 'delete_guitar_type')]
     public function deleteGuitarType(
         Request $request,
         GuitarTypeService $guitarTypeService,
+        GuitarService $guitarService,
         int $id
     ): Response
     { 
-        return new Response("lösche " . $id);
+        $guitarService->setDeletedByGuitarTypeId($id);
 
-        $guitarTypes = $guitarTypeService->getAll();
+        if($guitarTypeService->setDeletedbyId($id)) {
+            $message = SystemWording::GUITAR_TYPE_DELETED . $id;
+        } else {
+            $message = SystemWording::ERROR_MESSAGE;
+        }
 
-        return $this->render('guitar_type_overview.html.twig', [
-            'guitarTypes' => $guitarTypes
+        return $this->redirectToRoute('guitar_type_overview', [
+            'message' => $message
         ]);
     }
 
