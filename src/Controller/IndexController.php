@@ -254,6 +254,9 @@ class IndexController extends AbstractController
 
 
 
+    /*
+    * shows and changes guitarType by id
+    */
     #[Route(path: '/change-guitar-type/{id}', name: 'change_guitar_type')]
     public function changeGuitarType(
         Request $request,
@@ -263,33 +266,19 @@ class IndexController extends AbstractController
     ): Response
     { 
         $isSubmit = $requestService->isSubmit($request);
-
-        $message = '';
-        $guitarType = $guitarTypeService->get($id);
-
         if ($isSubmit) {
             $guitarTypeService->changeGuitarType($id, $request);
             $message = SystemWording::GUITAR_TYPE_CHANGED;
         } 
 
-
-        $guitarTypeArray = [];
-
-        $guitarTypeArray['brand'] = $guitarType->getBrand();
-        $guitarTypeArray['version'] = $guitarType->getVersion();
-        $guitarTypeArray['saddlewidth'] = $guitarType->getSaddlewidth();
-        $guitarTypeArray['neck'] = $guitarType->getNeck();
-        $guitarTypeArray['size'] = $guitarType->getSize();
-        $guitarTypeArray['fretboard'] = $guitarType->getFretboard();
-        $guitarTypeArray['scale'] = $guitarType->getScale();
-        $guitarTypeArray['type'] = $guitarType->getType();
+        $guitarTypeArray = $guitarTypeService->createGuitarTypeInfoArray($id);
 
         return $this->render('change_guitar_type.html.twig', [
             'guitarTypeInfos' => $guitarTypeArray,
             'return' => true,
             'submit_label' => 'Speichern',
             'guitarTypeId' => $id,
-            'message' => $message
+            'message' => $message ?? ''
         ]);
     }
 
@@ -302,7 +291,6 @@ class IndexController extends AbstractController
         int $id
     ): Response
     { 
-
         return new Response("lösche " . $id);
 
         $guitarTypes = $guitarTypeService->getAll();

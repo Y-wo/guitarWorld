@@ -52,6 +52,10 @@ class GuitarTypeService extends AbstractEntityService
         return $this->store($guitarType) ? true : false;
     }
 
+
+    /*
+    * changes guitarType 
+    */
     public function changeGuitarType(int $id, Request $request) : bool
     {
         $guitarType = $this->get($id);
@@ -69,4 +73,24 @@ class GuitarTypeService extends AbstractEntityService
 
         return $this->store($guitarType) ? true : false;
     }
+
+    /*
+    * creates guitarTypeInfoArray by id
+    */
+    public function createGuitarTypeInfoArray(int $id) : array
+    {
+        $guitarType = $this->get($id);
+        $guitarTypeArray = [];
+        $guitarTypeArray['brand'] = $guitarType->getBrand();
+        $guitarTypeArray['version'] = $guitarType->getVersion();
+        $guitarTypeArray['saddlewidth'] = $guitarType->getSaddlewidth();
+        $guitarTypeArray['neck'] = $guitarType->getNeck();
+        $guitarTypeArray['size'] = $guitarType->getSize();
+        $guitarTypeArray['fretboard'] = $guitarType->getFretboard();
+        $guitarTypeArray['scale'] = $guitarType->getScale();
+        $guitarTypeArray['type'] = $guitarType->getType();
+
+        return $guitarTypeArray;
+    }
+
 }
