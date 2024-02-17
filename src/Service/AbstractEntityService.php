@@ -81,4 +81,21 @@ abstract class AbstractEntityService
         return ($this->store($guitar)) ? true : false;   
     }
 
+
+    /*
+    * gets all abstract entities where deleted != true
+    */
+    public function getAllNotDeleted() : array 
+    {
+        $queryBuilder = $this
+            ->entityManager
+            ->getRepository(static::$entityFqn)
+            ->createQueryBuilder('r')
+            ->select('r')
+            ->where('r.deleted != true')
+            ->orderBy('r.brand')
+            ;
+
+        return $queryBuilder->getQuery()->execute();
+    }
 }

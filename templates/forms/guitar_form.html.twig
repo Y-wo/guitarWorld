@@ -18,7 +18,13 @@
         "> 
     </a>
     {% if targetFile is defined and targetFile is not null %}
-        <a href="{{path('remove_image_guitar')}}" class="button" >Bild löschen</a> 
+        <a 
+            href="{{path('remove_image_guitar')}}" 
+            class="button js-confirm-link" 
+            data-confirmation-text="{{confirmationImageText}}"
+        >
+            Bild löschen
+        </a> 
     {% endif %}
 </div>
 

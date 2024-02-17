@@ -52,6 +52,7 @@ class IndexController extends AbstractController
            'message' => $message,
            'guitars' => $guitars ?? null,
            'localStorageScript' => $localStorageScript ?? null,
+           'confirmationText' => SystemWording::GUITAR_DELETE_CONFIRMATION,
         ]);
     }
 
@@ -174,7 +175,6 @@ class IndexController extends AbstractController
                 ]);
             }
         }
-
         return $this->render('create_user.html.twig');
     }
 
@@ -245,11 +245,12 @@ class IndexController extends AbstractController
         GuitarTypeService $guitarTypeService
     ): Response
     { 
-        $guitarTypes = $guitarTypeService->getAll();
+        $guitarTypes = $guitarTypeService->getAllNotDeleted();
         $message = $request->query->get('message') ?? null;
 
         return $this->render('guitar_type_overview.html.twig', [
             'guitarTypes' => $guitarTypes,
+            'confirmationText' => SystemWording::GUITAR_TYPE_DELETE_CONFIRMATION,
             'message' => $message ?? ''
         ]);
     }
@@ -456,6 +457,7 @@ class IndexController extends AbstractController
             'guitarChange' => true,
             'message' => $message,
             'targetFile' => $targetFile,
+            'confirmationImageText' => SystemWording::IMAGE_DELETE_CONFIRMATION 
         ]);
     }
 

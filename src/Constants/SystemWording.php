@@ -20,16 +20,18 @@ abstract class SystemWording
     const SUCCESS_GUITAR_TYPE_CREATION = "Neuer Gitarrentyp erfolgreich angelegt: <br><br>";
     const GUITAR_TYPE_CHANGED = "Gitarrentyp gändert.";
     const GUITAR_TYPE_DELETED = "Gitarrentyp gelöscht: ID - ";
+    const GUITAR_TYPE_DELETE_CONFIRMATION = "Sind Sie sicher, dass Sie diesen Gitarrentyp löschen wollen? Alle zugeordneten Gitarren werden ebenfalls gelöscht.";
 
 
     // Guitar
     const SUCCESS_GUITAR_CREATION = "Neue Gitarre erfolgreich angelegt.";
-    const SUCCESS_GUITAR_DELETED = "Gitarre erfolgreich geslöscht ";
+    const SUCCESS_GUITAR_DELETED = "Gitarre erfolgreich gelöscht ";
     const GUITAR_ALREADY_EXISTS = "Die Gitarre exitiert bereits";
     const SUCCESS_GUITAR_CHANGE = "Gitarre erfolgreich angepasst.";
     const CHANGE_GUITAR = "change_guitar";
     const CREATE_GUITAR = "create_guitar";
     const NO_GUITAR_FOUND = "Es wurde leider keine Gitarre mit dieser ID gefunden.";
+    const GUITAR_DELETE_CONFIRMATION = "Sind Sie sicher, dass Sie diese Gitarre löschen wollen?";
 
     // Roles
     const ROLE_USER = 'ROLE_USER';
@@ -45,6 +47,7 @@ abstract class SystemWording
     const UPLOAD_TOO_BIG = 'Die Datei ist zu groß.';
     const UPLOAD_SUCCESS = 'Das Bild wurde erfolgreich angelegt: ';
     const IMAGE_GUITAR_REMOVED = "Das Bild wurde erfolgreich entfernt.";
+    const IMAGE_DELETE_CONFIRMATION = "Sind Sie sicher, dass Sie dieses Bild löschen wollen?";
     
 
 }

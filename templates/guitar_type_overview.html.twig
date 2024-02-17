@@ -11,8 +11,8 @@
         
         <div class="guitar-type-overview__item-container ">
             <ul>
-                <li>{{guitarType.id}}</li>
                 <li>{{guitarType.brand}}</li>
+                <li>{{guitarType.id}}</li>
                 <li>{{guitarType.version}}</li>
                 <li>{{guitarType.type}}</li>
                 <li>{{guitarType.saddlewidth}}</li>
@@ -20,10 +20,17 @@
                 <li>{{guitarType.size}}</li>
                 <li>{{guitarType.fretboard}}</li>
                 <li>{{guitarType.scale}}</li>
+                <li>deleted? {{guitarType.deleted}}</li>
             </ul> 
 
             <a class="button" href="{{path('change_guitar_type', {'id': guitarType.id })}}">Anpassen</a>
-            <a class="button" href="{{path('delete_guitar_type', {'id': guitarType.id })}}">Löschen</a>
+            <a 
+                class="button js-confirm-link" 
+                data-confirmation-text="{{confirmationText}}"
+                href="{{path('delete_guitar_type', {'id': guitarType.id })}}"
+                >
+                Löschen
+            </a>
 
         </div>
 

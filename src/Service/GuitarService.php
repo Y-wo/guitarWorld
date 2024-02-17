@@ -151,22 +151,6 @@ class GuitarService extends AbstractEntityService
     }
 
 
-    /*
-    * gets all guitars where deleted != true
-    */
-    public function getAllNotDeletedGuitars() : array 
-    {
-        $queryBuilder = $this
-            ->entityManager
-            ->getRepository(self::$entityFqn)
-            ->createQueryBuilder('r')
-            ->select('r')
-            ->where('r.deleted != true')
-            ;
-
-        return $queryBuilder->getQuery()->execute();
-    }
-
 
 
     /*

@@ -12,7 +12,8 @@
         </div>
     </a>
 
-    {# put buttons out if user has rights #}
+
+    {# prints buttons if user has rights #}
     {% if isAdmin %}
         <a 
             href="{{path('change_guitar', {
@@ -22,10 +23,11 @@
         </a>
         
         <a 
+            data-confirmation-text="{{confirmationText}}"
             href="{{path('delete_guitar', {
                 'id': guitar.id
                     })}}" 
-            class="button">Löschen
+            class="button js-confirm-link">Löschen
         </a>
     {% endif %}
 
