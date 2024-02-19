@@ -21,6 +21,10 @@ use App\Service\HelperService;
 
 class IndexController extends AbstractController
 {
+
+    /*
+    * Home-controller: Shows all guitars
+    */
     #[Route(path: '/', name: 'home')]
     public function home(   
         Request $request,
@@ -57,6 +61,9 @@ class IndexController extends AbstractController
     }
 
 
+    /*
+    * Authenticates User-Login-Data
+    */
     #[Route(path: '/login', name: 'login')]
     public function login(
         Request $request,
@@ -77,6 +84,9 @@ class IndexController extends AbstractController
     }
 
 
+    /*
+    * Logs user out by clearing the necessary session-variables 
+    */
     #[Route(path: '/logout', name: 'logout')]
     public function logout(
         Request $request,
@@ -92,17 +102,19 @@ class IndexController extends AbstractController
 
     }
 
+
+    /*
+    * Searches guitar by transfered search-phrase
+    */
     #[Route(path: '/search', name: 'search')]
     public function search(
         Request $request,
-        EntityManagerInterface $entityManager,
         GuitarService $guitarService
     ): Response
     {
         $searchPhrase = $request->query->get('search-phrase');
 
         $searchedGuitars = $guitarService->getAllByPhrase($searchPhrase, false, false);
-
         
         return $this->redirectToRoute('home', [
             'message' => 'Ergebnis der Suche "' .  $searchPhrase . '":',
@@ -114,7 +126,9 @@ class IndexController extends AbstractController
 
 
 
-
+    /*
+    * Shows guitar-data
+    */
     #[Route(path: '/guitar', name: 'guitar')]
     public function guitar(
         Request $request,
@@ -135,7 +149,9 @@ class IndexController extends AbstractController
 
 
 
-
+    /*
+    * Creates new User and checks if user does not already exist
+    */
     #[Route(path: '/create-user', name: 'create_user')]
     public function createUser(
         Request $request,
@@ -178,7 +194,12 @@ class IndexController extends AbstractController
         return $this->render('create_user.html.twig');
     }
 
-    
+
+
+
+    /*
+    * Rendered if User-Registration was successfull
+    */
     #[Route(path: '/user-success', name: 'user_success')]
     public function userSuccess(
         Request $request,
@@ -191,6 +212,10 @@ class IndexController extends AbstractController
     }
 
     
+
+    /*
+    * Creates new guitar-type, if guitar-type does not already exist
+    */
     #[Route(path: '/create-guitar-type', name: 'create_guitar_type')]
     public function createGuitarType(
         Request $request,
@@ -237,7 +262,7 @@ class IndexController extends AbstractController
 
 
     /*
-    * gives guitartype overview
+    * Gives overview of guitar-types
     */ 
     #[Route(path: '/guitar-type-overview', name: 'guitar_type_overview')]
     public function guitarTypeOverview(
@@ -258,7 +283,7 @@ class IndexController extends AbstractController
 
 
     /*
-    * shows and changes guitarType by id
+    * Shows and changes guitarType by id
     */
     #[Route(path: '/change-guitar-type/{id}', name: 'change_guitar_type')]
     public function changeGuitarType(
@@ -288,7 +313,7 @@ class IndexController extends AbstractController
 
 
     /*
-    * deletes guitarType by id
+    * Deletes guitarType by id
     */
     #[Route(path: '/delete-guitar-type/{id}', name: 'delete_guitar_type')]
     public function deleteGuitarType(
@@ -311,9 +336,10 @@ class IndexController extends AbstractController
         ]);
     }
 
+    
 
     /*
-    * Create Guitar
+    * Creates new Guitar
     */
     #[Route(path: '/create-guitar', name: 'create_guitar')]
     public function createGuitar(
@@ -375,8 +401,9 @@ class IndexController extends AbstractController
     }
 
 
+
     /*
-    * Change Guitar
+    * Changes Guitar
     */
     #[Route(path: '/change-guitar', name: 'change_guitar')]
     public function changeGuitar(
@@ -461,9 +488,10 @@ class IndexController extends AbstractController
         ]);
     }
 
+
     
     /*
-    * Delete Guitar Route
+    * Deletes Guitar Route
     */
     #[Route(path: '/delete-guitar', name: 'delete_guitar')]
     public function deleteGuitar(
@@ -481,6 +509,10 @@ class IndexController extends AbstractController
     
 
 
+    /*
+    * Uploads Image if image does not already exist. 
+    * Creates link between image and guitar
+    */
     #[Route(path: '/upload-image', name: 'upload_image')]
     public function uploadImage(
         Request $request,
@@ -532,7 +564,7 @@ class IndexController extends AbstractController
 
 
     /*
-    * remove ImageGuitarEntity from Database
+    * Removes ImageGuitarEntity from Database
     */
     #[Route(path: '/remove-image-guitar', name: 'remove_image_guitar')]
     public function removeImageGuitar(
@@ -559,7 +591,7 @@ class IndexController extends AbstractController
 
 
     /*
-    * shows the shopping cart and creates order
+    * Shows the shopping cart and creates order
     */
     #[Route(path: '/shopping-cart', name: 'shopping_cart')]
     public function shoppingCart(
@@ -588,8 +620,9 @@ class IndexController extends AbstractController
         ]);
     }
 
+
     /*
-    * shows orders and handles order-management
+    * Shows orders and handles order-management
     */
     #[Route(path: '/orders', name: 'orders')]
     public function orders(
@@ -625,7 +658,7 @@ class IndexController extends AbstractController
     }
 
     /*
-    * creates and downloads invoice of order
+    * Creates and downloads invoice of order
     */
     #[Route(path: '/invoice', name: 'invoice')]
     public function invoice(
@@ -667,8 +700,6 @@ class IndexController extends AbstractController
         header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
         readfile($file_url);
         exit(); 
-
-
 
 
 
