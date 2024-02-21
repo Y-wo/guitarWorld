@@ -13,15 +13,24 @@
         margin-bottom: 4rem 
         // position: sticky
         // top: 0
+        
 
     &__icon
         max-width: 100%
+        transition: background-color 0.25s, box-shadow 0.25s
+
+
+        &--active, &:hover 
+            background-color: white
+            box-shadow: 0 0 20px 20px white
+
     
     &__icon-container
         max-width: 2rem
         border-radius: 3rem
         padding: .5rem
         margin: .5rem
+    
         
         &:hover
             cursor: pointer
@@ -31,7 +40,7 @@
             margin-right: 5.5rem
 
             .navbar__icon:first-of-type
-                padding-right: 2rem
+                margin-right: 2rem
 
     &__logo-icon-container
         background-color: inherit

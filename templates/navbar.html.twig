@@ -7,9 +7,11 @@
     </a>
 
     <div class="navbar__icon-container navbar__icon-container--right">
-
-        <div class="navbar__shopping-cart-counter js-shopping-cart-counter"></div>
-        <image class="js-shopping-cart navbar__icon" src="{{asset('assets/icons/shopping-cart.svg')}}">
+        {% if isAdmin == false %}
+            <div class="navbar__shopping-cart-counter js-shopping-cart-counter"></div>
+            <image class="js-shopping-cart navbar__icon" src="{{asset('assets/icons/shopping-cart.svg')}}">
+        {% endif %}
+        
         <image class="js-profile navbar__icon" src="/guitarWorld/public/assets/icons/profile-normal.svg">
     
     <div>
