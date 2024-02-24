@@ -3,8 +3,10 @@ const shoppingCartPageUrl = "shopping-cart";
 const guitarDetailPageUrl = 'guitar?guitarId='
 
 document.addEventListener("DOMContentLoaded", async function() {
+    let isAdminLoggedIn = isAdmin();
     let addToCartButtons = document.querySelectorAll('.js-add-to-cart-button');
     let storedGuitars = JSON.parse(localStorage.getItem('guitars') ?? '{}');
+    
     refreshSidebarEntries(storedGuitars);
     refreshShoppingCartPageOverview(storedGuitars);
     refreshAddToCartButtons(storedGuitars);
@@ -14,6 +16,14 @@ document.addEventListener("DOMContentLoaded", async function() {
         })
     })
 });
+
+
+    // checks if user is logged in as admin
+    function isAdmin(){
+        let isAdminDiv = document.querySelector('.js-is-admin');
+        let isAdmin = isAdminDiv.getAttribute('data-is-admin');
+        return isAdmin;
+    }
 
     /*
     * adds target to shopping cart if not already in there
@@ -91,6 +101,10 @@ document.addEventListener("DOMContentLoaded", async function() {
     * appends shopping items to view
     */ 
     function appendShoppingItemsToTarget(appendingTarget, storedGuitars) {
+
+        let isAdminLoggedIn = isAdmin();
+        if (isAdminLoggedIn == "1") return;
+
         // Clears existing content in the sidebar
         appendingTarget.innerHTML = '';
 
@@ -154,6 +168,9 @@ document.addEventListener("DOMContentLoaded", async function() {
     * refreshs shopping cart counter in the navbar
     */
     function refreshShoppingCartCounter(number) {
+        let isAdminLoggedIn = isAdmin();
+        if (isAdminLoggedIn == "1") return;
+
         let shoppingCartCounter = document.querySelector('.js-shopping-cart-counter');
         shoppingCartCounter.style.visibility = (number == 0) ? 'hidden' : 'visible';
         shoppingCartCounter.innerHTML = number;

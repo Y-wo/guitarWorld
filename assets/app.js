@@ -32,3 +32,4 @@ import './styles/confirmation.sass';
 import './js/shopping-cart.js';
 import './js/sidebar.js';
 import './js/confirmation.js';
+import './js/authentication-service.js';
