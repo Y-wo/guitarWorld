@@ -1,47 +1,49 @@
 <div class="guitar-overview__container" data-guitar-id="{{guitar.id}}">
-    <a href="{{path('guitar', {'guitarId' : guitar.id})}}">
+    <a class="guitar-overview__link-container" href="{{path('guitar', {'guitarId' : guitar.id})}}">
         {% include 'guitar-image.html.twig'%}
-        <div>
+        <div class="guitar-overview__guitar-headline-container">
             {% include 'guitar-headline.html.twig'%}    
         </div>
-        <div>
+        <div class="guitar-overview__guitar-data-container">
             <p>{{guitar.model}} </p>
         </div>
-        <div>
+        <div class="guitar-overview__guitar-price-container">
             <p>{{guitar.price}},00 € </p> 
         </div>
     </a>
 
 
-    {# prints buttons if user has rights #}
-    {% if isAdmin %}
-        <a 
-            href="{{path('change_guitar', {
-                'id': guitar.id
-                    })}}" 
-            class="button">Gitarre bearbeiten
-        </a>
-        
-        <a 
-            data-confirmation-text="{{confirmationText}}"
-            href="{{path('delete_guitar', {
-                'id': guitar.id
-                    })}}" 
-            class="button js-confirm-link">Löschen
-        </a>
-    {% endif %}
+    <div class="guitar-overview__action-button-container">
+        {# prints buttons if user has rights #}
+        {% if isAdmin %}
+            <a 
+                href="{{path('change_guitar', {
+                    'id': guitar.id
+                        })}}" 
+                class="button">Gitarre bearbeiten
+            </a>
+            
+            <a 
+                data-confirmation-text="{{confirmationText}}"
+                href="{{path('delete_guitar', {
+                    'id': guitar.id
+                        })}}" 
+                class="button js-confirm-link">Löschen
+            </a>
+        {% endif %}
 
-    {# put buttons out if user has rights #}
-    {% if isAdmin == false %}
-        <button 
-            class="js-add-to-cart-button" 
-            data-guitar-id="{{guitar.id}}"
-            data-name="{% include 'guitar-headline-content.html.twig' %}"
-            data-image-src="{% if guitar.imageGuitar is not empty %}{{asset(guitar.imageGuitar.first.image.name)}}{% else %}{{asset('assets/placeholder/placeholder-guitar.svg')}}{% endif %}"
-            data-price="{{guitar.price}}"
-            >
-            In den Warenkorb
-        </button>
-    {% endif %}
+        {# put buttons out if user has rights #}
+        {% if isAdmin == false %}
+            <button 
+                class="js-add-to-cart-button" 
+                data-guitar-id="{{guitar.id}}"
+                data-name="{% include 'guitar-headline-content.html.twig' %}"
+                data-image-src="{% if guitar.imageGuitar is not empty %}{{asset(guitar.imageGuitar.first.image.name)}}{% else %}{{asset('assets/placeholder/placeholder-guitar.svg')}}{% endif %}"
+                data-price="{{guitar.price}}"
+                >
+                In den Warenkorb
+            </button>
+        {% endif %}
+    </div>
 
 </div>

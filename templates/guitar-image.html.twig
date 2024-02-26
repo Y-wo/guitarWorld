@@ -1,11 +1,13 @@
-<img class="guitar-overview__img 
-    {% if classes is defined and classes != null %} 
-        {{classes}} 
-    {% endif %}" 
-    src="
-    {% if guitar.imageGuitar is not empty %}
-        {{asset(guitar.imageGuitar.first.image.name)}}
-    {% else %} 
-        {{asset('assets/placeholder/placeholder-guitar.svg')}}
-    {% endif %}
-    ">
+<div class="guitar-overview__image-container">
+    <img class="guitar-overview__img 
+        {% if classes is defined and classes != null %} 
+            {{classes}} 
+        {% endif %}" 
+        src="
+        {% if guitar.imageGuitar is not empty %}
+            {{asset(guitar.imageGuitar.first.image.name)}}
+        {% else %} 
+            {{asset('assets/placeholder/placeholder-guitar.svg')}}
+        {% endif %}
+        ">
+</div>
