@@ -37,6 +37,8 @@ class IndexController extends AbstractController
         $clearLocalStorage = $request->query->get('clearLocalStorage') ?? false;
         $localStorageScript = $clearLocalStorage ? JsScripts::CLEAR_LOCAL_STORAGE : null;
 
+        $guitars = $guitarService->getAllSelectedGuitars(false, false);
+
         // handling if guitar is searched
         if ($isSubmit && !empty($searchPhrase)) {
             $guitars = $guitarService->getAllByPhrase($searchPhrase, false, false);
@@ -45,9 +47,13 @@ class IndexController extends AbstractController
                 :
                 'Leider wurde kein passendes Ergebnis gefunden.'
                 ;  
-        }   
 
-        if (!$isSubmit || (count($guitars) <= 0)) {
+            if (empty($guitars)) {
+                $guitars = $guitarService->getAllSelectedGuitars(false, false);
+            }   
+        }   
+        
+        if (!$isSubmit) {
             $guitars = $guitarService->getAllSelectedGuitars(false, false);
         }
 
