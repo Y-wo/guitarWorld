@@ -17,12 +17,13 @@
 
     &__icon
         max-width: 100%
-        transition: background-color 0.25s, box-shadow 0.25s
+        transition: background-color 0.25s, box-shadow 0.25s, transform 0.25s
 
 
         &--active, &:hover 
-            background-color: white
-            box-shadow: 0 0 20px 20px white
+            background-color: $color-quaternary
+            box-shadow: 0 0 20px 20px $color-quaternary
+            transform: scale(1.2)
 
     
     &__icon-container
