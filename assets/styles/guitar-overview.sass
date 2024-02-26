@@ -7,7 +7,7 @@
         width: 100%
         max-width: 100%
         border-radius: 0.5rem
-        margin: 0 1rem 2rem 1rem
+        margin-bottom: 2rem
         padding: 1rem
         box-shadow: $shadow
         cursor: pointer
@@ -26,12 +26,16 @@
             width: 42%
             max-width: 42%
             --guitar-container-height: 500px
-
         
         @media (min-width: $breakpoint-lg)
-            width: 25%
-            max-width: 25%
+            width: 28%
+            max-width: 28%
             --guitar-container-height: 600px
+
+        @media (min-width: $breakpoint-xl)
+            width: 29%
+            max-width: 29%
+
 
         &:hover
             box-shadow: $shadow-hover
@@ -80,4 +84,14 @@
 
     &__action-button-container
         height: 10%
+        display: flex
+        justify-content: end
 
+        .guitar-overview__action-button
+            height: 0rem
+            border-radius: 2rem
+            padding: 1.5rem 0.75rem
+            margin-left: 0.5rem
+
+    &__action-button-icon
+        width: 1.5rem

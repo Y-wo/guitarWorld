@@ -20,7 +20,12 @@
                 href="{{path('change_guitar', {
                     'id': guitar.id
                         })}}" 
-                class="button">Gitarre bearbeiten
+                class="button guitar-overview__action-button "
+                title="Gitarre bearbeiten"
+                >
+                <img 
+                    class="guitar-overview__action-button-icon"
+                    src="{{asset('assets/icons/edit.svg')}}" >
             </a>
             
             <a 
@@ -28,20 +33,28 @@
                 href="{{path('delete_guitar', {
                     'id': guitar.id
                         })}}" 
-                class="button js-confirm-link">Löschen
+                class="button js-confirm-link guitar-overview__action-button"
+                title="Löschen"
+                >
+                <img 
+                    class="guitar-overview__action-button-icon"
+                    src="{{asset('assets/icons/delete.svg')}}" >
             </a>
         {% endif %}
 
         {# put buttons out if user has rights #}
         {% if isAdmin == false %}
             <button 
-                class="js-add-to-cart-button" 
+                class="js-add-to-cart-button guitar-overview__action-button" 
                 data-guitar-id="{{guitar.id}}"
                 data-name="{% include 'guitar-headline-content.html.twig' %}"
                 data-image-src="{% if guitar.imageGuitar is not empty %}{{asset(guitar.imageGuitar.first.image.name)}}{% else %}{{asset('assets/placeholder/placeholder-guitar.svg')}}{% endif %}"
                 data-price="{{guitar.price}}"
+                title="In den Warenkorb"
                 >
-                In den Warenkorb
+                <img 
+                    class="guitar-overview__action-button-icon"
+                    src="{{asset('assets/icons/shopping-cart-black.svg')}}" >
             </button>
         {% endif %}
     </div>

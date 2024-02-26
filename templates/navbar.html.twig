@@ -1,19 +1,22 @@
-<nav class="navbar__container ">
-    <a href="{{path('home')}}" class="navbar__logo-container">
-        <div class="navbar__icon-container navbar__logo-icon-container">
-            <image class="navbar__icon" src="/guitarWorld/public/assets/icons/logo/guitar-pick-logo.svg">
+<nav class="navbar">
+    <div class="content">
+        <div class="navbar__container">
+            <a href="{{path('home')}}" class="navbar__logo-container">
+                <div class="navbar__icon-container navbar__logo-icon-container">
+                    <image class="navbar__icon" src="/guitarWorld/public/assets/icons/logo/guitar-pick-logo.svg">
+                </div>
+                <p>GUITAR WORLD</p>
+            </a>
+
+            <div class="navbar__icon-container navbar__icon-container--right">
+                {% if isAdmin == false %}
+                    <div class="navbar__shopping-cart-counter js-shopping-cart-counter"></div>
+                    <image class="js-shopping-cart navbar__icon" src="{{asset('assets/icons/shopping-cart.svg')}}">
+                {% endif %}
+                
+                <image class="js-profile navbar__icon" src="/guitarWorld/public/assets/icons/profile-normal.svg">
+            
+            <div>
         </div>
-        <p>GUITAR WORLD</p>
-    </a>
-
-    <div class="navbar__icon-container navbar__icon-container--right">
-        {% if isAdmin == false %}
-            <div class="navbar__shopping-cart-counter js-shopping-cart-counter"></div>
-            <image class="js-shopping-cart navbar__icon" src="{{asset('assets/icons/shopping-cart.svg')}}">
-        {% endif %}
-        
-        <image class="js-profile navbar__icon" src="/guitarWorld/public/assets/icons/profile-normal.svg">
-    
-    <div>
-
+    </div>
 </nav>

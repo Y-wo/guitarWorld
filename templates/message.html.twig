@@ -1,6 +1,10 @@
 {% if message is defined and message is not null and message != '' %}
     
     <div class="message__container">
-        {{ message|raw }}
+        <div class="message__text-container">
+            <div class="message__text">
+                {{ message|raw }}
+            </div>
+        </div>
     </div>
 {% endif %}

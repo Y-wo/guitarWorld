@@ -1,4 +1,9 @@
 <form class="searchbar-form__form" action="{{path('home')}}" method="GET"> 
-    <input type="text" name="search-phrase">
-    <input type="submit" name="submit" value="Suchen">
+    <div class="searchbar-form__input-container">
+        <input type="text" name="search-phrase">
+        <input name="submit" value="Suchen" hidden>
+        <button class="searchbar-form__search-button" type="submit" >
+            <img class="searchbar-form__search-icon" src="{{asset('assets/icons/search.svg')}}" >
+        </button>
+    </div>
 </form>
