@@ -2,52 +2,78 @@
 
 {% block content %}
 
-    {% for order in orders %}
+    <h1 class="content__main-headline">Bestellungen</h1>
 
-    {% set isOrderActive = true %}
+    <div class="content--centering-in-column">
 
-    {% if order.paid is not null or order.canceled is not null %}
-        {% set isOrderActive = false %}
-    {% endif %}
+        {% for order in orders %}
 
+        {% set isOrderActive = true %}
 
-    {% set stateBackground = 'bg-failure' %}
-
-        <div class="order__item-container {% if order.paid is not null %} bg-success {% elseif order.canceled is not null %} bg-disabled {% endif %}">
-            
-            {{order.id}} <br>   
-            {{order.date|date('d-m-Y')}}
+        {% if order.paid is not null or order.canceled is not null %}
+            {% set isOrderActive = false %}
+        {% endif %}
 
 
-            {% if order.paid is null and order.canceled is null%}
-                {% include 'forms/order-change-input-form.html.twig' with {
-                    'inputName': 'paidId',
-                    'buttonLabel': 'NICHT BEGLICHEN - begleichen',
-                }%}
-                {% include 'forms/order-change-input-form.html.twig' with {
-                    'inputName': 'canceledId',
-                    'buttonLabel': 'AKTIV - stornieren',
-                }%}
-            {% elseif order.paid is not null%}
-                {% include 'forms/order-change-input-form.html.twig' with {
-                    'inputName': 'resetPaidId',
-                    'buttonLabel': 'BEGLICHEN - zurücksetzen',
-                }%}
-
-            {% elseif order.canceled is not null %}
-                 STORNIERT 
-            {% endif %} 
+        {% set stateBackground = 'bg-failure' %}
 
 
-            {# --- invoice form --- #}
-            {% if order.canceled is null %}
-                <form action="{{path('invoice')}}" method="post">
-                    <input type="text" name="id" value="{{order.id}}" hidden>
-                    <input type="submit" class="button" name="submit" value="Rechnung">
-                </form>
-            {% endif %}
 
-        </div>
-    {% endfor %}
+            <div class="order__item-container {% if order.paid is not null %} bg-success {% elseif order.canceled is not null %} bg-disabled {% endif %}">
+
+                <div class="order__item-data-container">
+
+                    {{order.id}} <br>   
+                    {{order.date|date('d-m-Y')}}
+                    {{order.user.email}}
+
+                </div>
+
+                <div class="order__action-button-container">
+
+                    {% if order.paid is null and order.canceled is null%}
+                        {% include 'forms/order-change-input-form.html.twig' with {
+                            'inputName': 'paidId', 
+                            'buttonLabel': 'NICHT BEGLICHEN - begleichen',
+                            'icon': 'check.svg'
+                        }%}
+                        {% include 'forms/order-change-input-form.html.twig' with {
+                            'inputName': 'canceledId',
+                            'buttonLabel': 'AKTIV - stornieren',
+                            'icon': 'cancel.svg',
+                            'confirmText': 'Sind Sie sicher, dass Sie die Rechnung stornieren wollen? Die Aktion kann nicht rückgängig gemacht werden.'
+                        }%}
+                    {% elseif order.paid is not null%}
+                        {% include 'forms/order-change-input-form.html.twig' with {
+                            'inputName': 'resetPaidId',
+                            'buttonLabel': 'BEGLICHEN - zurücksetzen',
+                            'icon': 'return.svg'
+                        }%}
+
+                    {% elseif order.canceled is not null %}
+                        STORNIERT 
+                    {% endif %} 
+
+
+                    {# --- invoice form --- #}
+                    {% if order.canceled is null %}
+                        <form action="{{path('invoice')}}" method="post">
+                            <input type="text" name="id" value="{{order.id}}" hidden>
+                            <input class="" name="submit" value="Rechnung" hidden>
+
+                            <button class="order__action-button" type="submit">
+                                <img 
+                                    class="order__action-button-icon"
+                                    src="{{asset('assets/icons/invoice.svg')}}" 
+                                    >
+                            </button>
+                        </form>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
 
 {% endblock %}

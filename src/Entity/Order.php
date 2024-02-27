@@ -25,7 +25,7 @@ class Order extends AbstractEntity
     #[ORM\OneToOne(mappedBy: 'guitarOrder')]
     private ?Guitar $guitar = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\ManyToOne(inversedBy: 'orders', fetch: "EAGER")]
     private ?User $user = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]

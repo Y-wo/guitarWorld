@@ -5,7 +5,15 @@
     &__overview-container
         display: flex
         flex-direction: column
-        max-width: 100%
+        width: 100%
+        margin-bottom: 5rem
+
+        @media (min-width: $breakpoint-md)
+            width: 75%
+
+        @media (min-width: $breakpoint-lg)
+            width: 50%
+
 
     &__item-container
         @include item-container
@@ -40,6 +48,8 @@
         display: flex
         justify-content: space-between
         align-items: center
+        padding-bottom: 1rem
+        padding-right: 0.5rem
 
     &__a-tag
         width: 50%

@@ -6,3 +6,36 @@
         padding-block: 1rem
         margin-block: 1rem
         border-radius: 0.25rem
+        flex-direction: column
+        align-items: center
+
+        width: 100%
+
+        @media (min-width: $breakpoint-md)
+            width: 75%
+
+        @media (min-width: $breakpoint-lg)
+            width: 50%
+
+        form
+            width: revert
+
+        --order-item-container-content-width: 90%
+
+    &__item-data-container
+        width: var(--order-item-container-content-width)
+
+    &__action-button-container
+        display: flex
+        margin-top: 2rem
+        width: var(--order-item-container-content-width)
+    
+    &__action-button
+        border-radius: 2rem
+        margin-right: 1rem
+        width: revert 
+
+    &__action-button-icon
+        width: 1.5rem
+        pointer-events: none
+        padding: 0 0.2rem

@@ -5,36 +5,73 @@
 
 {% block content %}
 
-    {{dump(guitarTypes)}}
+    <h1 class="conten__main-headline">Gitarrentypen</h1>
 
-    {% for guitarType in guitarTypes %}
-        
-        <div class="guitar-type-overview__item-container ">
-            <ul>
-                <li>{{guitarType.brand}}</li>
-                <li>{{guitarType.id}}</li>
-                <li>{{guitarType.version}}</li>
-                <li>{{guitarType.type}}</li>
-                <li>{{guitarType.saddlewidth}}</li>
-                <li>{{guitarType.neck}}</li>
-                <li>{{guitarType.size}}</li>
-                <li>{{guitarType.fretboard}}</li>
-                <li>{{guitarType.scale}}</li>
-                <li>deleted? {{guitarType.deleted}}</li>
-            </ul> 
+    <div class="content--centering-in-column">
+        {% for guitarType in guitarTypes %}
+            
+            <div class="guitar-type-overview__item-container ">
+                <table>
+                    <tr>
+                        <td>Marke</td>
+                        <td>{{guitarType.brand}}</td>
+                    </tr>
+                    <tr>
+                        <td>Version</td>
+                        <td>{{guitarType.version}}</td>
+                    </tr>
+                    <tr>
+                        <td>Elektrisch/Akustisch</td>
+                        <td>{{guitarType.type}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sattelbreite</td>
+                        <td>{{guitarType.saddlewidth}}</td>
+                    </tr>
+                    <tr>
+                        <td>Hals</td>
+                        <td>{{guitarType.neck}}</td>
+                    </tr>
+                    <tr>
+                        <td>Größe</td>
+                        <td>{{guitarType.size}}</td>
+                    </tr>
+                    <tr>
+                        <td>Griffbrett</td>
+                        <td>{{guitarType.fretboard}}</td>
+                    </tr>
+                    <tr>
+                        <td>Mensur</td>
+                        <td>{{guitarType.scale}}</td>
+                    </tr>
+                </table>
 
-            <a class="button" href="{{path('change_guitar_type', {'id': guitarType.id })}}">Anpassen</a>
-            <a 
-                class="button js-confirm-link" 
-                data-confirmation-text="{{confirmationText}}"
-                href="{{path('delete_guitar_type', {'id': guitarType.id })}}"
-                >
-                Löschen
-            </a>
+                <div class="guitar-type-overview__action-button-container">
 
-        </div>
+                    <a 
+                        class="button guitar-type-overview__action-button" 
+                        href="{{path('change_guitar_type', {'id': guitarType.id })}}"
+                        title="Anpassen"
+                        >
+                        <img 
+                            class="guitar-type-overview__action-button-icon"
+                            src="{{asset('assets/icons/edit.svg')}}" >
+                    </a>
+                    <a 
+                        class="button js-confirm-link guitar-type-overview__action-button" 
+                        data-confirmation-text="{{confirmationText}}"
+                        href="{{path('delete_guitar_type', {'id': guitarType.id })}}"
+                        title="Löschen"
+                        >
+                        <img 
+                            class="guitar-type-overview__action-button-icon"
+                            src="{{asset('assets/icons/delete.svg')}}" >
+                    </a>
+                </div>
+            </div>
 
 
-    {% endfor %}
+        {% endfor %}
+    </div>
 
 {% endblock %}

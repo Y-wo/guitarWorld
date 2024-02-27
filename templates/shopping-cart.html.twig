@@ -1,13 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <h2>Übersicht</h2>
 
-    <div class="shopping-cart__overview-container js-shopping-cart-overview-container">
+    <h1 class="content__main-headline">Warenkorb Übersicht</h1>
+
+    <div class="content--centering-in-column">
+
+        {# Items are generated with javascript by using the stored items in the localStorage #}
+        <div class="shopping-cart__overview-container js-shopping-cart-overview-container">
+        </div>
+
     </div>
 
-    <h2>Bestelldaten</h2>
+    <h1 class="content__main-headline">Bestelldaten</h2>
 
-    {% include 'forms/shopping-cart-form.html.twig' %}
+    <div class="content--centering-in-column">
+        {% include 'forms/shopping-cart-form.html.twig' %}
+
+    </div>
 
 {% endblock %}
