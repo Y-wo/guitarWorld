@@ -5,9 +5,12 @@
 
 {% block content %}
 
+    <div class="content--centering-in-column">
 
-    {% include '/forms/guitar_form.html.twig' with {
-        'submit_label' : 'Speichern'
-    } %}
+        {% include '/forms/guitar_form.html.twig' with {
+            'submit_label' : 'Speichern'
+        } %}
+
+    </div>
 
 {% endblock %}

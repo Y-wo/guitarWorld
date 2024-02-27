@@ -4,8 +4,15 @@
 
 {% block content %}
 
-    {% include '/forms/guitar_type_form.html.twig' with {
-        'submit_label' : 'Anlegen'
-    } %}
+    <h1 class="content__main-headline"> Neuen Gitarrentyp anlegen </h3>
+
+    <div class="content--centering-in-column" >
+
+        {% include '/forms/guitar_type_form.html.twig' with {
+            'submit_label' : 'Anlegen'
+        } %}
+
+
+    </div>
 
 {% endblock %}

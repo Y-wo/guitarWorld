@@ -34,7 +34,9 @@
 {# ---------------------------- INPUT --------------#}
 
 {# control the route #}
-<form action="
+<form 
+    class="form__container"
+    action="
     {% if isChangeProcess %}
         {{path('change_guitar')}}?id={{infos.id}}
     {% else %}

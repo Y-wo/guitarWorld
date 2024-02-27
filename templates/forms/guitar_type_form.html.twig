@@ -1,9 +1,9 @@
 {% set route = route ?? 'create_guitar_type' %}
 
 {% if route == 'change_guitar_type' %}
-    <form action="{{path(route, {'id': guitarTypeId } )}}" method="POST">
+    <form class="form__container" action="{{path(route, {'id': guitarTypeId } )}}" method="POST">
 {% else %}
-    <form action="{{path(route)}}" method="POST">
+    <form class="form__container" action="{{path(route)}}" method="POST">
 {% endif %}
 
         {{ setInputField('text', 'brand', 'Marke', guitarTypeInfos, return) | raw }}

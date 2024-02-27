@@ -9,19 +9,48 @@
 
     &__item-container
         @include item-container
+        margin-top: 1rem
+        flex-direction: column
+        border-radius: 0.5rem
+        padding: 0.5rem
 
-        a
-            width: 20%
-
-            img
-                max-width: 100%
-        
-        p.shopping-cart__name
-            width: 30%
-        
-        p.shopping-cart__price
+        .shopping-cart__price
             width: 30%
             font-weight: bold
 
-        .button
-            width: 20%
+        .image__frame
+            box-shadow: revert
+
+        .shopping-cart__remove-button
+            width: revert 
+            border-radius: 2rem
+            margin-top: revert
+
+    &__item-container-first-row
+        display: flex
+        justify-content: center
+        height: 200px
+
+    
+    &__item-container-second-row
+        display: flex
+        flex-direction: column
+    
+    &__item-container-third-row
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+    &__a-tag
+        width: 50%
+        display: flex
+        justify-content: center
+
+
+    &__icon
+        width: 1.5rem
+        padding: 0 0.65rem
+
+    &__total-price
+        font-size: 1.25rem
+        margin-top: 2.5rem

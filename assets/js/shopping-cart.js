@@ -121,44 +121,57 @@ document.addEventListener("DOMContentLoaded", async function() {
 
             let shoppingItemContainer = document.createElement('div');
             shoppingItemContainer.className = "shopping-cart__item-container";
-            shoppingItemContainer.style.paddingBottom = "1rem"
+
+            let shoppingItemContainerFirstRow = document.createElement('div');
+            shoppingItemContainerFirstRow.className = "shopping-cart__item-container-first-row";
+
+            let shoppingItemContainerSecondRow = document.createElement('div');
+            shoppingItemContainerSecondRow.className = "shopping-cart__item-container-second-row";
+
+            let shoppingItemContainerThirdRow = document.createElement('div');
+            shoppingItemContainerThirdRow.className = "shopping-cart__item-container-third-row";
 
             let aTagToGuitar = document.createElement('a');
             aTagToGuitar.href = serverUrl + guitarDetailPageUrl + guitarValue.id;
-            aTagToGuitar.className = 'image__frame'
+            aTagToGuitar.className = 'image__frame shopping-cart__a-tag'
 
             let imageElement = document.createElement('img');
             imageElement.src = guitarValue.imageSrc;
 
             aTagToGuitar.appendChild(imageElement);
-            shoppingItemContainer.appendChild(aTagToGuitar);
+            shoppingItemContainerFirstRow.appendChild(aTagToGuitar);
 
             let nameElement = document.createElement('p');
             nameElement.className = "shopping-cart__name"
             nameElement.textContent = guitarValue.name;
-            shoppingItemContainer.appendChild(nameElement);
+            shoppingItemContainerSecondRow.appendChild(nameElement);
 
             let priceElement = document.createElement('p');
             priceElement.className = "shopping-cart__price"
             priceElement.textContent = guitarValue.price + ',00 €';
-            shoppingItemContainer.appendChild(priceElement);
+            shoppingItemContainerThirdRow.appendChild(priceElement);
 
             let removeButton = document.createElement('div');
             removeButton.setAttribute('data-guitar-id', guitarValue.id);
-            removeButton.className = "button";
-            removeButton.innerHTML = "Aus Warenkorb entfernen";
-            shoppingItemContainer.appendChild(removeButton);
+            removeButton.className = "button shopping-cart__remove-button";
+            removeButton.innerHTML = "<img src='" + serverUrl + "/assets/icons/delete.svg' class='shopping-cart__icon' >" ;
+            shoppingItemContainerThirdRow.appendChild(removeButton);
 
             removeButton.addEventListener('click', function(event) {
                 event.stopPropagation();
                 removeFromShoppingCart(event.target); 
             })
 
+            shoppingItemContainer.append(shoppingItemContainerFirstRow);
+            shoppingItemContainer.append(shoppingItemContainerSecondRow);
+            shoppingItemContainer.append(shoppingItemContainerThirdRow);
+
             appendingTarget.appendChild(shoppingItemContainer);
         }
 
         totalPriceElement = document.createElement('p');
-        totalPriceElement.innerHTML = 'TOTALPREIS: ' + totalPrice + ',00 €';
+        totalPriceElement.className = 'shopping-cart__total-price';
+        totalPriceElement.innerHTML = '<span class="bold">Totalpreis: </span>' + totalPrice + ',00 €';
         appendingTarget.appendChild(totalPriceElement);
     }
 
