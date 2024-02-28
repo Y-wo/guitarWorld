@@ -170,15 +170,17 @@ class OrderService extends AbstractEntityService
         $totalPrice = $this->computeTotalPrice($order);
         $totalSalesTax = $this->coumputeSaleTax($totalPrice);
 
+        $user = $order->getUser();
+
         $txt =         
         "
-        Max Mustermann
-        Musterstraße 123
-        12345 Musterstadt
-
         Guitar World
-        Muster 456
-        54321 Musterstadt
+        Berliner Straße 63
+        55131 Musterstadt
+
+        " . $user->getFirstname() . " " . $user->getLastname() . "
+        " . $user->getStreet() . " " . $user->getHousenumber() . "
+        " . $user->getZipcode() . " " . $user->getCity() . "
 
         Rechnung Nr.: " . $order->getId() . " 
         Rechnungsdatum: " . $order->getDate()->format('d.m.Y') . "
@@ -194,7 +196,7 @@ class OrderService extends AbstractEntityService
         Zahlungsbedingungen: Zahlbar innerhalb von 14 Tagen nach Rechnungsdatum ohne Abzug.
 
         Bankverbindung:
-        Max Mustermann
+        Flynn Tester
         Musterbank AG
         IBAN: DE12345678901234567890
         BIC: MUSTERBICXXX
