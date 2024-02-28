@@ -167,9 +167,14 @@ class IndexController extends AbstractController
     #[Route(path: '/create-user', name: 'create_user')]
     public function createUser(
         Request $request,
-        UserService $userService
+        UserService $userService,
+        LoginService $loginService
     ): Response
     {      
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $userManipulationProcess = $userService->getUserManipulationProcess($request);
 
         // process, if form ist submitted
@@ -215,8 +220,13 @@ class IndexController extends AbstractController
     #[Route(path: '/user-success', name: 'user_success')]
     public function userSuccess(
         Request $request,
+        LoginService $loginService
     ): Response
     { 
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $message = $request->query->get('success') ? SystemWording::SUCCESS_REGISTRATION : 'Keine Information';
         return $this->render('user_success.html.twig', [
             'message' => $message
@@ -231,9 +241,14 @@ class IndexController extends AbstractController
     #[Route(path: '/create-guitar-type', name: 'create_guitar_type')]
     public function createGuitarType(
         Request $request,
-        GuitarTypeService $guitarTypeService
+        GuitarTypeService $guitarTypeService,
+        LoginService $loginService
     ): Response
     { 
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $isSubmit = $guitarTypeService->isSubmit($request);
         
         // process if new guitarType is submitted
@@ -279,9 +294,14 @@ class IndexController extends AbstractController
     #[Route(path: '/guitar-type-overview', name: 'guitar_type_overview')]
     public function guitarTypeOverview(
         Request $request,
-        GuitarTypeService $guitarTypeService
+        GuitarTypeService $guitarTypeService,
+        LoginService $loginService
     ): Response
     { 
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $guitarTypes = $guitarTypeService->getAllNotDeleted();
         $message = $request->query->get('message') ?? null;
 
@@ -302,9 +322,14 @@ class IndexController extends AbstractController
         Request $request,
         GuitarTypeService $guitarTypeService,
         RequestService $requestService,
-        int $id
+        int $id,
+        LoginService $loginService
     ): Response
     { 
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $isSubmit = $requestService->isSubmit($request);
         if ($isSubmit) {
             $guitarTypeService->changeGuitarType($id, $request);
@@ -332,9 +357,14 @@ class IndexController extends AbstractController
         Request $request,
         GuitarTypeService $guitarTypeService,
         GuitarService $guitarService,
+        LoginService $loginService,
         int $id
     ): Response
     { 
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $guitarService->setDeletedByGuitarTypeId($id);
 
         if($guitarTypeService->setDeletedbyId($id)) {
@@ -358,9 +388,14 @@ class IndexController extends AbstractController
         Request $request,
         GuitarService $guitarService,
         GuitarTypeService $guitarTypeService,
-        ImageGuitarService $imageGuitarService
+        ImageGuitarService $imageGuitarService,
+        LoginService $loginService
     ): Response
     { 
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $processData = [];
 
         $session = $request->getSession();
@@ -423,8 +458,13 @@ class IndexController extends AbstractController
         GuitarService $guitarService,
         GuitarTypeService $guitarTypeService,
         ImageGuitarService $imageGuitarService,
+        LoginService $loginService
     ): Response
     {
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $isSubmit = $guitarService->isSubmit($request);
         $message = $request->query->get('message') ?? null;
         $fileExists = $request->query->get('fileExists') ?? null;
@@ -508,9 +548,14 @@ class IndexController extends AbstractController
     #[Route(path: '/delete-guitar', name: 'delete_guitar')]
     public function deleteGuitar(
         Request $request,
-        GuitarService $guitarService
+        GuitarService $guitarService,
+        LoginService $loginService
     ): Response
     {
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $guitarId = $request->query->get('id');
         $guitarService->setDeletedById($guitarId);
         $message = SystemWording::SUCCESS_GUITAR_DELETED . "(ID: " .$guitarId . ")";
@@ -528,9 +573,14 @@ class IndexController extends AbstractController
     #[Route(path: '/upload-image', name: 'upload_image')]
     public function uploadImage(
         Request $request,
-        ImageService $imageService
+        ImageService $imageService, 
+        LoginService $loginService
     ): Response
     {
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $isSubmit = $imageService->isSubmit($request);
         if ($isSubmit) {
             $uploadInfos = $imageService->uploadImage();
@@ -583,9 +633,14 @@ class IndexController extends AbstractController
         Request $request,
         ImageService $imageService,
         GuitarService $guitarService,
-        ImageGuitarService $imageGuitarService
-    ): Response
+        ImageGuitarService $imageGuitarService,
+        LoginService $loginService
+    ): Response 
     {
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $session = $request->getSession();
         $guitarId = $session->get('guitar_id');
         $guitar = $guitarService->get($guitarId);
@@ -640,8 +695,12 @@ class IndexController extends AbstractController
     public function orders(
         Request $request,
         OrderService $orderService,
+        LoginService $loginService
     ): Response
     {
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
         $orders = $orderService->getAllSortByDate(false);
         $isSubmit = $orderService->isSubmit($request);
 
@@ -675,9 +734,14 @@ class IndexController extends AbstractController
     #[Route(path: '/invoice', name: 'invoice')]
     public function invoice(
         Request $request,
-        OrderService $orderService
+        OrderService $orderService,
+        LoginService $loginService
     ): Response
     {
+        if (!$loginService->isAdminLoggedIn($request)){
+            return $this->redirectToRoute('home');
+        }
+
         $orderId = $request->request->get('id');
         $orderService->provideInvoice($orderId);
         return $this->redirectToRoute('home', [
