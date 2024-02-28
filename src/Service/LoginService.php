@@ -47,7 +47,9 @@ class LoginService{
         return false;
     }
 
-
+    /*
+    * Stores authentication-session-variables
+    */ 
     public function storeAuthenticationSessionVariables(
         Request $request,
         User $user
@@ -58,6 +60,10 @@ class LoginService{
         $session->set('user', $user);
     }
 
+
+    /*
+    * Clears Sessions
+    */ 
     public function clearSession(
         Request $request
     ) :void
@@ -66,6 +72,10 @@ class LoginService{
         $session->clear();
     }
 
+
+    /*
+    * Checks if User is logged in
+    */
     public function isLoggedIn(Request $request)
     : bool
     {
@@ -74,5 +84,21 @@ class LoginService{
         if($state) return true;
         return false;
     }
+
+    /*
+    * Checks if Admin is logged in
+    */
+    public function isAdminLoggedIn(Request $request)
+    : bool
+    {
+        if ($this->isLoggedIn($request)) {
+            $session = $request->getSession();
+            $user = $session->get('user');
+            $roles = $user->getRoles();
+            if (in_array(SystemWording::ROLE_ADMIN, $roles)) return true;
+        }
+        return false;
+    }
+
 
 }
