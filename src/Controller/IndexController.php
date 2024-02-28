@@ -57,12 +57,18 @@ class IndexController extends AbstractController
             $guitars = $guitarService->getAllSelectedGuitars(false, false);
         }
 
+        // This is needed for aligning the last guitar correctly
+        $guitarsModuloResult = count($guitars) % 3;
+        $lastGuitarSpecialAlignment = ($guitarsModuloResult == 0) ? false : true;
+
         return $this->render("home.html.twig", [
            'headline' => SystemWording::HELLO,
            'message' => $message,
            'guitars' => $guitars ?? null,
            'localStorageScript' => $localStorageScript ?? null,
            'confirmationText' => SystemWording::GUITAR_DELETE_CONFIRMATION,
+           'lastGuitarSpecialAlignment' => $lastGuitarSpecialAlignment,
+           'guitarsModuloResult' => $guitarsModuloResult
         ]);
     }
 

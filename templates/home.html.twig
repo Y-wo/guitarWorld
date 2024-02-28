@@ -9,13 +9,45 @@
 
 {% block content %}
 
+ 
     <div class="home__guitars-container">
 
-    {% for guitar in guitars %}
+        {# this is needed for aligning the last guitar correctly #}
+        {% set counter = 1 %}
+        {% set guitarsLenght = guitars|length %}
+        {% set penultimateGuitar = guitarsLenght - 1 %}
 
-        {% include 'guitar-overview.html.twig' %}
+        {% for guitar in guitars %}
 
-    {% endfor %}
+            {% set specialClass = '' %}
+
+            {% if guitarsModuloResult == 0 %}
+                {% if counter == penultimateGuitar  %}
+                    {% set specialClass = 'guitar-overview__container--special-alignement-once' %}
+                {% endif %}
+            {% elseif guitarsModuloResult == 1 %}
+                {% if counter == guitarsLenght  %}
+                    {% set specialClass = 'guitar-overview__container--special-alignement-evenly' %}
+                {% endif %}
+
+            {% elseif guitarsModuloResult == 2 %}
+                {% if counter == penultimateGuitar %}
+                    {% set specialClass = 'guitar-overview__container--special-alignement-first' %}
+                {% endif %}
+                {% if counter == guitarsLenght %}
+                    {% set specialClass = 'guitar-overview__container--special-alignement guitar-overview__container--special-alignment-second' %}
+                {% endif %}
+            {% endif %}
+
+
+            {% include 'guitar-overview.html.twig' with {
+                'specialClass' : specialClass
+            } %}
+
+            {% set counter = counter + 1 %}
+
+        {% endfor %}
+
 
     <div>
 

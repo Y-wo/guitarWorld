@@ -1,4 +1,7 @@
-<div class="guitar-overview__container" data-guitar-id="{{guitar.id}}">
+<div 
+    class="guitar-overview__container {{specialClass}}" 
+    data-guitar-id="{{guitar.id}}"
+    >
     <a class="guitar-overview__link-container" href="{{path('guitar', {'guitarId' : guitar.id})}}">
         {% include 'guitar-image.html.twig'%}
         <div class="guitar-overview__guitar-headline-container">
@@ -60,3 +63,4 @@
     </div>
 
 </div>
+
