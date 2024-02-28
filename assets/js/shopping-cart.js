@@ -221,10 +221,6 @@ document.addEventListener("DOMContentLoaded", async function() {
             submitButton.name = 'submit';
             shoppingCartFormGuitars.append(submitButton);
         }
-
-
-
-
     }
 
 

@@ -49,5 +49,4 @@ abstract class SystemWording
     const IMAGE_GUITAR_REMOVED = "Das Bild wurde erfolgreich entfernt.";
     const IMAGE_DELETE_CONFIRMATION = "Sind Sie sicher, dass Sie dieses Bild löschen wollen?";
     
-
 }

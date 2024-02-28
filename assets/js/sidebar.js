@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", async function(){
         if (event.target.classList.contains('js-profile')) {
 
             if (isAdminLoggedIn !== "1") {
-                console.log("geht in schleife 1 rein")
                 loginForm.classList.add('login-form__container--active');
                 shoppingCartButton.classList.remove('navbar__icon--active');
                 shoppingForm.classList.remove('sidebar__shopping-form--active');
@@ -71,7 +70,5 @@ document.addEventListener("DOMContentLoaded", async function(){
             isSidebarOpen = false;
         }
     });
-
-    
 
 });

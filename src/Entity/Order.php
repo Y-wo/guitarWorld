@@ -21,7 +21,6 @@ class Order extends AbstractEntity
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $payDate = null;
 
-    // #[ORM\OneToOne(mappedBy: 'guitarOrder', cascade: ['persist', 'remove'])]
     #[ORM\OneToOne(mappedBy: 'guitarOrder')]
     private ?Guitar $guitar = null;
 

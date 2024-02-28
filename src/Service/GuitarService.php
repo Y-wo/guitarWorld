@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Entity\Guitar;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use App\Service\GuitarTypeService;
 use App\Service\ImageService;
 
@@ -89,7 +88,6 @@ class GuitarService extends AbstractEntityService
             } 
             else {
                 //create Image-Entity   
-                // $imageId = $this->imageService->createNewImage($infos['image']);
                 $imageId = $this->imageService->getImageByName($infos['image'])->getId();
             }
         }
@@ -104,9 +102,6 @@ class GuitarService extends AbstractEntityService
         ];
 
         return $guitarUploadInfos;
-
-
-        // return $this->store($guitar) ? true : false;
     }
 
 
@@ -220,7 +215,6 @@ class GuitarService extends AbstractEntityService
             ->setParameter('phrase', '%' . $phrase . '%')
             ;
 
-
         return $queryBuilder->getQuery()->execute();
     }
 
@@ -240,8 +234,6 @@ class GuitarService extends AbstractEntityService
             ->where('r.guitarOrder = :order')
             ->setParameter('order', $id)
             ;
-
-
 
         return $queryBuilder->getQuery()->execute();
     }
