@@ -4,10 +4,10 @@
 
 ### Systemvoraussetzungen (Windows)
 
-- [Apache, MySQL, PHP^8.0 (XAMPP)](https://www.apachefriends.org/download.html).
-- [Composer](https://getcomposer.org/doc/00-intro.md#installation-windows).
-- [Git for Windows](https://git-scm.com/download/win).
-- [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [Apache, MySQL, PHP^8.0 (XAMPP)](https://www.apachefriends.org/download.html)
+- [Composer](https://getcomposer.org/doc/00-intro.md#installation-windows)
+- [Git for Windows](https://git-scm.com/download/win)
+- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 ### Anleitung
 
@@ -30,7 +30,7 @@
     ``` 
 
 ## Anwendung nutzen
-1. Xamp-Module starten: 
+1. Xampp-Module starten: 
     - ``Apache`` 
     - ``MySql`` 
 
