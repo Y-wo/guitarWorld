@@ -18,15 +18,47 @@
         {% set stateBackground = 'bg-failure' %}
 
 
-
             <div class="order__item-container {% if order.paid is not null %} bg-success {% elseif order.canceled is not null %} bg-disabled {% endif %}">
+
+                {% if order.canceled is not null %}
+                    <p class="order__status-text">STORNIERT</p> 
+                {% elseif order.paid is not null %}
+                    <p class="order__status-text">BEGLICHEN</p> 
+                {% else %}
+                    <p class="order__status-text">OFFEN</p> 
+                {% endif %} 
 
                 <div class="order__item-data-container">
 
-                    {{order.id}} <br>   
-                    {{order.date|date('d-m-Y')}}
-                    {{order.user.email}}
+                        <table class="order__order-data-table">
+                            <tr>
+                                <td>Bestelldatum</td>
+                                <td>{{order.date|date('d.m.y')}}</td>
+                            </tr>
+                            <tr>
+                                <td>Bestellnummer</td>
+                                <td>{{order.id}}</td>
+                            </tr>
+                        </table>
+                        <table class="order__user-data-table">
+                            <tr>
+                                <td>Name</td>
+                                <td>{{order.user.firstname}} {{order.user.lastname}}</td>
+                            </tr>
+                            <tr>
+                                <td>Adresse</td>
+                                <td>{{order.user.street}} {{order.user.housenumber}}, {{order.user.zipcode}} {{order.user.city}}</td>
+                            </tr>
+                            <tr>
+                                <td>E-Mail</td>
+                                <td>{{order.user.email}}</td>
+                            </tr>
+                            <tr>
+                                <td>Telefonnummer</td>
+                                <td>{{order.user.phone}}</td>
+                            </tr>
 
+                        </table>
                 </div>
 
                 <div class="order__action-button-container">
@@ -34,19 +66,19 @@
                     {% if order.paid is null and order.canceled is null%}
                         {% include 'forms/order-change-input-form.html.twig' with {
                             'inputName': 'paidId', 
-                            'buttonLabel': 'NICHT BEGLICHEN - begleichen',
+                            'buttonLabel': 'Begleichen',
                             'icon': 'check.svg'
                         }%}
                         {% include 'forms/order-change-input-form.html.twig' with {
                             'inputName': 'canceledId',
-                            'buttonLabel': 'AKTIV - stornieren',
+                            'buttonLabel': 'Stornieren',
                             'icon': 'cancel.svg',
                             'confirmText': 'Sind Sie sicher, dass Sie die Rechnung stornieren wollen? Die Aktion kann nicht rückgängig gemacht werden.'
                         }%}
                     {% elseif order.paid is not null%}
                         {% include 'forms/order-change-input-form.html.twig' with {
                             'inputName': 'resetPaidId',
-                            'buttonLabel': 'BEGLICHEN - zurücksetzen',
+                            'buttonLabel': 'Zurücksetzen',
                             'icon': 'return.svg'
                         }%}
 
@@ -61,7 +93,7 @@
                             <input type="text" name="id" value="{{order.id}}" hidden>
                             <input class="" name="submit" value="Rechnung" hidden>
 
-                            <button class="order__action-button" type="submit">
+                            <button class="order__action-button" type="submit" title="Download Rechnung">
                                 <img 
                                     class="order__action-button-icon"
                                     src="{{asset('assets/icons/invoice.svg')}}" 

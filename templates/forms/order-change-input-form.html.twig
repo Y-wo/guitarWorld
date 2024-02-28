@@ -1,12 +1,10 @@
 {% set assetPath = 'assets/icons/' ~ icon %}
 
-
-
 <form action="{{path('orders')}}" method="post">
     <input type="text" name="{{inputName}}" value="{{order.id}}" hidden>
     <input class="" name="submit" value="{{buttonLabel}}" hidden>
 
-    <button type="submit" class="order__action-button" > 
+    <button type="submit" class="order__action-button" title="{{buttonLabel}}"> 
         <img 
             class="order__action-button-icon"
             src="{{asset(assetPath)}}" 

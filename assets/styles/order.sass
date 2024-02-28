@@ -22,6 +22,20 @@
 
         --order-item-container-content-width: 90%
 
+
+        table
+            width: 100%
+
+            td
+                padding-bottom: .25rem
+
+                &:first-of-type
+                    font-weight: bold
+                    width: 30%
+        
+                &:nth-of-type(2)
+                    width: 70%
+
     &__item-data-container
         width: var(--order-item-container-content-width)
 
@@ -39,3 +53,12 @@
         width: 1.5rem
         pointer-events: none
         padding: 0 0.2rem
+
+
+    &__order-data-table
+        padding-bottom: 1rem
+
+    &__status-text
+        text-align: center
+        padding-bottom: 1rem
+        font-weight: bold
