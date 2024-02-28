@@ -37,7 +37,7 @@ form
 
     input, select
         height: 2.5rem
-        border-radius: 4px
+        border-radius: 1rem
         font-weight: bold
         color: $color-primary
         border-color: $color-secondary
@@ -50,7 +50,7 @@ form
 
         &:focus 
             outline: none 
-            box-shadow: 2px 2px 7px 0px
+            box-shadow: 2px 2px 7px 0px $color-tertiary
 
             + label
                 padding-left: 2rem
@@ -79,11 +79,11 @@ form
 
 button, .button
     color: $color-quaternary
-    background-color: $color-primary
+    background-color: $color-secondary
     transition: background-color .25s
     height: 2.75rem
     border: 2px solid $color-secondary
-    border-radius: 4px
+    border-radius: 1rem
     font-weight: bold
     display: flex
     justify-content: center
@@ -94,7 +94,16 @@ button, .button
     cursor: pointer
 
     &:hover
+        // background-color: $color-tertiary
+        opacity: 0.75
+
+    &[disabled]
         background-color: $color-secondary
+        opacity: 0.4
+
+        &:hover
+            cursor: default 
+
 
 
 .main

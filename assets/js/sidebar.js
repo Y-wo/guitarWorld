@@ -67,6 +67,10 @@ document.addEventListener("DOMContentLoaded", async function(){
     document.addEventListener('click', function(event){
         if(isSidebarOpen && (!sidebar.contains(event.target) || event.target == cross)){
             sidebar.classList.remove("active");
+            profileButton.classList.remove('navbar__icon--active');
+            if (isAdminLoggedIn !== "1") {
+                shoppingCartButton.classList.remove('navbar__icon--active');
+            }
             isSidebarOpen = false;
         }
     });
