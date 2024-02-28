@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Service\UserService;
 use App\Service\GuitarService;
 use App\Service\GuitarTypeService;
@@ -17,7 +16,6 @@ use App\Service\ImageService;
 use App\Service\LoginService;
 use App\Service\OrderService;
 use App\Service\RequestService;
-use App\Service\HelperService;
 
 class IndexController extends AbstractController
 {
@@ -102,9 +100,7 @@ class IndexController extends AbstractController
     #[Route(path: '/logout', name: 'logout')]
     public function logout(
         Request $request,
-        EntityManagerInterface $entityManager,
         LoginService $loginService,
-        UserService $userService
     ): Response
     {
         $loginService->clearSession($request);
@@ -322,8 +318,8 @@ class IndexController extends AbstractController
         Request $request,
         GuitarTypeService $guitarTypeService,
         RequestService $requestService,
+        LoginService $loginService,
         int $id,
-        LoginService $loginService
     ): Response
     { 
         if (!$loginService->isAdminLoggedIn($request)){
@@ -631,7 +627,6 @@ class IndexController extends AbstractController
     #[Route(path: '/remove-image-guitar', name: 'remove_image_guitar')]
     public function removeImageGuitar(
         Request $request,
-        ImageService $imageService,
         GuitarService $guitarService,
         ImageGuitarService $imageGuitarService,
         LoginService $loginService
@@ -746,44 +741,6 @@ class IndexController extends AbstractController
         $orderService->provideInvoice($orderId);
         return $this->redirectToRoute('home', [
             'message' => SystemWording::ERROR_MESSAGE
-        ]);
-    }
-
-
-
-    /*
-    * test
-    */
-    #[Route(path: '/test', name: 'test')]
-    public function test(
-        Request $request,
-        OrderService $orderService,
-        GuitarService $guitarService
-    ): Response
-    {
-
-
-        $myfile = fopen("invoices/newfile.txt", "w") or die("Unable to open file!");
-        $txt = "John Doe test123\n";
-        fwrite($myfile, $txt);
-        $txt = "Jane Doe\n";
-        fwrite($myfile, $txt);
-        fclose($myfile);
-
-        $file_url = 'http://localhost/guitarWorld/public/invoices/newfile.txt';
-        // header('Content-Type: application/octet-stream');
-        // header("Content-Transfer-Encoding: Binary"); 
-        header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
-        readfile($file_url);
-        exit(); 
-
-
-
-        // $order = $orderService->get(35);
-        // $test = $guitarService->getAllByOrderId(35);
-        // // $test = $orderService->get(23);
-        return $this->render('test.html.twig', [
-            'test' => $test ?? ''
         ]);
     }
 
