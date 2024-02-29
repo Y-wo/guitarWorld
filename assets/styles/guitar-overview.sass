@@ -21,50 +21,21 @@
         max-height: var(--guitar-container-height)
         min-height: var(--guitar-container-height)
 
-
-        @media (min-width: $breakpoint-md)
-            width: 42%
-            max-width: 42%
-            --guitar-container-height: 500px
         
         @media (min-width: $breakpoint-lg)
             width: 28%
             max-width: 28%
             --guitar-container-height: 600px
 
-        @media (min-width: $breakpoint-xl)
+        @media (min-width: $breakpoint-lg)
             width: 29%
             max-width: 29%
 
 
-        &--special-alignement-first
-            margin-left: 0
-            margin-right: auto
-
+        &--special-alignement
             @media (min-width: $breakpoint-lg)
                 margin-right: auto
-                margin-left: 0
-            
-        &--special-alignement-second
-            margin-left: auto
-            margin-right: auto
-        
-        &--special-alignement-once
-            margin-left: 0
-            margin-right: auto
-
-            @media (min-width: $breakpoint-lg)
-                margin-right: auto  
                 margin-left: auto
-
-        &--special-alignement-evenly
-            margin-right: 0
-            margin-left: auto
-
-            @media (min-width: $breakpoint-lg)
-                margin-right: revert 
-                margin-left: revert
-
 
         &:hover
             box-shadow: $shadow-hover
@@ -74,8 +45,6 @@
 
         h3
             font-size: 1rem
-
-    
 
 
     &__link-container
