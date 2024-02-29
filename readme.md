@@ -35,3 +35,7 @@
     - ``MySql`` 
 
 2. Die Anwendung ist [hier](http://localhost/guitarWorld/public/) zu erreichen.
+
+3. Test-Anmeldedaten:
+    - Nutzer: ``admin@email.de``
+    - Passwort: ``adminadmin``
