@@ -3,9 +3,11 @@
 {% set return = (return is defined and return == true) ? true : false %}
 {% set infos = infos is defined ? infos : null %}
 
-{% block content %}
-
+{% block pageHeadline %}
     <h1 class="content__main-headline">Gitarre anpassen</h1>
+{% endblock %}
+
+{% block content %}
     
     <div class="content--centering-in-column">
 
