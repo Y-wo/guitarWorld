@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 28. Feb 2024 um 17:20
+-- Erstellungszeit: 29. Feb 2024 um 12:15
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.2.0
 
@@ -82,22 +82,22 @@ CREATE TABLE `guitar` (
 
 INSERT INTO `guitar` (`id`, `guitar_type_id`, `model`, `color`, `deleted`, `price`, `used`, `guitar_order_id`, `body`, `pickup`) VALUES
 (9, 3, 'plaplapla', 'dfghdfghd', 0, 6667, 0, 58, 'required', 'required'),
-(12, 2, 'Katze', 'sdfggfds', 0, 123, 0, NULL, 'required', 'required'),
-(14, 2, 'maus', 'qqq', 0, 233, 0, NULL, 'required', 'required'),
-(16, 2, 'rrr', 'rrr', 0, 222, 0, NULL, 'required', 'required'),
-(62, 9, 'Error', 'Rem', 0, 109, 0, NULL, 'Qui', 'Laborum'),
+(12, 2, 'Lorem ipsum dolor ', 'schwarz', 0, 123, 0, NULL, 'Fichte', 'Humbucker'),
+(14, 2, ' consetetur sadipscing', 'braun', 0, 233, 0, NULL, 'Mahagoni', 'Piezo'),
+(16, 2, 'sed diam', 'blau', 0, 222, 0, NULL, 'Fichte', 'Single Coil'),
+(62, 9, 'dolor sit amet', 'braun', 0, 109, 0, NULL, 'FIchte', '-'),
 (63, 10, 'Error', 'Rem', 1, 109, 0, NULL, 'Qui', 'Laborum'),
-(64, 9, 'Voluptates aut molli', 'Ut quia porro error ', 0, 743, 0, NULL, 'Hic fuga Totam ipsa', 'Placeat voluptatibu'),
+(64, 9, 'Voluptates aut molli', 'blau', 0, 743, 0, NULL, 'Mahagoni', 'Piezo'),
 (65, 2, 'Et iusto aute volupt', 'Totam quis eos a ve', 0, 132, 0, 61, 'Nobis laborum Neces', 'Rerum sint proident'),
-(93, 9, 'Qui in repudiandae a', 'Magnam ad et quis qu', 0, 815, 0, NULL, 'Dolorum pariatur Of', 'Consectetur non exc'),
-(94, 7, 'Quos vel praesentium', 'Quia et impedit ass', 0, 229, 0, NULL, 'Elit dolorum velit ', 'Natus at occaecat ut'),
-(95, 5, 'In alias ad nihil qu', 'Accusantium quis cul', 0, 659, 0, NULL, 'Sunt veniam ut volu', 'Minus cumque iste ip'),
-(96, 16, 'Pariatur Incididunt', 'Sit laboris id inci', 0, 874, 0, NULL, 'Aut quis quidem repu', 'Adipisicing in amet'),
+(93, 9, 'Qui in repudiandae a', 'rot', 0, 815, 0, NULL, 'Mahagoni', 'Humbucker'),
+(94, 7, 'Quos vel praesentium', 'braun', 0, 229, 0, NULL, 'Fichte', 'Piezo'),
+(95, 5, 'In alias ad nihil qu', 'gold', 0, 659, 0, NULL, 'Fichte', 'Single Coil'),
+(96, 16, 'Pariatur Incididunt', 'blau', 0, 874, 0, NULL, 'Mahagoni', 'Humbucker'),
 (97, 13, 'Tenetur sequi perfer', 'Ullamco velit autem', 1, 807, 0, NULL, 'Pariatur Voluptas e', 'Quibusdam asperiores'),
-(98, 14, 'Elit dolores ut sim', 'Dolor nihil dolor at', 0, 680, 0, NULL, 'Illo quam esse velit', 'Quidem amet est co'),
-(99, 15, 'Velit blanditiis ess', 'Lorem perferendis la', 0, 827, 0, NULL, 'In et commodi repreh444', 'Aliquip unde corpori'),
+(98, 14, 'Elit dolores ut sim', 'Sunburst', 0, 680, 0, NULL, 'Mahagoni', 'Humbucker'),
+(99, 15, 'Velit blanditiis ess', 'blau', 0, 827, 0, NULL, 'Fichte', 'Single Coil'),
 (100, 9, 'Illum aliquam asper', 'Quia reiciendis ut e', 1, 571, 0, NULL, 'Commodi est accusam', 'Maiores quod enim op'),
-(101, 12, 'Dolor maxime digniss', 'Numquam dolore dolor', 0, 470, 0, NULL, 'Voluptas non ut ut d', 'Maxime commodo ad qu'),
+(101, 12, 'Dolor maxime digniss', 'Numquam dolore dolor', 1, 470, 0, NULL, 'Voluptas non ut ut d', 'Maxime commodo ad qu'),
 (102, 10, 'Minim ea esse vel iu', 'Amet sunt officia e', 1, 701, 0, NULL, 'Aliquam id fuga Ea ', 'Soluta voluptate aut'),
 (103, 11, 'Id eos itaque elit', 'Consectetur ut inci', 1, 655, 0, NULL, 'Recusandae Ipsum q', 'Necessitatibus modi '),
 (104, 1, 'Pariatur Rem do qua', 'Similique perferendi', 1, 38, 0, NULL, 'Non aut accusamus ma', 'Et et harum dolore p'),
@@ -109,9 +109,24 @@ INSERT INTO `guitar` (`id`, `guitar_type_id`, `model`, `color`, `deleted`, `pric
 (110, 13, 'Quisquam sit enim co', 'Corrupti tempor min', 1, 857, 0, NULL, 'Quasi enim qui paria', 'Labore quidem blandi'),
 (111, 17, 'Dignissimos laborum ', 'Esse esse esse labo', 1, 886, 0, NULL, 'Porro iste magna arc', 'Est nulla dolor labo'),
 (112, 15, 'Illo quibusdam Nam e', 'Nihil tempore iusto', 1, 397, 0, NULL, 'Cumque in ipsum eaq', 'Vel qui neque dolor '),
-(113, 13, 'Consequatur Autem c', 'Excepteur ut invento', 0, 297, 0, 63, 'Est est iure minim ', 'Sit culpa cum qui pe'),
+(113, 13, 'Consequatur Autem c', 'Excepteur ut invento', 1, 297, 0, NULL, 'Est est iure minim ', 'Sit culpa cum qui pe'),
 (114, 6, 'Nesciunt eos culpa ', 'Tempore occaecat qu', 1, 480, 0, NULL, 'Nam sint quo commod', 'Aperiam dolore odio '),
-(115, 11, 'Inventore dolores de', 'Illo fugit culpa ha', 0, 208, 0, 63, 'Rerum voluptatem Er', 'Vitae quam non porro');
+(115, 11, 'Inventore dolores de', 'Illo fugit culpa ha', 1, 208, 0, NULL, 'Rerum voluptatem Er', 'Vitae quam non porro'),
+(116, 16, 'Quis ipsam officiis ', 'Ex nisi architecto e', 1, 179, 0, NULL, 'Nobis laboris evenie', 'In fugit provident'),
+(117, 1, 'Doloremque saepe exe', 'Quia voluptates repu', 1, 734, 0, NULL, 'Possimus in vel aut', 'Amet vitae sed quos'),
+(118, 1, 'Pariatur Minim mini', 'Assumenda voluptatem', 1, 82, 0, NULL, 'Et velit quia conse', 'Inventore aut minima'),
+(119, 16, 'Recusandae Quod qui', 'Maiores ut quod sint', 1, 198, 0, NULL, 'Pariatur Sint ea q', 'Pariatur Ullamco un'),
+(120, 12, 'Sit eu enim reprehe', 'Dicta blanditiis min', 1, 586, 0, NULL, 'Sit iusto vel iure ', 'Autem ut temporibus '),
+(121, 6, 'Nihil molestiae est ', 'Quis dolorum harum l', 0, 513, 0, 68, 'Culpa facilis tempo', 'Expedita aliquip qui'),
+(122, 13, 'Beatae sed ut evenie', 'Sint placeat vero c', 0, 243, 0, NULL, 'Labore sunt aliqua', 'Tenetur id enim qui '),
+(123, 7, 'Unde fugit modi et ', 'Obcaecati aut except', 0, 174, 0, 69, 'Inventore voluptates', 'Ut ut iusto tempor n'),
+(124, 11, 'Repudiandae blanditi', 'Eos deserunt incidid', 0, 184, 0, 68, 'Atque et et reprehen', 'Omnis officia culpa '),
+(125, 4, 'Do quis et quia labo', 'Sint corrupti moll', 1, 621, 0, NULL, 'Aliquip quo ut dolor', 'Perspiciatis molest'),
+(126, 13, 'Nemo consequatur cul', 'Laudantium et est ', 0, 380, 0, 67, 'Dolores architecto p', 'Expedita explicabo '),
+(127, 16, 'Do occaecat blanditi', 'Illum rerum commodi', 0, 27, 0, 66, 'Sit voluptate quaera', 'Voluptatum excepturi'),
+(128, 7, 'Earum dolorum illo s', 'In qui est ipsam qu', 0, 496, 0, NULL, 'Exercitation corrupt', 'Esse ut earum distin'),
+(129, 1, 'finaler test', 'test', 1, 123, 0, NULL, 'test', 'test'),
+(130, 18, 'Gitarre blabla bla', 'd', 1, 1234, 0, NULL, 'sdfg', 'sdfg');
 
 -- --------------------------------------------------------
 
@@ -138,22 +153,23 @@ CREATE TABLE `guitar_type` (
 
 INSERT INTO `guitar_type` (`id`, `version`, `brand`, `type`, `saddlewidth`, `deleted`, `neck`, `size`, `fretboard`, `scale`) VALUES
 (1, 'electri', 'Ibanez ', 'Elektrisch', 22, 0, 's', 'small', 'Palisander', 22),
-(2, 'acoustic', 'Ortegasdf', 'Elektrisch', 112, 0, '113', 'OOO', 'Pao Ferro', 114),
-(3, 'test-create-version', 'test-create-brand', 'rest-create-type', 999, 0, 'test-create-neck', 'test-create-size', 'test-create-Fretboard', 888),
-(4, 'test1', 'test2', 'Electric', 1234, 0, 'sdfg', 'sdfg', 'sdfg', 1234),
-(5, 'Dolores aut illo und', 'Quis voluptates duci', 'Akustisch', 47, 0, 'Eius nisi dolores in', 'Harum rem nostrud fu', 'Et voluptatem aliqua', 1),
-(6, 'Esse tenetur aut nih', 'Harum consequatur d', 'Elektrisch', 5, 0, 'Autem ipsam et quos ', 'Laudantium vel sed ', 'Voluptas amet atque', 12),
-(7, 'acousticsdfg', 'Ortegasdfg', 'Elektrisch', 9, 0, 'Et deserunt in dolor', 'Mollitia sit officii', 'Corrupti in quidem ', 83),
-(8, 'acousticsdfgfdsf', 'Ortegasdfgfsdf', 'Elektrisch', 9, 0, 'Et deserunt in dolor', 'Mollitia sit officii', 'Corrupti in quidem ', 83),
-(9, 'Non laboris et dolor', 'Nulla esse dolorem d', 'Elektrisch', 49, 0, 'Eos repellendus Ess', 'Aut natus at accusan', 'Est laboris aut acc', 82),
+(2, 'acoustic', 'Ortega', 'Elektrisch', 112, 0, '113', 'OOO', 'Pao Ferro', 114),
+(3, 'tzk-34 ', 'Gibson', 'Elektrisch', 999, 0, 'Mahagoni', 'medium', 'Mahagoni', 888),
+(4, 'version 23', 'Harley Benton', 'Elektrisch', 1234, 0, 'Fichte', 'small', 'Mahagoni', 1234),
+(5, 'tkl', 'Squier', 'Akustisch', 47, 0, 'Fichte', 'O', 'Pao Ferro', 13),
+(6, 'Esse', 'Fender', 'Elektrisch', 5, 0, 'Mahagoni', 'OO', 'Fichte', 12),
+(7, 'acoustics version ETL', 'Ortega', 'Elektrisch', 9, 0, 'Mahagoni', 'OO', 'Fichte', 83),
+(8, 'verion 8', 'Ortega', 'Elektrisch', 9, 0, 'Mahagoni', 'small', 'Fichte', 83),
+(9, 'Non laboris ', 'G&L', 'Elektrisch', 49, 0, 'Mahagoni', 'OO', 'Mahagoni', 82),
 (10, 'Id minima nisi nostr', 'A ipsa et id mollit', 'Elektrisch', 12, 1, 'Commodo aliquam quae', 'Deserunt enim quidem', 'Sit consequatur nec', 14),
-(11, 'Maxime ut soluta iur', 'Illum hic amet eaq', 'Elektrisch', 4, 0, 'Mollitia reprehender', 'Sit lorem labore mol', 'Laudantium quibusda', 14),
-(12, 'Quaerat officiis fug', 'Dolorem dolore proid', 'Elektrisch', 95, 0, 'Sit unde consectetur', 'Nostrum commodo ea v', 'Repudiandae iure ull', 75),
-(13, 'Aut quas voluptatem', 'Deserunt et id est a', 'Elektrisch', 26, 0, 'Odio omnis officia a', 'Error fugit eiusmod', 'Ipsa eligendi eum c', 55),
-(14, 'Quia in laborum dese', 'Est doloremque deser  lülülü', 'Akustisch', 75, 0, 'Et cumque esse earu', 'Asperiores elit mol', 'Autem aliquid pariat', 98),
-(15, 'test333', 'test hihi haha333', 'Akustisch', 234333, 0, 'test333', 'test333', 'test333', 234333),
-(16, 'Quas officia quasi c', 'Laborum numquam cons', 'Akustisch', 12, 0, 'Corporis earum sed o', 'Nihil reprehenderit', 'Voluptatem aspernat', 62),
-(17, 'test22245', 'test22245', 'Akustisch', 6622245, 0, 'Sit voluptatem et 22245', 'Blanditiis consectet22245', 'Consequatur minim re22245', 5722245);
+(11, 'Maxime ', 'ESP', 'Elektrisch', 4, 0, 'Fichte', 'XL', 'Mahagoni', 14),
+(12, 'version 33', 'Harley Benton', 'Elektrisch', 95, 0, 'Mahagoni', 'OO', 'Palisander', 75),
+(13, 'testversion', 'Ibanez', 'Elektrisch', 26, 0, 'Mahagoni', 'o', 'Palisander', 55),
+(14, 'Quia ', 'Gibson', 'Akustisch', 75, 0, 'Mahagoni', 'Concert', 'Fichte', 98),
+(15, 'version expensive', 'PRS', 'Akustisch', 23, 0, 'Mahagoni', 'OO', 'Mahagoni', 23),
+(16, 'Quas ', 'Cort', 'Akustisch', 12, 0, 'Mahagoni', 'small', 'Mahagoni', 62),
+(17, 'expanded', 'Maybach', 'Akustisch', 66, 0, 'Pao Ferro', 'XL', 'Pao Ferro', 57),
+(18, '123', 'blabla', 'Elektrisch', 123, 1, '123', '123', '123', 123);
 
 -- --------------------------------------------------------
 
@@ -275,12 +291,18 @@ INSERT INTO `order` (`id`, `date`, `pay_date`, `user_id`, `paid`, `canceled`) VA
 (55, '2024-02-28', '2024-03-13', 95, NULL, '2024-02-28'),
 (56, '2024-02-28', '2024-03-13', 96, NULL, '2024-02-28'),
 (57, '2024-02-28', '2024-03-13', 97, NULL, '2024-02-28'),
-(58, '2024-02-28', '2024-03-13', 98, NULL, NULL),
+(58, '2024-02-28', '2024-03-13', 98, '2024-02-29', NULL),
 (59, '2024-02-28', '2024-03-13', 99, NULL, '2024-02-28'),
 (60, '2024-02-28', '2024-03-13', 100, NULL, '2024-02-28'),
 (61, '2024-02-28', '2024-03-13', 101, '2024-02-28', NULL),
 (62, '2024-02-28', '2024-03-13', 102, NULL, '2024-02-28'),
-(63, '2024-02-28', '2024-03-13', 103, NULL, NULL);
+(63, '2024-02-28', '2024-03-13', 103, NULL, '2024-02-28'),
+(64, '2024-02-29', '2024-03-14', 104, NULL, '2024-02-29'),
+(65, '2024-02-29', '2024-03-14', 105, NULL, '2024-02-29'),
+(66, '2024-02-29', '2024-03-14', 106, '2024-02-29', NULL),
+(67, '2024-02-29', '2024-03-14', 107, NULL, NULL),
+(68, '2024-02-29', '2024-03-14', 109, NULL, NULL),
+(69, '2024-02-29', '2024-03-14', 111, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -372,7 +394,13 @@ INSERT INTO `user` (`id`, `email`, `roles`, `password`, `street`, `housenumber`,
 (100, 'hoqefufafo@mailinator.com', '[\"ROLE_USER\"]', NULL, 'daxylah@mailinator.com', 259, 59639, 'Meredith', 'Prince', 'qysivub@mailinator.com', 0, '2024-02-28', 'kabugiq@mailinator.com', '2024-02-28'),
 (101, 'degajupyzo@mailinator.com', '[\"ROLE_USER\"]', NULL, 'teststraße', 760, 95721, 'Margaret', 'Dixon', 'testort', 0, '2024-02-28', '1234', '2024-02-28'),
 (102, 'mixy@mailinator.com', '[\"ROLE_USER\"]', NULL, 'potyhybek@mailinator.com', 702, 54233, 'Chaney', 'Mcleod', 'gyxefedeb@mailinator.com', 0, '2024-02-28', 'vugofyqiv@mailinator.com', '2024-02-28'),
-(103, 'vujacef@mailinator.com', '[\"ROLE_USER\"]', NULL, 'pibulufyzy@mailinator.com', 373, 94524, 'Oprah', 'Williams', 'fyxi@mailinator.com', 0, '2024-02-28', 'rotanet@mailinator.com', '2024-02-28');
+(103, 'vujacef@mailinator.com', '[\"ROLE_USER\"]', NULL, 'pibulufyzy@mailinator.com', 373, 94524, 'Oprah', 'Williams', 'fyxi@mailinator.com', 0, '2024-02-28', 'rotanet@mailinator.com', '2024-02-28'),
+(104, 'cyhu@mailinator.com', '[\"ROLE_USER\"]', NULL, 'stra0ße', 33, 97911, 'Jason', 'Kline', 'ort', 0, '2024-02-29', '1234', '2024-02-29'),
+(105, 'kasu@mailinator.com', '[\"ROLE_USER\"]', NULL, 'vonywuwijo@mailinator.com', 833, 19056, 'Ivy', 'Burgess', 'pybefina@mailinator.com', 0, '2024-02-29', 'pivysiqesy@mailinator.com', '2024-02-29'),
+(106, 'cygypaza@mailinator.com', '[\"ROLE_USER\"]', NULL, 'desupafyz@mailinator.com', 955, 65086, 'Stephen', 'Bernard', 'mojyvijore@mailinator.com', 0, '2024-02-29', 'kepug@mailinator.com', '2024-02-29'),
+(107, 'gopuwel@mailinator.com', '[\"ROLE_USER\"]', NULL, 'tyxabevyri@mailinator.com', 466, 10666, 'Quemby', 'Sargent', 'lycifo@mailinator.com', 0, '2024-02-29', 'hosohawoh@mailinator.com', '2024-02-29'),
+(109, 'test@test1.de', '[\"ROLE_USER\"]', NULL, 'testsraße', 123, 345, 'test', 'test', 'TestOrt', 0, '2024-02-29', '536543', '2024-02-29'),
+(111, 'test@test2.de', '[\"ROLE_USER\"]', NULL, '1234', 1234, 4321, 'asdf', 'asdf', 'ort', 0, '2024-02-29', '3456', '2024-02-29');
 
 --
 -- Indizes der exportierten Tabellen
@@ -443,13 +471,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT für Tabelle `guitar`
 --
 ALTER TABLE `guitar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT für Tabelle `guitar_type`
 --
 ALTER TABLE `guitar_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT für Tabelle `image`
@@ -461,7 +489,7 @@ ALTER TABLE `image`
 -- AUTO_INCREMENT für Tabelle `image_guitar`
 --
 ALTER TABLE `image_guitar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT für Tabelle `messenger_messages`
@@ -473,13 +501,13 @@ ALTER TABLE `messenger_messages`
 -- AUTO_INCREMENT für Tabelle `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- Constraints der exportierten Tabellen
