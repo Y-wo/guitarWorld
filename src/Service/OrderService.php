@@ -208,4 +208,25 @@ class OrderService extends AbstractEntityService
     }
 
 
+
+    /*
+    * Searches order by phrase (firstname, lastname, orderId, email)
+    */
+    public function getAllByPhrase(string $phrase) : array 
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $queryBuilder
+            ->innerJoin('r.user', 'u')
+            ->where('
+            r.id LIKE :phrase OR
+            u.email LIKE :phrase OR
+            u.firstname LIKE :phrase OR 
+            u.lastname LIKE :phrase
+            ')
+            ->setParameter('phrase', '%' . $phrase . '%')
+            ;
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
 }

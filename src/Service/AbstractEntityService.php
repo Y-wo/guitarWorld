@@ -98,4 +98,19 @@ abstract class AbstractEntityService
 
         return $queryBuilder->getQuery()->execute();
     }
+
+
+    /*
+    * create query which queries all Entities
+    */
+    public function createQueryBuilder() {
+        $queryBuilder = $this
+            ->entityManager
+            ->getRepository(static::$entityFqn)
+            ->createQueryBuilder('r')
+            ->select('r')
+            ;
+
+        return $queryBuilder;
+    }
 }

@@ -696,10 +696,26 @@ class IndexController extends AbstractController
         if (!$loginService->isAdminLoggedIn($request)){
             return $this->redirectToRoute('home');
         }
-        $orders = $orderService->getAllSortByDate(false);
-        $isSubmit = $orderService->isSubmit($request);
 
-        if ($isSubmit) {
+        $orders = $orderService->getAllSortByDate(false);
+        $message = $request->query->get('message') ?? null;
+
+        // Handles Order-/User-search
+        $isSearchSubmit = $request->query->get('submit');
+        $searchPhrase = $request->query->get('search-phrase');
+        if ($isSearchSubmit && !empty($searchPhrase)) {
+            $orders = $orderService->getAllByPhrase($searchPhrase);
+            $message = (count($orders) > 0) ?
+                'Ergebnis der Suche "' .  $searchPhrase . '".'
+                :
+                'Leider wurde kein passendes Ergebnis gefunden.'
+                ;  
+        }
+        
+        
+        // Handles invoice-manipulation-actions
+        $isActionSubmit = $orderService->isSubmit($request);
+        if ($isActionSubmit) {
             $orderChangeInfos = $request->request->all();
 
             // handles handling of order-state 
@@ -719,6 +735,7 @@ class IndexController extends AbstractController
 
         return $this->render('orders.html.twig', [
             'orders' => $orders,
+            'message' => $message ?? null,
         ]);
 
     }

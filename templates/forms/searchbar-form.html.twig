@@ -1,4 +1,6 @@
-<form class="searchbar-form__form" action="{{path('home')}}" method="GET"> 
+{% set pathName = pathName ?? 'home' %}
+
+<form class="searchbar-form__form" action="{{path(pathName)}}" method="GET"> 
     <div class="searchbar-form__input-container">
         <input type="text" name="search-phrase">
         <input name="submit" value="Suchen" hidden>

@@ -148,19 +148,6 @@ class GuitarService extends AbstractEntityService
 
 
 
-    /*
-    * create query which queries all guitars
-    */
-    public function createQueryBuilder() {
-        $queryBuilder = $this
-            ->entityManager
-            ->getRepository(self::$entityFqn)
-            ->createQueryBuilder('r')
-            ->select('r')
-            ;
-
-        return $queryBuilder;
-    }
 
 
 

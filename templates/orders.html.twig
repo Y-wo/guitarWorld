@@ -1,8 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
+{% block pageHeadline %}
+    <h1 class="content__main-headline">Bestellungen / Kunden</h1>
+{% endblock %}
 
-    <h1 class="content__main-headline">Bestellungen</h1>
+{% block searchbar %}
+
+    {% include 'forms/searchbar-form.html.twig' with {
+        'pathName': 'orders'
+    } %}
+
+{% endblock %}
+
+{% block content %}
 
     <div class="content--centering-in-column">
 
