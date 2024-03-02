@@ -121,7 +121,6 @@ class IndexController extends AbstractController
         return $this->redirectToRoute('home', [
             'message' => 'Ergebnis der Suche "' .  $searchPhrase . '":',
             'searchedGuitars' => $searchedGuitars,
-            'bla' => 'blubb'
         ]);
 
     }
