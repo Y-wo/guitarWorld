@@ -28,6 +28,7 @@ import './styles/searchbar-form.sass';
 import './styles/guitar-type-overview.sass';
 import './styles/confirmation.sass';
 import './styles/form.sass';
+import './styles/footer.sass';
 
 import './js/shopping-cart.js';
 import './js/sidebar.js';

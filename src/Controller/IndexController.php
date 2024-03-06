@@ -754,4 +754,43 @@ class IndexController extends AbstractController
         ]);
     }
 
+
+
+
+    /*
+    * Footer AGB
+    */
+    #[Route(path: '/footer-agb', name: 'footer_agb')]
+    public function footerAgb(
+        Request $request,
+    ): Response
+    {
+        return $this->render('footer/footer_agb.html.twig');
+    }
+
+
+
+    /*
+    * Footer Impressum
+    */
+    #[Route(path: '/footer-impressum', name: 'footer_impressum')]
+    public function footerImpressum(
+        Request $request,
+    ): Response
+    {
+        return $this->render('footer/footer_impressum.html.twig');
+    }
+
+
+
+    /*
+    * Footer Datenschutz
+    */
+    #[Route(path: '/footer-datenschutz', name: 'footer_datenschutz')]
+    public function footerData(
+        Request $request,
+    ): Response
+    {
+        return $this->render('footer/footer_datenschutz.html.twig');
+    }
 }
